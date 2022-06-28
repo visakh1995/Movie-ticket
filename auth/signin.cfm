@@ -1,16 +1,11 @@
 <cfinclude template="../section/header.cfm">
-<section class="addressbook">
+<section class="movieticket">
     <div class="container grid">
-        <div class="addressbook-form card flex">
-            <div class="addressbook-sidebar-login">
-                <span class="sidebar-logo">
-                    <i class="fa-solid fa-address-book"></i>
-                </span>
-            </div>
-            <div class="addressbook-form-fields">
+        <div class="movieticket-form card flex">
+            <div class="movieticket-form-fields">
                 <div id="alert"></div>
-                <form method="post" action="../components/userdefined.cfc?method=addressBookLogin">
-                    <h1>LOGIN</h1>
+                <form method="post" action="../components/moviefunctions.cfc?method=movieTicketSignin">
+                    <h1><i class="fa-duotone fa-projector"></i>SIGNIN</h1>
                     <cfif isDefined("aMessages")>
                         <div class="alertClass" id="alertClass">
                             <cfoutput>
@@ -30,25 +25,15 @@
                         </div>
                       </cfif>
                     <div class="form-control">
-                        <input type="text" name ="userName" id="userName" 
+                        <input type="text" name ="username" id="username" 
                         placeholder="Username" required>
                     </div>
                     <div class="form-control">
                         <input type="password" name ="password" id="password" 
                         placeholder="Password" required>
                     </div>
-                    <button class="btn btn-outline btn-login" type="submit">Login</button>
-                    <div class="addressbook-form-footer">
-                        <h5>Or Sign In Using</h5>
-                        <div class="o-auth">
-                            <span class="google"><a href="../components/userAuth.cfc?method=googleSignIn">
-                                <i class="fa-brands fa-google"></i>
-                            </a></span>
-                            <span class="facebook"><a href="../components/userAuth.cfc?method=facebookSignIn">
-                                <i class="fa-brands fa-facebook"></i>
-                            </a></span>
-                        </div>
-                        <h5>Dont have an account?<span><a href="signup.cfm">Register here</a></span></h5>
+                    <button class="btn btn-outline btn-login" type="submit">Signin</button>
+                    <div class="movieticket-form-footer">
                     </div>
                 </form>
             </div>  

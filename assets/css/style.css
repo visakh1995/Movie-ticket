@@ -4,7 +4,10 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+    list-style: none;
+    text-decoration: none;
 }
+
 body{
     font-family: "Lato", sans-serif;
     color:#333;
@@ -31,7 +34,9 @@ img{
 
 /* navbar */
 .navbar {
-    background-color: #047ade;
+    /* background-color: #047ade; */
+    background-color: #42378f;
+    background-image: linear-gradient(315deg, #42378f 0%, #f53844 74%);
     height:70px;
     color:#fff;
 }
@@ -49,76 +54,78 @@ img{
     justify-content: space-between;
 }
 
-/* addressbook-signup */
-.addressbook{
+/* movieticket-signup */
+.movieticket{
     position:absolue;
-    background-color:#047ade;
+    /* background-color:#047ade; */
+    background-color: #42378f;
+    background-image: linear-gradient(315deg, #42378f 0%, #f53844 74%);
     color:#fff;
 }
-.addressbook-form{
+.movieticket-form{
     top: -20px;
-    max-height: 500px;
-    width:610px;
+    max-height: 430px;
+    width:400px;
     padding:10px;
     z-index:100;
 }
-.addressbook-form.signup.card {
+.movieticket-form.signup.card {
     min-height: 610px;
     width:670px;
 }
-.addressbook-form h1{
+.movieticket-form h1{
     font-size: 20px;
     text-align: center;
     font-weight: 900;
-    color: #047ade;
+    color: #42378f;
     letter-spacing: 1px;
 }
-.addressbook-form p{
+.movieticket-form p{
     padding:5px 0;
     text-align: center;
     font-size: small;
 }
-.addressbook-form .form-control {
+.movieticket-form .form-control {
     padding:30px 0;
 }
-.addressbook-form input[type="text"],[type="password"],[type="email"]{
+.movieticket-form input[type="text"],[type="password"],[type="email"]{
     border:0;
     border-bottom: 1px solid #b4becb;
     width:100%;
     padding:3px;
     font-size: 16px;
 }
-.addressbook-form input:focus {
+.movieticket-form input:focus {
     outline: none;
 }
-.addressbook-sidebar{
+.movieticket-sidebar{
     background-color: #5286b3;
     height:500px;
     width:200px;
 }
-.addressbook-sidebar-login{
+.movieticket-sidebar-login{
     background-color: #5286b3;
     height:400px;
     width:200px;
 }
-.addressbook-sidebar-signup{
+.movieticket-sidebar-signup{
     background-color: #5286b3;
     height:400px;
     width:200px;
 }
-.addressbook .flex{
+.movieticket .flex{
     display:flex;
     justify-content: space-evenly;
 }
-.addressbook-form-footer{
+.movieticket-form-footer{
     text-align: center;
     margin-top: 45px;
 }
-.addressbook-form-footer .o-auth{
+.movieticket-form-footer .o-auth{
     margin-top: 12px;
     margin-bottom: 12px;
 }
-.addressbook-sidebar-login .sidebar-logo{
+.movieticket-sidebar-login .sidebar-logo{
     position: absolute;
     font-size: 52px;
     margin-top: 160px;
@@ -364,13 +371,13 @@ button.btn.btn-outline.btn-show {
 }
 .btn-outline {
     background-color: transparent;
-    border: 1px #047ade solid;
+    border: 1px #42378f solid;
     color:#000;
 }
 button.btn.btn-login{
     margin-left: 48px;
     margin-top: 20px;
-    color:#047ade;
+    color:#42378f;
     padding: 5px 43px;
 }
 button.btn.btn-signup{
