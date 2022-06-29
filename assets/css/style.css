@@ -141,18 +141,24 @@ h1.signup-title {
 }
 /* dashboard */
 section.dashboard {
-    background: #b4acbe;
+    /* background: rgb(207, 74, 74); */
     height: 100%;
+    width: 100%;
 }
 .dashboard-topbar{
     height:60px;
     background-color:#fff
 }
-.dashboard .grid-2 {
-    overflow: visible;
-    grid-template-columns: 20% 80%;
-    gap: 30px;
-  }
+/* .dashboard .grid-2 { */
+    /* overflow: visible; */
+    /* grid-template-columns: 2% 98%; */
+    /* gap: 30px; */
+  /* } */
+.wrapper {
+    display:flex;
+    justify-content: center;
+    
+}
 .panel-profile{
     height:200px;
     background-color:#fff;
@@ -349,6 +355,14 @@ h4.view-modal-title {
 .grid-2 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    /* show case height is there,grid height inside max set to 100% */
+  }
+  .grid-3 {
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
     gap: 20px;
     justify-content: center;
     align-items: center;

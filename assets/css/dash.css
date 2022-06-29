@@ -34,7 +34,7 @@
 .wrapper .sidebar ul li a{
     display: block;
     padding: 13px 30px;
-    border-bottom: 1px solid #10558d;
+    /* border-bottom: 1px solid #10558d; */
     color: rgb(241, 237, 237);
     font-size: 16px;
     position: relative;
@@ -110,4 +110,20 @@ body.active .wrapper .section{
 }
 .navbar-dash .flex{
     justify-content: space-between;
+}
+.card-dash{
+    border-radius: 5px;
+    background-color: #42378f;
+    background-image: linear-gradient(315deg, #42378f 0%, #f53844 74%);
+    color:#000;
+    padding:50px 80px;
+    margin:10px;
+    position: relative;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+}
+.flexdash{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 40%;
 }

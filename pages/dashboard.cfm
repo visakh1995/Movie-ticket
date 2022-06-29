@@ -17,7 +17,7 @@
                 <li>
                     <a href="#">
                         <span class="icon"><i class="fas fa-user-friends"></i></span>
-                        <span class="item">Manage Teatres</span>
+                        <span class="item"><a href="./manageTheaters.cfm">Manage Teatres</a></span>
                     </a>
                 </li>
                 <li>
@@ -60,18 +60,18 @@
         </div>
     </div>
     <div class="main-content">
-        <div class="container flex">
-            <div class="card">
-                <p>bookings</p>
+        <div class="sliders flexdash">
+            <div class="card-dash">
+                <p>Theatres</p>
             </div>
-            <div class="card">
-                <p>bookings</p>
+            <div class="card-dash">
+                <p>Movies</p>
             </div>
-            <div class="card">
-                <p>bookings</p>
+            <div class="card-dash">
+                <p>User </p>
             </div>
-            <div class="card">
-                <p>bookings</p>
+            <div class="card-dash">
+                <p>Movie </p>
             </div>
         </div>
     </div>
