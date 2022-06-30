@@ -14,14 +14,14 @@
         <cfif verifiedDetails.RecordCount gt 0>
             <cfif NOT structKeyExists(Session,"movieBookCredentials")>
                 <cflock timeout="20" scope="Session" type="Exclusive">
-                    <cfset Session.movieBookCredentials = structNew()>
+                    <cfset Session.movieTicketCredentials = structNew()>
                 </cflock>
             </cfif>
-            <cfif structKeyExists(Session,"movieBookCredentials")>
-                <cfset Session.movieBookCredentials["id"] = "#verifiedDetails.id#">
-                <cfset Session.movieBookCredentials["userName"] = "#verifiedDetails.username#">
-                <cfset Session.movieBookCredentials["password"] = "#verifiedDetails.password#">
-                <cfset Session.movieBookCredentials["isAuthenticated"] = "True">
+            <cfif structKeyExists(Session,"movieTicketCredentials")>
+                <cfset Session.movieTicketCredentials["id"] = "#verifiedDetails.id#">
+                <cfset Session.movieTicketCredentials["userName"] = "#verifiedDetails.username#">
+                <cfset Session.movieTicketCredentials["password"] = "#verifiedDetails.password#">
+                <cfset Session.movieTicketCredentials["isAuthenticated"] = "True">
             </cfif>
             <cflocation addtoken="no"  url="../pages/dashboard.cfm"> 
         <cfelse>
@@ -31,106 +31,188 @@
         </cfif>
 
     </cffunction>
-<!--- <!---      ---> --->
-<cffunction name="teatreCreateContactForm" access="remote" output="true">
-    <cfargument name="title" type="string" required="true">
-    <cfargument name="name" type="string" required="true">
-    <cfargument name="email" type="string" required="true">
-    <cfargument name="dob" type="string" required="true">
-    <cfargument name="photo" type="string" required="true">
-    <cfargument name="address" type="string" required="true">
-    <cfargument name="pinCode" type="string" required="true">
-    <cfargument name="street" type="string" required="true">
-    <cfargument name="phone" type="string" required="true">
 
-    <cfset local.aErrorMessages =  "">
-    <cfif arguments.title EQ ''>
-        <cfset local.aErrorMessages = 'Please provide your title'/>
-    </cfif>
-    <cfif arguments.email EQ '' OR NOT isValid("email",arguments.email)>
-        <cfset local.aErrorMessages = 'Please provide valid email ID'/>
-     </cfif>
-    <cfif arguments.lastName EQ ''> 
-    <cfset local.aErrorMessages = 'Please provide valid last name'/>
-    </cfif> 
-    <cfif arguments.dob EQ ''>
-        <cfset local.aErrorMessages = 'Please provide valid dob'/>
-    </cfif>
-    <cfif arguments.photo EQ ''>
-        <cfset local.aErrorMessages = 'Please provide valid photo'/>
-    </cfif>
-    <cfif arguments.address EQ ''>
-        <cfset local.aErrorMessages = 'Please provide valid address'/>
-    </cfif>
-    <cfif arguments.pinCode EQ ''>
-        <cfset local.aErrorMessages = 'Please provide valid Pincode'/>
-    </cfif>
-    <cfif arguments.street EQ ''>
-        <cfset local.aErrorMessages = 'Please provide valid street name'/>
-    </cfif>
-    <cfif arguments.phone EQ ''>
-        <cfset local.aErrorMessages = 'Please provide valid phone'/>
-    </cfif>
-    <cfif len(trim(local.aErrorMessages)) NEQ 0>
-        <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
-        <cflocation addtoken="no"  url="../pages/dashboard.cfm?aMessages=#local.encryptedMessage#">
-    <cfelse>
-        <cfquery name="emailVerify">
-            SELECT *FROM coldfusiion.moviebookcontacts WHERE email = "#arguments.email#";
-        </cfquery>
-        <cfquery name="phoneVerify">
-            SELECT *FROM coldfusiion.moviebookcontacts WHERE photo = "#arguments.phone#";
-        </cfquery>
-        <cfif emailVerify.RecordCount NEQ 0>
-            <cfset local.aErrorMessages = 'The email already registered'/>
-            <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
-            <cflocation addtoken="no"  url="../pages/dashboard.cfm?aMessages=#local.encryptedMessage#">
+    <cffunction name="movieTicketCreateForm" access="remote" output="true">
+        <cfargument name="theaterName" type="string" required="true">
+        <cfargument name="email" type="string" required="true">
+        <cfargument name="phone" type="string" required="true">
+        <cfargument name="address" type="string" required="true">
+        <cfargument name="street" type="string" required="true">
+        <cfargument name="pinCode" type="string" required="true">
+        <cfargument name="photo" type="string" required="true">
+
+        <cfset local.aErrorMessages =  "">
+        <cfif arguments.email EQ '' OR NOT isValid("email",arguments.email)>
+            <cfset local.aErrorMessages = 'Please provide valid email ID'/>
         </cfif> 
-        <cfif phoneVerify.RecordCount NEQ 0>
-            <cfset local.aErrorMessages = 'The phone already registered'/>
+        <cfif arguments.phone EQ ''>
+            <cfset local.aErrorMessages = 'Please provide valid phone'/>
+        </cfif>
+        <cfif arguments.address EQ ''>
+            <cfset local.aErrorMessages = 'Please provide valid address'/>
+        </cfif>
+        <cfif arguments.street EQ ''>
+            <cfset local.aErrorMessages = 'Please provide valid street name'/>
+        </cfif>
+        <cfif arguments.pinCode EQ ''>
+            <cfset local.aErrorMessages = 'Please provide valid Pincode'/>
+        </cfif>
+        <cfif arguments.photo EQ ''>
+            <cfset local.aErrorMessages = 'Please provide valid photo'/>
+        </cfif>
+        <cfif len(trim(local.aErrorMessages)) NEQ 0>
             <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
-            <cflocation addtoken="no"  url="../pages/dashboard.cfm?aMessages=#local.encryptedMessage#">
-        </cfif> 
-        <cffile action="upload"
-        fileField="photo"
-        nameconflict="overwrite"
-        destination="C:\coldFusion2021\cfusion\wwwroot\ADDRESSBOOK\uploads\">
+            <cflocation addtoken="no"  url="../pages/manageTheaters.cfm?aMessages=#local.encryptedMessage#">
+        <cfelse>
+            <cfquery name="emailVerify" datasource="cruddb">
+                SELECT *FROM bookmyticket.moviepanel_teaters WHERE theaterEmail = "#arguments.email#";
+            </cfquery>
+            <cfquery name="phoneVerify" datasource="cruddb">
+                SELECT *FROM bookmyticket.moviepanel_teaters WHERE theaterPhone = "#arguments.phone#";
+            </cfquery>
+            <cfif emailVerify.RecordCount NEQ 0>
+                <cfset local.aErrorMessages = 'The email already registered'/>
+                <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
+                <cflocation addtoken="no"  url="../pages/manageTheaters.cfm?aMessages=#local.encryptedMessage#">
+            </cfif> 
+            <cfif phoneVerify.RecordCount NEQ 0>
+                <cfset local.aErrorMessages = 'The phone already registered'/>
+                <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
+                <cflocation addtoken="no"  url="../pages/manageTheaters.cfm?aMessages=#local.encryptedMessage#">
+            </cfif> 
+            <cffile action="upload"
+            fileField="photo"
+            nameconflict="overwrite"
+            destination="C:\coldFusion2021\cfusion\wwwroot\movie-ticket\uploads\">
 
-        <cfset local.imageValue = #cffile.serverFile#>
-        <cfparam name="arguments.title" default="">
-        <cfparam name="arguments.Name" default="">
-        <cfparam name="arguments.email" default="">
-        <cfparam name="arguments.dob" default="">
-        <cfparam name="arguments.address" default="">
-        <cfparam name="arguments.pinCode" default="">
-        <cfparam name="arguments.street" default="">
-        <cfparam name="arguments.phone" default="">
-        <cfparam name="imageValue" default="">
-        <cfparam name="arguments.status" default="1">
+            <cfset local.imageValue = #cffile.serverFile#>
+            <cfparam name="arguments.theaterName" default="">
+            <cfparam name="arguments.email" default="">
+            <cfparam name="arguments.phone" default="">
+            <cfparam name="arguments.address" default="">
+            <cfparam name="arguments.street" default="">
+            <cfparam name="arguments.pinCode" default="">
+            <cfparam name="imageValue" default="">
+            <cfparam name="arguments.status" default="1">
 
-        <cfparam name="Session.addressBookCredentials.id" default="Not Authenticated">
-        <cfquery name="addData" result = result>
-            INSERT INTO coldfusiion.adbookcontacts(userId,title,firstName,lastName,email,gender,dob,
-            photo,address,phone,street,pincode,status)
-            VALUES(
-                <cfqueryparam  CFSQLType="cf_sql_integer" value="#Session.movieBookCredentials.id#">,
-                <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.title#">,
-                <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.name#">,
-                <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.email#">,
-                <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.checks#">,
-                <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.dob#">,
-                <cfqueryparam  CFSQLType="cf_sql_varchar" value="#imageValue#">,
-                <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.address#">,
-                <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.phone#">,
-                <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.street#">,
-                <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.pinCode#">,
-                <cfqueryparam  CFSQLType="cf_sql_integer" value="1">
-            )
+            <cfquery name="addData" result = result datasource="cruddb">
+                INSERT INTO bookmyticket.moviepanel_teaters(theaterName,theateremail,theaterphone,theaterPhoto,
+                theateraddress,
+                theaterStreet,theaterPincode,theaterStatus)
+                VALUES(
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.theaterName#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.email#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.phone#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#imageValue#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.address#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.street#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.pinCode#">,
+                    <cfqueryparam  CFSQLType="cf_sql_integer" value="1">
+                )
+            </cfquery>
+            <cfset local.message  ="Contact created successfully">
+            <cfset local.encryptedMessage = ToBase64(local.message) />
+            <cflocation addtoken="no"  url="../pages/manageTheaters.cfm?aMessageSuccess=#local.encryptedMessage#"> 
+        </cfif>
+    </cffunction>
+
+    <cffunction name="findTheatreList" access="remote" output="true">
+        <cfquery name="showTheatres" datasource="cruddb">
+            SELECT * FROM bookmyticket.moviepanel_teaters
         </cfquery>
-        <cfset local.message  ="Contact created successfully">
+        <cfreturn showTheatres>
+    </cffunction>
+
+    <cffunction name="movieTheatreDelete" access="remote">
+        <cfargument name="deleteId" type="string" required="yes">
+        <cfquery name="deleteData" datasource="cruddb">
+            DELETE FROM bookmyticket.moviepanel_teaters WHERE 
+            id = <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.deleteId#">
+        </cfquery>
+        <cfset local.message  ="Contact deleted successfully">
         <cfset local.encryptedMessage = ToBase64(local.message) />
-        <cflocation addtoken="no"  url="../pages/dashboard.cfm?aMessageSuccess=#local.encryptedMessage#"> 
-    </cfif>
-</cffunction>
+        <cflocation addtoken="no"  url="../pages/manageTheaters.cfm?aMessages=#local.encryptedMessage#"> 
+    </cffunction>
+
+    <cffunction name="editTheaterInfo" access="remote" returnFormat = "json">
+        <cfargument name="theatre_id" type="string" required="yes">
+        <cfquery name="fetchData" datasource="cruddb">
+            SELECT * FROM bookmyticket.moviepanel_teaters WHERE 
+            id = <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.theatre_id#">
+        </cfquery>
+        <cfreturn fetchData> 
+    </cffunction>
+
+    <cffunction name="updateTheaterInfo" access="remote">
+    
+        <cfargument name="TheaterId" type="string" required="true">
+        <cfargument name="theaterName" type="string" required="true">
+        <cfargument name="email" type="string" required="true">
+        <cfargument name="phone" type="string" required="true">
+        <cfargument name="address" type="string" required="true">
+        <cfargument name="street" type="string" required="true">
+        <cfargument name="pinCode" type="string" required="true">
+        <cfargument name="photo" type="string" required="true">
+
+        <cfset local.aErrorMessages =  "">
+        <cfif arguments.email EQ '' OR NOT isValid("email",arguments.email)>
+            <cfset local.aErrorMessages = 'Please provide valid email ID'/>
+        </cfif> 
+        <cfif arguments.phone EQ ''>
+            <cfset local.aErrorMessages = 'Please provide valid phone'/>
+        </cfif>
+        <cfif arguments.address EQ ''>
+            <cfset local.aErrorMessages = 'Please provide valid address'/>
+        </cfif>
+        <cfif arguments.street EQ ''>
+            <cfset local.aErrorMessages = 'Please provide valid street name'/>
+        </cfif>
+        <cfif arguments.pinCode EQ ''>
+            <cfset local.aErrorMessages = 'Please provide valid Pincode'/>
+        </cfif>
+        <cfif arguments.photo EQ ''>
+            <cfset local.aErrorMessages = 'Please provide valid photo'/>
+        </cfif>
+
+        <cfif len(trim(local.aErrorMessages)) NEQ 0>
+            <cfset local.encryptedMessage = ToBase64(local.aErrorMessages)/>
+            <cflocation addtoken="no"  url="../pages/manageTheaters.cfm?aMessages=#local.encryptedMessage#">
+        <cfelse> 
+            <cfparam name="arguments.theaterName" default="">
+            <cfparam name="arguments.email" default="">
+            <cfparam name="arguments.phone" default="">
+            <cfparam name="arguments.address" default="">
+            <cfparam name="arguments.street" default="">
+            <cfparam name="arguments.pinCode" default="">
+            <cfparam name="imageValue" default="">
+            <cfparam name="arguments.status" default="1">
+            <cfparam name="Session.movieTicketCredentials.id" default="Not Authenticated">
+
+            <cfif len(trim(arguments.photo)) NEQ 0>
+                <cffile action="upload"
+                fileField="photo"
+                nameconflict="overwrite"
+                destination="C:\coldFusion2021\cfusion\wwwroot\movie-ticket\uploads\">
+                <cfset local.imageUpdatedValue = #cffile.serverFile#>
+            <cfelse>
+                <cfset local.imageUpdatedValue = #arguments.defaultPhoto#>
+            </cfif>
+            <cfquery name="updateData" datasource="cruddb">
+                UPDATE bookmyticket.moviepanel_teaters SET 
+                    theaterName = <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.theaterName#">,
+                    theaterEmail =<cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.email#">,
+                    theaterPhone = <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.phone#">,
+                    theaterAddress = <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.address#">,
+                    theaterStreet = <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.street#">,
+                    theaterPincode = <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.pinCode#">,
+                    theaterPhoto = <cfqueryparam  CFSQLType="cf_sql_varchar" value="#local.imageUpdatedValue#">,
+                    theaterStatus = <cfqueryparam  CFSQLType="cf_sql_integer" value="1">
+                WHERE id = "#arguments.TheaterId#"
+            </cfquery>
+            <cfset local.message  ="Theater updated successfully">
+            <cfset local.encryptedMessage = ToBase64(local.message)/>
+            <cflocation addtoken="no"  url="../pages/manageTheaters.cfm?aMessageSuccess=#local.encryptedMessage#"> 
+        </cfif>
+    </cffunction>
 
 </cfcomponent>

@@ -1,4 +1,3 @@
-
 <cfinclude template="../section/dashheader.cfm">
 <div class="wrapper flex">
     <div class="sidebar">

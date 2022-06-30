@@ -183,26 +183,7 @@ section.dashboard {
 }
 
 /* table */
-table {
-    border-collapse: collapse;
-    width: 100%;
-    border:1px solid lightgray;
-  }
-  
-td,th{
-    text-align: left;
-    padding: 8px;
-    border:1px solid lightgray;
 
-}
-thead {
-    font-size: 12px;
-    color: #047ade;
-}
-  
-tr:nth-child(even) {
-    background-color: #dddddd;
-}
 .avatar {
     vertical-align: middle;
     width: 100%;
@@ -619,3 +600,26 @@ table .avatar-img {
 .closebtn:hover {
     color: black;
 }
+.img-fluid{
+    width:100px;
+}
+/* table {
+    border-collapse: collapse;
+    width: 100%;
+    border:1px solid lightgray;
+  }
+  
+td,th{
+    text-align: left;
+    padding: 8px;
+    border:1px solid lightgray;
+
+}
+thead {
+    font-size: 12px;
+    color: #047ade;
+}
+  
+tr:nth-child(even) {
+    background-color: #dddddd;
+} */

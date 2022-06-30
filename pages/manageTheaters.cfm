@@ -1,9 +1,12 @@
 <cfinclude template="../section/dashheader.cfm">
+<cfinclude template ="./modal.cfm"> 
+<cfset newInstance = createObject("component","movie-ticket/components.moviefunctions")> 
+<cfset theatreList = newInstance.findTheatreList()> 
 <div class="wrapper flex">
     <div class="sidebar ">
         <div class="profile">
             <img src="https://1.bp.blogspot.com/-vhmWFWO2r8U/YLjr2A57toI/AAAAAAAACO4/0GBonlEZPmAiQW4uvkCTm5LvlJVd_-l_wCNcBGAsYHQ/s16000/team-1-2.jpg" alt="profile_picture">
-            <h3>Anamika Roy</h3>
+            <h3>Admin</h3>
         </div>
         <div>
             <ul>
@@ -62,97 +65,76 @@
     <div>
         <section class="main-content">
             <div class="card">
-                <table id="detailsTable">
+                <button class="teater btn" data-id ="0" data-bs-toggle="modal" 
+                data-bs-target=".exampleModal">CREATE</button>
+                <cfif isDefined("aMessageSuccess")>
+                    <div class="alertSuccess" id="alertSuccess">
+                      <cfoutput>
+                          <span class="closebtndash" onclick="closeAlertBoxSuccess()">&times</span> 
+                          <cfset showMessageSuccess = ToString(ToBinary(aMessageSuccess))>
+                          <p>#showMessageSuccess#</p>
+                      </cfoutput>
+                    </div>
+                </cfif>
+                <cfif isDefined("aMessages")>
+                    <div class="alertClass" id="alertClass">
+                        <cfoutput>
+                            <span class="closebtn" onclick="closeAlertBox()">&times</span> 
+                            <cfset showMessage = ToString(ToBinary(aMessages))>
+                            <p>#showMessage#</p>
+                        </cfoutput>
+                    </div>
+                </cfif>
+                <table id="table_id" class="display">
                     <thead>
                         <tr>
-                            <th></th>
-                            <th>NAME</th>
-                            <th>EMAIL</th>
-                            <th>PHONE</th>
-                            <th>STATUS</th>
+                            <th>Photo</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+                            <th>View</th>
+                            <th>Update</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
+                        <cfoutput>
+                            <cfloop query = theatreList >
+                                <tr>
+                                    <td>
+                                        <img class="avatar-img" 
+                                        src="../uploads/#theatreList.TheaterPhoto#">
+                                    </td>
+                                    <td>#theatreList.TheaterName#</td>
+                                    <td>#theatreList.TheaterEmail#</td>
+                                    <td>#theatreList.TheaterPhone#</td>
+                                    <td>#theatreList.TheaterAddress#</td>
+                                    <td>
+                                        <button class="btn btn-outline btn-show" data-bs-toggle="modal" 
+                                            data-bs-target=".viewModal-#theatreList.id#">
+                                            Manage screen & time
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button class="teater btn btn-outline btn-show" data-id ="1" 
+                                        data-bs-toggle="modal" data-bs-target=".exampleModal">
+                                        Edit
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-outline btn-show">
+                                            <a href="./action.cfm?delete=#theatreList.id#">
+                                            Delete</a>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </cfloop>
+                        </cfoutput>
                     </tbody>
                 </table>
             </div>
         </section>
     </div>
-    <div class="modal fade exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-        <div class="modal-contente">
-            <div class="modal-body">
-                <div class="modal-content">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <div class="contact-list">
-                        <div class="modal-container ">
-                            <div class="modal-head">
-                            <h2><span id="modal_title"></span></h2>
-                            <div id="alert"></div>
-                        </div>
-                        <form class="my-4" method="post" enctype="multipart/form-data" 
-                            action="" name="img_form" id="formId">
-                            <h2></h2><hr>
-                            <div class="modal-body">
- 
-                                <div class="form-control">
-                                    <input type="text" name ="tName" required
-                                    id ="Name" placeholder="name*">
-                                </div>
-
-                            </div>
-            
-                            <div class="modal-body-inclusive">
-
-
-                                <div class="form-control photo">
-                                    <input type="file" name ="photo" 
-                                    id="photo" placeholder="Upload photo*" 
-                                    accept=".jpeg,.png,.gif,.jpg" >
-                                    <input type="hidden" name ="defaultPhoto" 
-                                    id="defaultPhoto" placeholder="Upload photo*">
-                                </div>
-                            </div>
-    
-                            <h2>Contact Details</h2><hr>
-                            <div class="modal-body">
-                                <div class="form-control">
-                                    <input type="email" name ="email" required
-                                    id ="email" placeholder="Email*" 
-                                    onclick ="return onValidateEmail()">
-                                </div>
-                                <div class="form-control">
-                                    <input type="text" name ="phone" required
-                                    id ="phone" placeholder="Phone*">
-                                </div>
-                                <div class="form-control">
-                                    <input type="text" name ="street" required
-                                    id ="street" placeholder="Street*">
-                                </div>
-                            </div>
-            
-                            <div class="modal-body">
-                                <div class="form-control">
-                                    <input type="text" name ="pinCode" required
-                                    id ="pinCode" placeholder="Pincode*">
-                                </div>
-                                <div class="form-control">
-                                    <input type="text" name ="address" required
-                                    id ="address" placeholder="Address*">
-                                </div>
-                            </div>
-                            <button class="btn modal-btn"
-                                onclick ="return onmovieContactValidate()">Submit
-                            </button>
-                        </form>
-                    </div>
-                </div>
-                </div>
-            </div>
-        </div>
-        </div>
-    </div>
-    
-
 </div>
-
+<cfinclude template ="../section/footer.cfm">

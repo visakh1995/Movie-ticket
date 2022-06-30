@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="../assets/css/style.css">
         <link rel="stylesheet" href="../assets/css/dash.css">
         <link href="../assets/css/fontawesome/css/all.css" rel="stylesheet" />
+
     </head>
         <div class="navbar">
             <div class="container flex">
