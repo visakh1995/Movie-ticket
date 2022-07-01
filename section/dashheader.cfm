@@ -7,6 +7,8 @@
         <link rel="stylesheet" href="../assets/css/dash.css">
         <link href="../assets/css/fontawesome/css/all.css" rel="stylesheet" />
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css">
+        
     </head>
         <div class="navbar-dash">
             <div class="container flex">
