@@ -215,4 +215,129 @@
         </cfif>
     </cffunction>
 
+    <!--- manage screen and show time --->
+    <cffunction name="movieTicketCreateScreenForm" access="remote" output="true">
+        <cfargument name="theatreId" type="string" required="true">
+        <cfargument name="screenName" type="string" required="true">
+        <cfargument name="silverRate" type="string" required="true">
+        <cfargument name="goldRate" type="string" required="true">
+
+        <cfset local.aErrorMessages =  "">
+        <cfif arguments.screenName EQ ''>
+            <cfset local.aErrorMessages = 'Please provide screen name'/>
+        </cfif>
+        <cfif arguments.silverRate EQ ''>
+            <cfset local.aErrorMessages = 'Please provide silver rate'/>
+        </cfif>
+        <cfif arguments.goldRate EQ ''>
+            <cfset local.aErrorMessages = 'Please provide gold rate'/>
+        </cfif>
+
+        <cfif len(trim(local.aErrorMessages)) NEQ 0>
+            <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
+            <cflocation addtoken="no"  url="../pages/screens-showtime.cfm?aMessages=#local.encryptedMessage#">
+        <cfelse>
+            <cfparam name="arguments.screenName" default="">
+            <cfparam name="arguments.theatreId" default="">
+            <cfparam name="arguments.silverRate" default="">
+            <cfparam name="arguments.goldRate" default="">
+            <cfparam name="arguments.status" default="1">
+
+            <cfquery name="addScreen" result = result datasource="cruddb">
+                INSERT INTO bookmyticket.moviepanel_screens(
+                    theatreId,
+                    screenName,
+                    silverRate,
+                    goldRate,
+                    screenStatus)
+                VALUES(
+                    <cfqueryparam  CFSQLType="cf_sql_integer" value="#arguments.theatreId#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.screenName#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.silverRate#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.goldRate#">,
+                    <cfqueryparam  CFSQLType="cf_sql_integer" value="1">
+                )
+            </cfquery>
+            <cfset local.message  ="Screen created successfully">
+            <cfset local.encryptedMessage = ToBase64(local.message) />
+            <cflocation addtoken="no"  url="../pages/screens-showtime.cfm?aMessageSuccess=#local.encryptedMessage#"> 
+        </cfif>
+    </cffunction>
+
+    <cffunction name="findScreensList" access="remote" output="true">
+        <cfquery name="screenList" datasource="cruddb">
+            SELECT * FROM bookmyticket.moviepanel_screens
+        </cfquery>
+        <cfreturn screenList>
+    </cffunction>
+
+    <cffunction name="theatreScreenDelete" access="remote">
+        <cfargument name="deleteId" type="string" required="yes">
+        <cfquery name="deleteScreen" datasource="cruddb">
+            DELETE FROM bookmyticket.moviepanel_screens WHERE 
+            id = <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.deleteId#">
+        </cfquery>
+        <cfset local.message  ="Screen deleted successfully">
+        <cfset local.encryptedMessage = ToBase64(local.message) />
+        <cflocation addtoken="no"  url="../pages/screens-showtime.cfm?aMessages=#local.encryptedMessage#"> 
+    </cffunction>
+
+    <cffunction name="editSceenInfo" access="remote" returnFormat = "json">
+        <cfargument name="screen_id" type="string" required="yes">
+        <cfquery name="fetchScreenData" datasource="cruddb">
+            SELECT * FROM bookmyticket.moviepanel_screens WHERE 
+            id = <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.screen_id#">
+        </cfquery>
+        <cfreturn fetchScreenData> 
+    </cffunction>
+
+    <cffunction name="movieTicketUpdateScreenForm" access="remote">
+    
+        <cfargument name="theatreId" type="string" required="true">
+        <cfargument name="screenId" type="string" required="true">
+        <cfargument name="screenName" type="string" required="true">
+        <cfargument name="silverRate" type="string" required="true">
+        <cfargument name="goldRate" type="string" required="true">
+
+        <cfset local.aErrorMessages =  "">
+        <cfif arguments.screenName EQ ''>
+            <cfset local.aErrorMessages = 'Please provide screen name'/>
+        </cfif>
+        <cfif arguments.silverRate EQ ''>
+            <cfset local.aErrorMessages = 'Please provide silver rate'/>
+        </cfif>
+        <cfif arguments.goldRate EQ ''>
+            <cfset local.aErrorMessages = 'Please provide gold rate'/>
+        </cfif>
+
+        <cfif len(trim(local.aErrorMessages)) NEQ 0>
+            <cfset local.encryptedMessage = ToBase64(local.aErrorMessages)/>
+            <cflocation addtoken="no"  url="../pages/screens-showtime.cfm?aMessages=#local.encryptedMessage#">
+        <cfelse> 
+            <cfparam name="arguments.screenName" default="">
+            <cfparam name="arguments.screenId" default="">
+            <cfparam name="arguments.theatreId" default="">
+            <cfparam name="arguments.silverRate" default="">
+            <cfparam name="arguments.goldRate" default="">
+            <cfparam name="arguments.status" default="1">
+
+
+            <cfquery name="updateData" datasource="cruddb">
+                UPDATE bookmyticket.moviepanel_screens SET 
+                theatreId = <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.theatreId#">,
+                screenName = <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.screenName#">,
+                silverRate =<cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.silverRate#">,
+                goldRate = <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.goldRate#">,
+                screenStatus = <cfqueryparam  CFSQLType="cf_sql_integer" value="1">
+                WHERE id = "#arguments.screenId#"
+            </cfquery>
+            <cfset local.message  ="Screen updated successfully">
+            <cfset local.encryptedMessage = ToBase64(local.message)/>
+            <cflocation addtoken="no"  url="../pages/manageTheaters.cfm?aMessageSuccess=#local.encryptedMessage#"> 
+        </cfif>
+    </cffunction>
+    
+
+    
+
 </cfcomponent>

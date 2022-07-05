@@ -112,18 +112,18 @@
                                     <td>#theatreList.TheaterAddress#</td>
                                     <td>
                                         <button class="btn btn-outline btn-show">
-                                            <a href="./screens-showtime.cfm">Manage screen & show time</a>
+                                            <a href="./screens-showtime.cfm?theatreValue=#theatreList.id#">Manage screen & show time</a>
                                         </button>
                                     </td>
                                     <td>
-                                        <button class="teater btn btn-outline btn-show" data-id ="1" 
+                                        <button class="teater btn btn-outline btn-show" data-id =#theatreList.id# 
                                         data-bs-toggle="modal" data-bs-target=".exampleModal">
                                         Edit
                                         </button>
                                     </td>
                                     <td>
                                         <button class="btn btn-outline btn-show">
-                                            <a href="./action.cfm?delete=#theatreList.id#">
+                                            <a href="./action.cfm?teatreDelete=#theatreList.id#">
                                             Delete</a>
                                         </button>
                                     </td>

@@ -41,3 +41,37 @@ $('.teater').on('click',function(){
         $('#formId').attr('action', '../components/moviefunctions.cfc?method=movieTicketCreateForm'); 
     }
 });
+
+$('.screen').on('click',function(){
+    var screen_id=$(this).data('id');  
+    if(screen_id>0){
+        $("#modal_title").text("Edit Screen");
+        $.ajax({   
+            url: "../components/moviefunctions.cfc",
+            type: 'get',
+            dataType:"json",
+            data:{
+            method:"editSceenInfo",
+            screen_id:screen_id              
+            },
+            success: function(data)
+            {  
+                console.log(data);
+                $("#modal_title").text("Edit Screen");
+                $('#screen_id').val(data.DATA[0][0]); 
+                $('#screen_name').val(data.DATA[0][2]); 
+                $('#silver_rate').val(data.DATA[0][3]);                                    
+                $('#gold_rate').val(data.DATA[0][4]);
+                $('#formId').attr('action', '../components/moviefunctions.cfc?method=movieTicketUpdateScreenForm');      
+            }         
+        });  
+    }
+    else
+    {        
+       $("#modal_title").text("Add Screen");
+       $('#screen_name').val("");
+       $('#gold_rate').val("");
+       $('#silver_rate').val("");  
+       $('#formId').attr('action', '../components/moviefunctions.cfc?method=movieTicketCreateScreenForm'); 
+    }
+})
