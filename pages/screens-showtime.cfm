@@ -3,8 +3,10 @@
     <cfset teatreId = url.theatreValue>
 </cfif>
 <cfinclude template ="./createscreen.cfm"> 
+<cfinclude template ="./createshowtime.cfm"> 
 <cfset newInstance = createObject("component","movie-ticket/components.moviefunctions")> 
 <cfset screensList = newInstance.findScreensList()> 
+<cfset showTimesList = newInstance.findShowTimesList()> 
 <div class="wrapper flex">
     <div class="sidebar ">
         <div class="profile">
@@ -126,8 +128,8 @@
             </div>
             <!--- show time--->
             <div class="card">
-                <button class="teater btn" data-id ="0" data-bs-toggle="modal" 
-                data-bs-target=".screenModal">Add new time</button>
+                <button class="showTime btn" data-id ="0" data-bs-toggle="modal" 
+                data-bs-target=".showtimeModal">Add new show time</button>
                 <cfif isDefined("aMessageSuccess")>
                     <div class="alertSuccess" id="alertSuccess">
                     <cfoutput>
@@ -158,20 +160,20 @@
                     </thead>
                     <tbody>
                         <cfoutput>
-                            <cfloop query = screensList >
+                            <cfloop query = showTimesList >
                                 <tr>
-                                    <td>#screensList.screenName#</td>
-                                    <td>#screensList.goldRate#</td>
-                                    <td>#screensList.silverRate#</td>
+                                    <td>#showTimesList.showName#</td>
+                                    <td>#showTimesList.screen#</td>
+                                    <td>#showTimesList.showStartTime#</td>
                                     <td>
-                                        <button class="teater btn btn-outline btn-show" data-id ="1" 
-                                            data-bs-toggle="modal" data-bs-target=".screenModal">
+                                        <button class="showTime btn btn-outline btn-show" data-id ="1" 
+                                            data-bs-toggle="modal" data-bs-target=".showTimeModal">
                                             Edit
                                         </button>
                                     </td>
                                     <td>
                                         <button class="btn btn-outline btn-show">
-                                            <a href="./action.cfm?screenDelete=#screensList.id#">
+                                            <a href="./action.cfm?showTimeDelete=#showTimesList.id#">
                                             Delete</a>
                                         </button>
                                     </td>

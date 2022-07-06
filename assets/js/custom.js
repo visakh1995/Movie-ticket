@@ -75,3 +75,38 @@ $('.screen').on('click',function(){
        $('#formId').attr('action', '../components/moviefunctions.cfc?method=movieTicketCreateScreenForm'); 
     }
 })
+
+$('.showTimes').on('click',function(){
+    var showTime_id=$(this).data('id');  
+    if(showTime_id>0){
+        $("#modal_title").text("Edit Showtime");
+        $.ajax({   
+            url: "../components/moviefunctions.cfc",
+            type: 'get',
+            dataType:"json",
+            data:{
+            method:"editSceenInfo",
+            screen_id:screen_id              
+            },
+            success: function(data)
+            {  
+                console.log(data);
+                $("#modal_title").text("Edit Screen");
+                $('#screen_id').val(data.DATA[0][0]); 
+                $('#screen_name').val(data.DATA[0][2]); 
+                $('#silver_rate').val(data.DATA[0][3]);                                    
+                $('#gold_rate').val(data.DATA[0][4]);
+                $('#formId').attr('action', '../components/moviefunctions.cfc?method=movieTicketUpdateShowTime');      
+            }         
+        });  
+    }
+    else
+    {    
+       $("#modal_title").text("Add Screen Show Time");
+       $('#show_name').val("");
+       $('#screen').val("");
+       $('#show_start_time').val(""); 
+       $('#formId').attr('action', '../components/moviefunctions.cfc?method=movieTicketCreateShowTime'); 
+    }
+})
+

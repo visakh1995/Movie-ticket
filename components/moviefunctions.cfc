@@ -336,6 +336,65 @@
             <cflocation addtoken="no"  url="../pages/manageTheaters.cfm?aMessageSuccess=#local.encryptedMessage#"> 
         </cfif>
     </cffunction>
+
+    <!---  show screen time --->
+    <cffunction name="movieTicketCreateShowTime" access="remote" output="true">
+        <cfargument name="theatreId" type="string" required="true">
+        <cfargument name="showName" type="string" required="true">
+        <cfargument name="screen" type="integer" required="true">
+        <cfargument name="showStartTime" type="string" required="true">
+
+        <cfset local.aErrorMessages =  "">
+        <cfif arguments.showName EQ ''>
+            <cfset local.aErrorMessages = 'Please provide show name'/>
+        </cfif>
+        <cfif arguments.screen EQ ''>
+            <cfset local.aErrorMessages = 'Please select your screen'/>
+        </cfif>
+        <cfif arguments.showStartTime EQ ''>
+            <cfset local.aErrorMessages = 'Please provide your show time'/>
+        </cfif>
+
+        <cfif len(trim(local.aErrorMessages)) NEQ 0>
+            <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
+            <cflocation addtoken="no"  url="../pages/screens-showtime.cfm?aMessages=#local.encryptedMessage#">
+        <cfelse>
+            <cfparam name="arguments.theatreId" default="">
+            <cfparam name="arguments.showName" default="">
+            <cfparam name="arguments.screen" default="">
+            <cfparam name="arguments.showStartTime" default="1">
+
+            <cfquery name="addShowTime" result = result datasource="cruddb">
+                INSERT INTO bookmyticket.moviepanel_showtimes(
+                    teatreId,
+                    showName,
+                    screen,
+                    showStartTime,
+                    showTimeStatus)
+                VALUES(
+                    <cfqueryparam  CFSQLType="cf_sql_integer" value="#arguments.theatreId#">,
+                    <cfqueryparam  CFSQLType="cf_sql_integer" value="0">,
+                    <cfqueryparam  CFSQLType="cf_sql_integer" value ="#arguments.screen#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.showStartTime#">,
+                    <cfqueryparam  CFSQLType="cf_sql_integer" value="1">
+                )
+            </cfquery>
+            <cfset local.message  ="Show time created successfully">
+            <cfset local.encryptedMessage = ToBase64(local.message) />
+            <cflocation addtoken="no"  url="../pages/screens-showtime.cfm?aMessageSuccess=#local.encryptedMessage#"> 
+        </cfif>
+    </cffunction>
+    
+    <cffunction name="findShowTimesList" access="remote" output="true">
+        <cfquery name="showTimesList" datasource="cruddb">
+            SELECT * FROM bookmyticket.moviepanel_showtimes
+        </cfquery>
+        <cfreturn showTimesList>
+    </cffunction>
+
+    
+
+    
     
 
     
