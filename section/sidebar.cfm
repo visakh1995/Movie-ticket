@@ -12,13 +12,13 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="./manageTheaters.cfm">
                     <span class="icon"><i class="fas fa-user-friends"></i></span>
-                    <span class="item"><a href="./Theaters/manageTheaters.cfm">Manage Teatres</a></span>
+                    <span class="item">Manage Teatres</span>
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="./manageMovies.cfm">
                     <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
                     <span class="item">Manage Movies</span>
                 </a>

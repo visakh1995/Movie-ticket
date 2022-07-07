@@ -1,5 +1,5 @@
 <cfset newInstance = createObject("component","movie-ticket/components.moviefunctions")> 
-<cfset screensList = newInstance.findScreensList()> 
+<cfset screensList = newInstance.findScreensList(teatreId)> 
 <div class="modal fade showtimeModal" tabindex="-1" aria-labelledby="showtimeModal" aria-hidden="true">
     <div class="modal-dialog">
     <div class="modal-contente">
@@ -9,21 +9,27 @@
                 <div class="contact-list">
                     <div class="modal-container">
                         <div class="modal-head">
-                        <h2><span id="modal_title"></span></h2>
+                        <h2><span id="modal_title_time" name="titles"></span></h2>
                         <div id="alert"></div>
                     </div>
                     <form class="my-4" method="post" enctype="multipart/form-data" 
-                        action="../components/moviefunctions.cfc?method=movieTicketCreateShowTime" name="img_form" id="formId">
+                        action="" name="img_form" id="timeFormId">
                         <div class="modal-body">
                             <div class="form-control">
-                                <input type="text" name ="showName" required
-                                id ="show_name" placeholder="Show Name">
+                                <select  class="fullWidth" name = "showName" id="show_name" required> 
+                                    <option value = "">--- Select ---</option> 
+                                    <option value = "First_show">First show</option> 
+                                    <option value = "Noon_show">Noon Show</option>  
+                                    <option value = "Second_show">Second Show</option>  
+                                </select>
                                 <cfoutput>
                                     <input type="hidden" name="theatreId" value="#teatreId#" id="theatreId">
+                                    <input type="hidden" name="showId"  id="show_id">
                                 </cfoutput>
                             </div>
                             <div class="form-control">
                                 <select  class="fullWidth" name = "screen" id="screen" required> 
+                                    <option value = "">--- Select ---</option> 
                                     <cfoutput>
                                       <cfloop query = screensList> 
                                            <option value="#screensList.id#">#screensList.screenName#</option> 
@@ -47,39 +53,3 @@
     </div>
     </div>
 </div>
-<script>
-    $('.showTime').on('click',function(){
-    var showTime_id=$(this).data('id');  
-    if(showTime_id>0){
-        $("#modal_title").text("Edit Showtime");
-        $.ajax({   
-            url: "../components/moviefunctions.cfc",
-            type: 'get',
-            dataType:"json",
-            data:{
-            method:"editSceenInfo",
-            screen_id:screen_id              
-            },
-            success: function(data)
-            {  
-                console.log(data);
-                $("#modal_title").text("Edit Screen");
-                $('#screen_id').val(data.DATA[0][0]); 
-                $('#screen_name').val(data.DATA[0][2]); 
-                $('#silver_rate').val(data.DATA[0][3]);                                    
-                $('#gold_rate').val(data.DATA[0][4]);
-                $('#formId').attr('action', '../components/moviefunctions.cfc?method=movieTicketUpdateShowTime');      
-            }         
-        });  
-    }
-    else
-    {    
-       $("#modal_title").text("Add Screen Show Time");
-       $('#show_name').val("");
-       $('#screen').val("");
-       $('#show_start_time').val(""); 
-       $('#formId').attr('action', '../components/moviefunctions.cfc?method=movieTicketCreateShowTime'); 
-    }
-})
-
-</script>

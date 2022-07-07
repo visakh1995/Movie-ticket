@@ -18,3 +18,22 @@
         </cfoutput>
     </select>
 </div>
+
+
+<script>
+    var hamburger = document.querySelector(".hamburger");
+      hamburger.addEventListener("click", function(){
+      document.querySelector("body").classList.toggle("active");
+  })
+</script>
+
+<cffunction name="findScreensList" access="public" output="true">
+    <cfargument name="teatreId" type="integer" >
+    <cfdump var =#arguments.teatreId#>
+    <cfabort>
+    <cfquery name="screenList" datasource="cruddb">
+        SELECT * FROM bookmyticket.moviepanel_screens 
+        WHERE id = <cfqueryparam  CFSQLType="cf_sql_integer" value="#arguments.teatreId#">
+    </cfquery>
+    <cfreturn screenList>
+</cffunction>

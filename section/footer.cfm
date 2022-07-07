@@ -25,10 +25,5 @@
 <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.html5.min.js"></script> 
 <script src="https://cdn.datatables.net/buttons/2.2.3/js/buttons.print.min.js"></script> 
 <script src="../assets/js/custom.js"></script> 
-<script>
-      var hamburger = document.querySelector(".hamburger");
-        hamburger.addEventListener("click", function(){
-        document.querySelector("body").classList.toggle("active");
-    })
-</script>
+
 </html>

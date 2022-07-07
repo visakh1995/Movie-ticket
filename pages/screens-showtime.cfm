@@ -4,69 +4,11 @@
 </cfif>
 <cfinclude template ="./createscreen.cfm"> 
 <cfinclude template ="./createshowtime.cfm"> 
-<cfset newInstance = createObject("component","movie-ticket/components.moviefunctions")> 
-<cfset screensList = newInstance.findScreensList()> 
-<cfset showTimesList = newInstance.findShowTimesList()> 
+<cfset newInstance = createObject("component","movie-ticket/components.moviefunctions")>
+<cfset screensList = newInstance.findScreensList(teatreId)> 
+<cfset showTimesList = newInstance.findShowTimesList(teatreId)> 
 <div class="wrapper flex">
-    <div class="sidebar ">
-        <div class="profile">
-            <img src="https://1.bp.blogspot.com/-vhmWFWO2r8U/YLjr2A57toI/AAAAAAAACO4/0GBonlEZPmAiQW4uvkCTm5LvlJVd_-l_wCNcBGAsYHQ/s16000/team-1-2.jpg" alt="profile_picture">
-            <h3>Admin</h3>
-        </div>
-        <div>
-            <ul>
-                <li>
-                    <a href="#">
-                        <span class="icon"><i class="fas fa-desktop"></i></span>
-                        <span class="item">My Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="icon"><i class="fas fa-user-friends"></i></span>
-                        <span class="item"><a href="./manageTheaters.cfm">Manage Teatres</a></span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="icon"><i class="fas fa-tachometer-alt"></i></span>
-                        <span class="item">Manage Movies</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="icon"><i class="fas fa-database"></i></span>
-                        <span class="item">Manage Shows</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="icon"><i class="fas fa-chart-line"></i></span>
-                        <span class="item">Manage Users</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="icon"><i class="fas fa-user-shield"></i></span>
-                        <span class="item">Manage Bookings</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="icon"><i class="fas fa-cog"></i></span>
-                        <span class="item">View Contactinfo</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="icon"><i class="fas fa-cog"></i></span>
-                        <span class="item">Update Password</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-
+    <cfinclude template="../section/sidebar.cfm">
     <div>
         <section class="main-content">
             <h3>Manage screen and show time</h3>
@@ -166,7 +108,7 @@
                                     <td>#showTimesList.screen#</td>
                                     <td>#showTimesList.showStartTime#</td>
                                     <td>
-                                        <button class="showTime btn btn-outline btn-show" data-id ="1" 
+                                        <button class="showTime btn btn-outline btn-show" data-id =#showTimesList.id# 
                                             data-bs-toggle="modal" data-bs-target=".showTimeModal">
                                             Edit
                                         </button>
@@ -183,7 +125,6 @@
                     </tbody>
                 </table>
             </div>
-            <!---  --->
         </section>
     </div>
 </div>

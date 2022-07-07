@@ -264,9 +264,11 @@
         </cfif>
     </cffunction>
 
-    <cffunction name="findScreensList" access="remote" output="true">
+    <cffunction name="findScreensList" access="public">
+        <cfargument name="teatreId" type="string" required="yes">
         <cfquery name="screenList" datasource="cruddb">
-            SELECT * FROM bookmyticket.moviepanel_screens
+            SELECT * FROM bookmyticket.moviepanel_screens 
+            WHERE theatreId = <cfqueryparam  CFSQLType="cf_sql_integer" value="#arguments.teatreId#">
         </cfquery>
         <cfreturn screenList>
     </cffunction>
@@ -292,7 +294,6 @@
     </cffunction>
 
     <cffunction name="movieTicketUpdateScreenForm" access="remote">
-    
         <cfargument name="theatreId" type="string" required="true">
         <cfargument name="screenId" type="string" required="true">
         <cfargument name="screenName" type="string" required="true">
@@ -321,7 +322,6 @@
             <cfparam name="arguments.goldRate" default="">
             <cfparam name="arguments.status" default="1">
 
-
             <cfquery name="updateData" datasource="cruddb">
                 UPDATE bookmyticket.moviepanel_screens SET 
                 theatreId = <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.theatreId#">,
@@ -331,6 +331,7 @@
                 screenStatus = <cfqueryparam  CFSQLType="cf_sql_integer" value="1">
                 WHERE id = "#arguments.screenId#"
             </cfquery>
+
             <cfset local.message  ="Screen updated successfully">
             <cfset local.encryptedMessage = ToBase64(local.message)/>
             <cflocation addtoken="no"  url="../pages/manageTheaters.cfm?aMessageSuccess=#local.encryptedMessage#"> 
@@ -373,7 +374,7 @@
                     showTimeStatus)
                 VALUES(
                     <cfqueryparam  CFSQLType="cf_sql_integer" value="#arguments.theatreId#">,
-                    <cfqueryparam  CFSQLType="cf_sql_integer" value="0">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.showName#">,
                     <cfqueryparam  CFSQLType="cf_sql_integer" value ="#arguments.screen#">,
                     <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.showStartTime#">,
                     <cfqueryparam  CFSQLType="cf_sql_integer" value="1">
@@ -386,11 +387,80 @@
     </cffunction>
     
     <cffunction name="findShowTimesList" access="remote" output="true">
+        <cfargument name="teatreId" type="string" required="yes">
         <cfquery name="showTimesList" datasource="cruddb">
             SELECT * FROM bookmyticket.moviepanel_showtimes
+            WHERE teatreId = <cfqueryparam  CFSQLType="cf_sql_integer" value="#arguments.teatreId#">
         </cfquery>
         <cfreturn showTimesList>
     </cffunction>
+
+    <cffunction name="editShowTimeInfo" access="remote" returnFormat = "json">
+        <cfargument name="showTime_id" type="string" required="yes">
+        <cfquery name="fetchShowTimeData" datasource="cruddb">
+            SELECT * FROM bookmyticket.moviepanel_showtimes WHERE 
+            id = <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.showTime_id#">
+        </cfquery>
+        <cfreturn fetchShowTimeData> 
+    </cffunction>
+
+    <cffunction name="movieTicketUpdateShowTime" access="remote">
+        <cfargument name="theatreId" type="string" required="true">
+        <cfargument name="showId" type="string" required="true">
+        <cfargument name="showName" type="string" required="true">
+        <cfargument name="screen" type="integer" required="true">
+        <cfargument name="showStartTime" type="string" required="true">
+ 
+        <cfset local.aErrorMessages =  "">
+        <cfif arguments.showName EQ ''>
+            <cfset local.aErrorMessages = 'Please select show name'/>
+        </cfif>
+        <cfif arguments.screen EQ ''>
+            <cfset local.aErrorMessages = 'Please select your screen'/>
+        </cfif>
+        <cfif arguments.showStartTime EQ ''>
+            <cfset local.aErrorMessages = 'Please provide your show time'/>
+        </cfif>
+
+        <cfif len(trim(local.aErrorMessages)) NEQ 0>
+            <cfset local.encryptedMessage = ToBase64(local.aErrorMessages)/>
+            <cflocation addtoken="no"  url="../pages/screens-showtime.cfm?aMessages=#local.encryptedMessage#">
+        <cfelse> 
+            <cfparam name="arguments.theatreId" default="">
+            <cfparam name="arguments.showId" default="">
+            <cfparam name="arguments.showName" default="">
+            <cfparam name="arguments.screen" default="">
+            <cfparam name="arguments.showStartTime" default="1">
+
+
+            <cfquery name="updateData" datasource="cruddb">
+                UPDATE bookmyticket.moviepanel_showtimes SET 
+                teatreId = <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.theatreId#">,
+                showName = <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.showName#">,
+                screen =<cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.screen#">,
+                showStartTime = <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.showStartTime#">,
+                showTimeStatus = <cfqueryparam  CFSQLType="cf_sql_integer" value="1">
+                WHERE id = "#arguments.showId#"
+            </cfquery>
+
+            <cfset local.message  ="Screen updated successfully">
+            <cfset local.encryptedMessage = ToBase64(local.message)/>
+            <cflocation addtoken="no"  url="../pages/manageTheaters.cfm?aMessageSuccess=#local.encryptedMessage#"> 
+        </cfif>
+    </cffunction>
+
+    <cffunction name="theatreShowTimeDelete" access="remote">
+        <cfargument name="deleteId" type="string" required="yes">
+        <cfquery name="deleteShowTime" datasource="cruddb">
+            DELETE FROM bookmyticket.moviepanel_showtimes WHERE 
+            id = <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.deleteId#">
+        </cfquery>
+        <cfset local.message  ="Show Time deleted successfully">
+        <cfset local.encryptedMessage = ToBase64(local.message) />
+        <cflocation addtoken="no"  url="../pages/screens-showtime.cfm?aMessages=#local.encryptedMessage#"> 
+    </cffunction>
+
+    
 
     
 
