@@ -459,14 +459,4 @@
         <cfset local.encryptedMessage = ToBase64(local.message) />
         <cflocation addtoken="no"  url="../pages/screens-showtime.cfm?aMessages=#local.encryptedMessage#"> 
     </cffunction>
-
-    
-
-    
-
-    
-    
-
-    
-
 </cfcomponent>

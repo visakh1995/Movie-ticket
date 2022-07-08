@@ -1,7 +1,7 @@
 <cfinclude template="../section/dashheader.cfm">
 <cfinclude template ="./createmovie.cfm"> 
-<cfset newInstance = createObject("component","movie-ticket/components.moviefunctions")> 
-<cfset theatreList = newInstance.findTheatreList()> 
+<cfset newInstance = createObject("component","movie-ticket/components.movies")> 
+<cfset moviesList = newInstance.findMoviesList()> 
 <div class="wrapper flex">
     <cfinclude template="../section/sidebar.cfm">
     <div>
@@ -39,41 +39,53 @@
                             <th>Language</th>
                             <th>Duration</th>
                             <th>Description</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
 
                         </tr>
                     </thead>
                     <tbody>
                         <cfoutput>
-                            <cfloop query = theatreList >
+                            <cfloop query = moviesList >
                                 <tr>
                                     <td>
                                         <img class="avatar-img" 
-                                        src="../uploads/#theatreList.TheaterPhoto#">
+                                        src="../uploads/#moviesList.poster#">
                                     </td>
-                                    <td>#theatreList.TheaterName#</td>
-                                    <td>#theatreList.TheaterEmail#</td>
-                                    <td>#theatreList.TheaterPhone#</td>
-                                    <td>#theatreList.TheaterAddress#</td>
-                                    <td>#theatreList.TheaterAddress#</td>
+                                    <td>
+                                        <img class="avatar-img" 
+                                        src="../uploads/#moviesList.wallpaper#">
+                                    </td>
+                                    <td>#moviesList.movieName#</td>
+                                    <td>#moviesList.releaseDate#</td>
+                                    <td>#moviesList.movieFormat#</td>
+                                    <td>#moviesList.genre#</td>
+                                    <td>#moviesList.language#</td>
+                                    <td>#moviesList.duration#</td>
+                                    <td>#moviesList.description#</td>
+                                    <td>Trailer: #moviesList.trailerUrl#</td>
                                     <td>
                                         <button class="btn btn-outline btn-show">
-                                            <a href="./screens-showtime.cfm?theatreValue=#theatreList.id#">
-                                                Manage screen & show time</a>
+                                            <a href="./screens-showtime.cfm?theatreValue=#moviesList.id#">
+                                                Manage cast and crew</a>
                                         </button>
                                     </td>
                                     <td>
-                                        <button class="teater btn btn-outline btn-show" data-id =#theatreList.id# 
-                                        data-bs-toggle="modal" data-bs-target=".exampleModal">
+                                        <button class="movie btn btn-outline btn-show" data-id =#moviesList.id# 
+                                        data-bs-toggle="modal" data-bs-target=".movieModal">
                                         Edit
                                         </button>
                                     </td>
                                     <td>
                                         <button class="btn btn-outline btn-show">
-                                            <a href="./action.cfm?teatreDelete=#theatreList.id#">
+                                            <a href="./action.cfm?movieDelete=#moviesList.id#">
                                             Delete</a>
                                         </button>
                                     </td>
                                 </tr>
+                               
                             </cfloop>
                         </cfoutput>
                     </tbody>

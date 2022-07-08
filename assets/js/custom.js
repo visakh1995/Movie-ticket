@@ -80,7 +80,6 @@ $('.screen').on('click',function(){
 $('.showTime').on('click',function(){
     var showTime_id=$(this).data('id');  
     if(showTime_id>0){
-
         $.ajax({   
             url: "../components/moviefunctions.cfc",
             type: 'get',
@@ -112,45 +111,50 @@ $('.showTime').on('click',function(){
 })
 
 $('.movie').on('click',function(){
-    var movie_id=$(this).data('id');    
+    var movie_id=$(this).data('id');  
     if(movie_id>0){
         $("#movie_modal_title").text("Edit Movie");
         $.ajax({   
-            url: "../components/moviefunctions.cfc",
+            url: "../components/movies.cfc",
             type: 'get',
             dataType:"json",
             data:{
-            method:"editTheaterInfo",
-            theatre_id:theatre_id              
+            method:"editMovieInfo",
+            movie_id:movie_id              
             },
             success: function(data)
             {  
                 console.log(data);     
-                $('#TheaterId').val(data.DATA[0][0]);                  
-                $('#theatre_name').val(data.DATA[0][1]);
-                $('#email').val(data.DATA[0][2]);
-                $('#phone').val(data.DATA[0][3]);                         
-                $('#address').val(data.DATA[0][5]);
-                $('#street').val(data.DATA[0][6]);                        
-                $('#pinCode').val(data.DATA[0][7]);                                                           
-                $("#output").attr("src", "../uploads/"+data.DATA[0][4]);                     
-                $('#formId').attr('action', '../components/moviefunctions.cfc?method=updateTheaterInfo');             
+                $('#movie_id').val(data.DATA[0][0]);                  
+                $('#movie_name').val(data.DATA[0][1]);
+                $('#release_date').val(data.DATA[0][2]);
+                $('#movie_format').val(data.DATA[0][3]);                         
+                $('#genre').val(data.DATA[0][4]);
+                $('#language').val(data.DATA[0][5]);                        
+                $('#duration').val(data.DATA[0][6]);  
+                $('#trailer_url').val(data.DATA[0][7]);
+                $('[name="description"]').val(data.DATA[0][10]); 
+                $("#outputPoster").attr("src", "../uploads/"+data.DATA[0][8]); 
+                $("#outputWallpaper").attr("src", "../uploads/"+data.DATA[0][9]); 
+                $('#movieFormId').attr('action', '../components/movies.cfc?method=movieUpdateForm');
+                $("#default_poster").val(data.DATA[0][8]);
+                $("#default_wallpaper").val(data.DATA[0][9]);  
             }         
         });  
     }
     else
     {        
         $("#movie_modal_title").text("Add Movie");
-        $('#TheaterId').val("");
-        $('#theatre_name').val("");
-        $('#email').val("");        
-        $('#address').val("");
-        $('#street').val("");       
-        $('#pinCode').val("");
-        $("#output").attr("src", "");
-        $('.email_alert').text(" ");
-        $('.phone_alert').text(" ");
-        $('[name="phone"]').val("");
-        $('#formId').attr('action', '../components/moviefunctions.cfc?method=movieTicketCreateForm'); 
+        $('#movie_name').val("");
+        $('#release_date').val("");
+        $('#movie_format').val("");        
+        $('#genre').val("");
+        $('#language').val("");       
+        $('#duration').val("");
+        $('#trailer_url').val("");
+        $("#outputPoster").attr("src", ""); 
+        $("#outputWallpaper").attr("src", ""); 
+        $('#description').val("");
+        $('#movieFormId').attr('action', '../components/movies.cfc?method=movieCreateForm'); 
     }
 });
