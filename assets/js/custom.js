@@ -127,8 +127,8 @@ $('.movie').on('click',function(){
                 console.log(data);     
                 $('#movie_id').val(data.DATA[0][0]);                  
                 $('#movie_name').val(data.DATA[0][1]);
-                $('#release_date').val(data.DATA[0][2]);
-                $('#movie_format').val(data.DATA[0][3]);                         
+                $('[name="releaseDate"]').val(data.DATA[0][2]);
+                $('[name="movieFormat"]').val(data.DATA[0][3]);                         
                 $('#genre').val(data.DATA[0][4]);
                 $('#language').val(data.DATA[0][5]);                        
                 $('#duration').val(data.DATA[0][6]);  
@@ -147,7 +147,7 @@ $('.movie').on('click',function(){
         $("#movie_modal_title").text("Add Movie");
         $('#movie_name').val("");
         $('#release_date').val("");
-        $('#movie_format').val("");        
+        $('#movie-formats').val("");        
         $('#genre').val("");
         $('#language').val("");       
         $('#duration').val("");
