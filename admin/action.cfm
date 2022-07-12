@@ -22,3 +22,16 @@
     <cfset deleteDirectory = createObject("component","movie-ticket/components.movies")> 
     <cfset res = deleteDirectory.movieDelete(deleteId)>
 </cfif>
+<cfif isDefined("url.castDelete")>
+    <cfset deleteId = url.castDelete>
+    <cfparam  name="deleteId" default="">
+    <cfset deleteDirectory = createObject("component","movie-ticket/components.movies")> 
+    <cfset res = deleteDirectory.castDelete(deleteId)>
+</cfif>
+<cfif isDefined("url.crewDelete")>
+    <cfset deleteId = url.crewDelete>
+    <cfparam  name="deleteId" default="">
+    <cfset deleteDirectory = createObject("component","movie-ticket/components.movies")> 
+    <cfset res = deleteDirectory.crewDelete(deleteId)>
+</cfif>
+

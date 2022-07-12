@@ -219,6 +219,146 @@
         <cflocation addtoken="no"  url="../admin/managemovies.cfm?aMessages=#local.encryptedMessage#"> 
     </cffunction>
 
-    
+    <!---    cast crew --->
 
+    <cffunction name="movieTicketCreateCastForm" access="remote" output="true">
+        <cfargument name="characterName" type="string" required="true">
+        <cfargument name="actorName" type="string" required="true">
+        <cfargument name="actorPhoto" type="string" required="true">
+        <cfargument name="movieId" type="string" required="true">
+
+        <cfset local.aErrorMessages =  "">
+        <cfif arguments.characterName EQ ''>
+            <cfset local.aErrorMessages = 'Please provide valid character name'/>
+        </cfif>
+        <cfif arguments.actorName EQ ''>
+            <cfset local.aErrorMessages = 'Please provide valid actor name'/>
+        </cfif>
+        <cfif arguments.actorPhoto EQ ''>
+            <cfset local.aErrorMessages = 'Please provide valid actor photo'/>
+        </cfif>
+
+        <cfif len(trim(local.aErrorMessages)) NEQ 0>
+            <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
+            <cflocation addtoken="no"  url="../admin/managemovies.cfm?aMessages=#local.encryptedMessage#">
+        <cfelse>
+
+            <cffile action="upload"
+            fileField="actorPhoto"
+            nameconflict="overwrite"
+            destination="C:\coldFusion2021\cfusion\wwwroot\movie-ticket\uploads\">
+            <cfset local.imageValueActorphoto = #cffile.serverFile#>
+
+            <cfparam name="arguments.characterName" default="">
+            <cfparam name="arguments.actorName" default="">
+            <cfparam name="arguments.actorPhoto" default="">
+            <cfparam name="arguments.movieId" default="">
+            <cfparam name="arguments.status" default="1">
+
+            <cfquery name="addData" result = result datasource="cruddb">
+                INSERT INTO bookmyticket.moviepanel_casts(movieid,characterName,actorName,actorPhoto,castStatus)
+                VALUES(
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.movieId#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.characterName#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.actorName#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#local.imageValueActorphoto#">,
+                    <cfqueryparam  CFSQLType="cf_sql_integer" value="1">
+                )
+            </cfquery>
+            <cfset local.message  ="Cast created successfully">
+            <cfset local.encryptedMessage = ToBase64(local.message) />
+            <cflocation addtoken="no"  url="../admin/managemovies.cfm?aMessageSuccess=#local.encryptedMessage#"> 
+        </cfif>
+    </cffunction>
+
+    <cffunction name="movieTicketCreateCrewForm" access="remote" output="true">
+        <cfargument name="roleName" type="string" required="true">
+        <cfargument name="personsName" type="string" required="true">
+        <cfargument name="crewPhoto" type="string" required="true">
+        <cfargument name="movieId" type="string" required="true">
+
+
+        <cfset local.aErrorMessages =  "">
+        <cfif arguments.roleName EQ ''>
+            <cfset local.aErrorMessages = 'Please provide valid role name'/>
+        </cfif>
+        <cfif arguments.personsName EQ ''>
+            <cfset local.aErrorMessages = 'Please provide valid persons name'/>
+        </cfif>
+        <cfif arguments.crewPhoto EQ ''>
+            <cfset local.aErrorMessages = 'Please provide valid crew photo'/>
+        </cfif>
+
+        <cfif len(trim(local.aErrorMessages)) NEQ 0>
+            <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
+            <cflocation addtoken="no"  url="../admin/managemovies.cfm?aMessages=#local.encryptedMessage#">
+        <cfelse>
+
+            <cffile action="upload"
+            fileField="crewPhoto"
+            nameconflict="overwrite"
+            destination="C:\coldFusion2021\cfusion\wwwroot\movie-ticket\uploads\">
+            <cfset local.imageValueCrewphoto = #cffile.serverFile#>
+
+            <cfparam name="arguments.roleName" default="">
+            <cfparam name="arguments.movieId" default="">
+            <cfparam name="arguments.personsName" default="">
+            <cfparam name="arguments.crewPhoto" default="">
+            <cfparam name="arguments.status" default="1">
+
+            <cfquery name="addData" result = result datasource="cruddb">
+                INSERT INTO bookmyticket.moviepanel_crews(movieid,roleName,personsname,crewphoto,crewStatus)
+                VALUES(
+                    <cfqueryparam  CFSQLType="cf_sql_integer" value="#arguments.movieId#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.roleName#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.personsName#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#local.imageValueCrewphoto#">,
+                    <cfqueryparam  CFSQLType="cf_sql_integer" value="1">
+                )
+            </cfquery>
+            <cfset local.message  ="Crew created successfully">
+            <cfset local.encryptedMessage = ToBase64(local.message) />
+            <cflocation addtoken="no"  url="../admin/managemovies.cfm?aMessageSuccess=#local.encryptedMessage#"> 
+        </cfif>
+    </cffunction>
+
+    <cffunction name="findMovieCastList" access="public">
+        <cfargument name="movieId" type="string" required="yes">
+        <cfquery name="movieCastList" datasource="cruddb">
+            SELECT * FROM bookmyticket.moviepanel_casts 
+            WHERE movieId = <cfqueryparam  CFSQLType="cf_sql_integer" value="#arguments.movieId#">
+        </cfquery>
+        <cfreturn movieCastList>
+    </cffunction>
+
+    <cffunction name="findMovieCrewList" access="public">
+        <cfargument name="movieId" type="string" required="yes">
+        <cfquery name="movieCrewList" datasource="cruddb">
+            SELECT * FROM bookmyticket.moviepanel_crews 
+            WHERE movieId = <cfqueryparam  CFSQLType="cf_sql_integer" value="#arguments.movieId#">
+        </cfquery>
+        <cfreturn movieCrewList>
+    </cffunction>
+
+    <cffunction name="castDelete" access="remote">
+        <cfargument name="deleteId" type="string" required="yes">
+        <cfquery name="deleteMovieCast" datasource="cruddb">
+            DELETE FROM bookmyticket.moviepanel_casts WHERE 
+            id = <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.deleteId#">
+        </cfquery>
+        <cfset local.message  ="Cast deleted successfully">
+        <cfset local.encryptedMessage = ToBase64(local.message) />
+        <cflocation addtoken="no"  url="../admin/managemovies.cfm?aMessages=#local.encryptedMessage#"> 
+    </cffunction>
+
+    <cffunction name="crewDelete" access="remote">
+        <cfargument name="deleteId" type="string" required="yes">
+        <cfquery name="deleteMovieCrew" datasource="cruddb">
+            DELETE FROM bookmyticket.moviepanel_crews WHERE 
+            id = <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.deleteId#">
+        </cfquery>
+        <cfset local.message  ="Cast deleted successfully">
+        <cfset local.encryptedMessage = ToBase64(local.message) />
+        <cflocation addtoken="no"  url="../admin/managemovies.cfm?aMessages=#local.encryptedMessage#"> 
+    </cffunction>
 </cfcomponent>

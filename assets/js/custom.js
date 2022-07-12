@@ -43,7 +43,7 @@ $('.teater').on('click',function(){
 });
 
 $('.screen').on('click',function(){
-    var screen_id=$(this).data('id');  
+    var screen_id=$(this).data('id'); 
     if(screen_id>0){
         $("#modal_title").text("Edit Screen");
         $.ajax({   
@@ -158,3 +158,71 @@ $('.movie').on('click',function(){
         $('#movieFormId').attr('action', '../components/movies.cfc?method=movieCreateForm'); 
     }
 });
+
+$('.cast').on('click',function(){
+    var cast_id=$(this).data('id');  
+    if(cast_id>0){
+        $("#cast_modal_title").text("Edit Cast");
+        $.ajax({   
+            url: "../components/movies.cfc",
+            type: 'get',
+            dataType:"json",
+            data:{
+            method:"editCastInfo",
+            cast_id:cast_id              
+            },
+            success: function(data)
+            {  
+                console.log(data);
+                $("#modal_title").text("Edit Cast");
+                $('#cast_id').val(data.DATA[0][0]); 
+                $('#character_name').val(data.DATA[0][2]); 
+                $('#actor_name').val(data.DATA[0][3]);                                    
+                $('#actor_photo').val(data.DATA[0][4]);
+                $('#formId').attr('action', '../components/movies.cfc?method=movieTicketUpdateCastForm');      
+            }         
+        });  
+    }
+    else
+    {        
+       $("#cast_modal_title").text("Add Cast");
+       $('#character_name').val("");
+       $('#actor_name').val("");
+       $('#actor_photo').val("");  
+       $('#castFormId').attr('action', '../components/movies.cfc?method=movieTicketCreateCastForm'); 
+    }
+})
+
+$('.crew').on('click',function(){
+    var crew_id=$(this).data('id');  
+    if(crew_id>0){
+        $("#crew_modal_title").text("Edit Cast");
+        $.ajax({   
+            url: "../components/movies.cfc",
+            type: 'get',
+            dataType:"json",
+            data:{
+            method:"editCrewInfo",
+            cast_id:cast_id              
+            },
+            success: function(data)
+            {  
+                console.log(data);
+                $("#crew_modal_title").text("Edit Crew");
+                $('#crew_id').val(data.DATA[0][0]); 
+                $('#character_name').val(data.DATA[0][2]); 
+                $('#actor_name').val(data.DATA[0][3]);                                    
+                $('#actor_photo').val(data.DATA[0][4]);
+                $('#crewFormId').attr('action', '../components/movies.cfc?method=movieTicketUpdateCrewForm');      
+            }         
+        });  
+    }
+    else
+    {        
+       $("#crew_modal_title").text("Add Crew");
+       $('#role_name').val("");
+       $('#persons_name').val("");
+       $('#crew_photo').val("");  
+       $('#crewFormId').attr('action', '../components/movies.cfc?method=movieTicketCreateCrewForm'); 
+    }
+})

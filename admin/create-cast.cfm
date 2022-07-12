@@ -1,5 +1,4 @@
-<cfset screensList = newInstance.findScreensList(teatreId)> 
-<div class="modal fade bd-showTime-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade bd-cast-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -10,42 +9,39 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 id="modal_title_time"></h4>
+                            <h4 id="cast_modal_title"></h4>
                         </div>
                         <div class="card-body">
                             <div class="basic-form">
                                 <form class="my-4" method="post" enctype="multipart/form-data" 
-                                    action="" name="img_form" id="timeFormId">
+                                    action="" name="img_form" id="castFormId">
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <select  class="form-control" name = "showName" id="show_name" required> 
-                                                    <option value = "">--- Select ---</option> 
-                                                    <option value = "First_show">First show</option> 
-                                                    <option value = "Noon_show">Noon Show</option>  
-                                                    <option value = "Second_show">Second Show</option>  
-                                                </select>
+                                                <input type="text" class="form-control" name ="characterName" required
+                                                id ="character_name" placeholder="Character Name*">
                                                 <cfoutput>
-                                                    <input type="hidden" name="theatreId" value="#teatreId#" id="theatreId">
-                                                    <input type="hidden" name="showId"  id="show_id">
+                                                <input type="hidden" id="movie_id" value=#movieId# name="movieId">
                                                 </cfoutput>
                                             </div>
                                             <div class="col-sm-6">
-                                                <select  class="form-control" name = "screen" id="screen" required> 
-                                                    <option value = "">--- Select ---</option> 
-                                                    <cfoutput>
-                                                      <cfloop query = screensList> 
-                                                           <option value="#screensList.id#">#screensList.screenName#</option> 
-                                                       </cfloop> 
-                                                    </cfoutput>
-                                                </select>
+                                                <input type="text" class="form-control" name ="actorName" required
+                                                id ="actor_name" placeholder="Actor Name*">
                                             </div>
                                         </div>
 
                                         <div class="row mt-3">
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control"name ="showStartTime"
-                                                 required id ="show_start_time" placeholder="Show start time*">
+                                                <p>Actor Photo</p>
+                                                <input type="file" class="form-control" name ="actorPhoto" 
+                                                id="actor_photo" placeholder="Actor Photo*" 
+                                                accept=".jpeg,.png,.gif,.jpg">
+                                                <input type="hidden" name ="defaultActorPhoto" 
+                                                id="default_actor_photo" placeholder="Actor Photo*">
+                                                <div class="img-show">
+                                                <img style="width:10px" id="outputActorPhoto"
+                                                     class="img-fluid"  />
+                                                </div>
                                             </div>
                                         </div>
 
@@ -68,3 +64,6 @@
         </div>
     </div>
 </div>
+
+
+

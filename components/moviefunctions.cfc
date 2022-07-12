@@ -62,7 +62,7 @@
         </cfif>
         <cfif len(trim(local.aErrorMessages)) NEQ 0>
             <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
-            <cflocation addtoken="no"  url="../pages/manageTheaters.cfm?aMessages=#local.encryptedMessage#">
+            <cflocation addtoken="no"  url="../admin/manageTheaters.cfm?aMessages=#local.encryptedMessage#">
         <cfelse>
             <cfquery name="emailVerify" datasource="cruddb">
                 SELECT *FROM bookmyticket.moviepanel_teaters WHERE theaterEmail = "#arguments.email#";
@@ -73,12 +73,12 @@
             <cfif emailVerify.RecordCount NEQ 0>
                 <cfset local.aErrorMessages = 'The email already registered'/>
                 <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
-                <cflocation addtoken="no"  url="../pages/manageTheaters.cfm?aMessages=#local.encryptedMessage#">
+                <cflocation addtoken="no"  url="../admin/manageTheaters.cfm?aMessages=#local.encryptedMessage#">
             </cfif> 
             <cfif phoneVerify.RecordCount NEQ 0>
                 <cfset local.aErrorMessages = 'The phone already registered'/>
                 <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
-                <cflocation addtoken="no"  url="../pages/manageTheaters.cfm?aMessages=#local.encryptedMessage#">
+                <cflocation addtoken="no"  url="../admin/manageTheaters.cfm?aMessages=#local.encryptedMessage#">
             </cfif> 
             <cffile action="upload"
             fileField="photo"
@@ -235,7 +235,7 @@
 
         <cfif len(trim(local.aErrorMessages)) NEQ 0>
             <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
-            <cflocation addtoken="no"  url="../pages/screens-showtime.cfm?aMessages=#local.encryptedMessage#">
+            <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?aMessages=#local.encryptedMessage#">
         <cfelse>
             <cfparam name="arguments.screenName" default="">
             <cfparam name="arguments.theatreId" default="">
@@ -260,14 +260,12 @@
             </cfquery>
             <cfset local.message  ="Screen created successfully">
             <cfset local.encryptedMessage = ToBase64(local.message) />
-            <cflocation addtoken="no"  url="../pages/screens-showtime.cfm?aMessageSuccess=#local.encryptedMessage#"> 
+            <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?aMessageSuccess=#local.encryptedMessage#"> 
         </cfif>
     </cffunction>
 
     <cffunction name="findScreensList" access="public">
         <cfargument name="teatreId" type="string" required="yes">
-        <cfdump var ="check">
-        <cfabort>
         <cfquery name="screenList" datasource="cruddb">
             SELECT * FROM bookmyticket.moviepanel_screens 
             WHERE theatreId = <cfqueryparam  CFSQLType="cf_sql_integer" value="#arguments.teatreId#">
@@ -283,7 +281,7 @@
         </cfquery>
         <cfset local.message  ="Screen deleted successfully">
         <cfset local.encryptedMessage = ToBase64(local.message) />
-        <cflocation addtoken="no"  url="../pages/screens-showtime.cfm?aMessages=#local.encryptedMessage#"> 
+        <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?aMessages=#local.encryptedMessage#"> 
     </cffunction>
 
     <cffunction name="editSceenInfo" access="remote" returnFormat = "json">
@@ -315,7 +313,7 @@
 
         <cfif len(trim(local.aErrorMessages)) NEQ 0>
             <cfset local.encryptedMessage = ToBase64(local.aErrorMessages)/>
-            <cflocation addtoken="no"  url="../pages/screens-showtime.cfm?aMessages=#local.encryptedMessage#">
+            <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?aMessages=#local.encryptedMessage#">
         <cfelse> 
             <cfparam name="arguments.screenName" default="">
             <cfparam name="arguments.screenId" default="">
@@ -336,7 +334,7 @@
 
             <cfset local.message  ="Screen updated successfully">
             <cfset local.encryptedMessage = ToBase64(local.message)/>
-            <cflocation addtoken="no"  url="../pages/manageTheaters.cfm?aMessageSuccess=#local.encryptedMessage#"> 
+            <cflocation addtoken="no"  url="../admin/manageTheaters.cfm?aMessageSuccess=#local.encryptedMessage#"> 
         </cfif>
     </cffunction>
 
@@ -360,7 +358,7 @@
 
         <cfif len(trim(local.aErrorMessages)) NEQ 0>
             <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
-            <cflocation addtoken="no"  url="../pages/screens-showtime.cfm?aMessages=#local.encryptedMessage#">
+            <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?aMessages=#local.encryptedMessage#">
         <cfelse>
             <cfparam name="arguments.theatreId" default="">
             <cfparam name="arguments.showName" default="">
@@ -384,7 +382,7 @@
             </cfquery>
             <cfset local.message  ="Show time created successfully">
             <cfset local.encryptedMessage = ToBase64(local.message) />
-            <cflocation addtoken="no"  url="../pages/screens-showtime.cfm?aMessageSuccess=#local.encryptedMessage#"> 
+            <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?aMessageSuccess=#local.encryptedMessage#"> 
         </cfif>
     </cffunction>
     
@@ -426,7 +424,7 @@
 
         <cfif len(trim(local.aErrorMessages)) NEQ 0>
             <cfset local.encryptedMessage = ToBase64(local.aErrorMessages)/>
-            <cflocation addtoken="no"  url="../pages/screens-showtime.cfm?aMessages=#local.encryptedMessage#">
+            <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?aMessages=#local.encryptedMessage#">
         <cfelse> 
             <cfparam name="arguments.theatreId" default="">
             <cfparam name="arguments.showId" default="">
@@ -447,7 +445,7 @@
 
             <cfset local.message  ="Screen updated successfully">
             <cfset local.encryptedMessage = ToBase64(local.message)/>
-            <cflocation addtoken="no"  url="../pages/manageTheaters.cfm?aMessageSuccess=#local.encryptedMessage#"> 
+            <cflocation addtoken="no"  url="../admin/manageTheaters.cfm?aMessageSuccess=#local.encryptedMessage#"> 
         </cfif>
     </cffunction>
 
@@ -459,7 +457,7 @@
         </cfquery>
         <cfset local.message  ="Show Time deleted successfully">
         <cfset local.encryptedMessage = ToBase64(local.message) />
-        <cflocation addtoken="no"  url="../pages/screens-showtime.cfm?aMessages=#local.encryptedMessage#"> 
+        <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?aMessages=#local.encryptedMessage#"> 
     </cffunction>
 
 

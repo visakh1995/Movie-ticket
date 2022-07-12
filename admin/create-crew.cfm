@@ -1,4 +1,4 @@
-<div class="modal fade bd-screen-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade bd-crew-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,35 +9,38 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 id="modal_title"></h4>
+                            <h4 id="crew_modal_title"></h4>
                         </div>
                         <div class="card-body">
                             <div class="basic-form">
                                 <form class="my-4" method="post" enctype="multipart/form-data" 
-                                    action="" name="img_form" id="formId">
+                                    action="" name="img_form" id="crewFormId">
                                     <div class="modal-body">
                                         <div class="row">
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control"  
-                                                name ="screenName" required
-                                                id ="screen_name" placeholder="Screen Name">
+                                                <input type="text" class="form-control" name ="roleName" required
+                                                id ="role_name" placeholder="Role Name*">
                                                 <cfoutput>
-                                                    <input type="hidden" name="theatreId" value="#teatreId#" id="theatreId">
-                                                    <input type="hidden" name="screenId" id="screen_id">
-                                                </cfoutput>
-                                            </div>
+                                                    <input type="hidden" id="movie_id" value=#movieId# name="movieId">
+                                                </cfoutput>                                            </div>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control" 
-                                                 name ="goldRate" required
-                                                id ="gold_rate" placeholder="Gold Rate*">
+                                                <input type="text" class="form-control" name ="personsName" required
+                                                id ="persons_name" placeholder="Persons Name*">
                                             </div>
                                         </div>
 
                                         <div class="row mt-3">
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control"  
-                                                name ="silverRate" required
-                                                id ="silver_rate" placeholder="Silver Rate*">
+                                                <p>Photo</p>
+                                                <input type="file" class="form-control" name ="crewPhoto" 
+                                                id="crew_photo" placeholder="Photo*" 
+                                                accept=".jpeg,.png,.gif,.jpg">
+                                                <input type="hidden" name ="defaultCrewPhoto" 
+                                                id="default_crew_photo" placeholder="Crew Photo*">
+                                                <div class="img-show">
+                                                <img style="width:10px" id="crew_photo"
+                                                     class="img-fluid"  />
+                                                </div>
                                             </div>
                                         </div>
 
@@ -46,7 +49,8 @@
                                             data-bs-dismiss="modal">
                                                 Close
                                             </button>
-                                            <button type="submit" class="btn btn-primary">
+                                            <button type="submit" class="btn btn-primary" 
+                                            onclick ="return onAddressBookContactValidate()">
                                                 Save changes
                                             </button>
                                         </div>

@@ -6,8 +6,8 @@
     <div class="container-fluid">
         <div class="row page-titles">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href="javascript:void(0)">Movies</a></li>
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Manage Movies</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Shows</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Manage Shows</a></li>
             </ol>
         </div>
     <div class="row">
