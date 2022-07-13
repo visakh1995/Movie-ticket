@@ -226,3 +226,45 @@ $('.crew').on('click',function(){
        $('#crewFormId').attr('action', '../components/movies.cfc?method=movieTicketCreateCrewForm'); 
     }
 })
+
+
+$('.movieShowTime').on('click',function(){
+    var movieShowTime=$(this).data('id');    
+    if(movieShowTime>0){
+        $("#modal_title").text("Edit Movie Show time");
+        $.ajax({   
+            url: "../components/moviefunctions.cfc",
+            type: 'get',
+            dataType:"json",
+            data:{
+            method:"editMovieShowTime",
+            theatre_id:theatre_id              
+            },
+            success: function(data)
+            {  
+                console.log(data);     
+                $('#movieShowTimeId').val(data.DATA[0][0]);                  
+                $('#movie').val(data.DATA[0][1]);
+                $('#theater').val(data.DATA[0][2]);
+                $('#screen').val(data.DATA[0][3]);                         
+                $('#show_name').val(data.DATA[0][5]);
+                $('#end_date').val(data.DATA[0][6]);                        
+                $('#total_seats').val(data.DATA[0][7]);                                                           
+                $('#movieShowTimeFormId').attr('action', '../components/movies.cfc?method=movieTicketUpdateMovieShowTime');             
+            }         
+        });  
+    }
+    else
+    {        
+        $("#modal_title").text("Add Movie Show Time");
+        $('#movie').val("");
+        $('#theater').val("");
+        $('#screen').val("");        
+        $('#showname').val("");
+        $('#end_date').val("");       
+        $('#show_priority').val("");
+        $("#total_seats").attr("src", "");
+        $('#movieShowTimeFormId').attr('action', '../components/movies.cfc?method=movieTicketCreateMovieShowTime'); 
+    }
+});
+

@@ -460,6 +460,36 @@
         <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?aMessages=#local.encryptedMessage#"> 
     </cffunction>
 
+    <cffunction name="findAllScreensList" access="public">
+        <cfquery name="screenList" datasource="cruddb">
+            SELECT * FROM bookmyticket.moviepanel_screens 
+        </cfquery>
+        <cfreturn screenList>
+    </cffunction>
+
+    <cffunction name="findAllMoviesList" access="public">
+        <cfquery name="movieList" datasource="cruddb">
+            SELECT * FROM bookmyticket.moviepanel_movies
+        </cfquery>
+        <cfreturn movieList>
+    </cffunction>
+
+    <cffunction name="findJoinList" access="public">
+        <cfquery name="allJoinList" datasource="cruddb">
+            SELECT sh.id,m.poster,m.movieName,th.theaterName,m.releaseDate,m.duration,
+            s.screenName,st.showStartTime,st.showName,sh.endDate,sh.showPriority
+            FROM bookmyticket.moviepanel_movieshowtimes sh
+            INNER JOIN bookmyticket.moviepanel_movies m ON sh.movie =m.id
+            INNER JOIN bookmyticket.moviepanel_teaters th ON sh.theater=th.id 
+            INNER JOIN bookmyticket.moviepanel_screens s ON sh.screen=s.id
+            INNER JOIN bookmyticket.moviepanel_showtimes st ON sh.screen =st.screen
+
+        </cfquery>
+        <cfreturn allJoinList>
+    </cffunction>
+
+
+
 
 
 </cfcomponent>

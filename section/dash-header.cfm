@@ -17,8 +17,6 @@
     <link href="../assets/dash/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/dash.css">
 
-
-	
 </head>
 <body>
     <div id="main-wrapper">
@@ -87,12 +85,12 @@
                         <span class="nav-text">Manage Theaters</span>
                         </a>
                     </li>
-                    <li><a class="ai-icon" href="./managemovies.cfm" aria-expanded="false">
+                    <li><a class="ai-icon" href="./manage-shows.cfm" aria-expanded="false">
                         <i class="flaticon-041-graph"></i>
                         <span class="nav-text">Manage Movies</span>
                         </a>
                     </li>
-                    <li><a class="ai-icon" href="javascript:void()" aria-expanded="false">
+                    <li><a class="ai-icon" href="./managemovieshowtime.cfm" aria-expanded="false">
                         <i class="flaticon-045-heart"></i>
                         <span class="nav-text">Manage Shows</span>
                         </a>

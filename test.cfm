@@ -172,6 +172,7 @@
 </div>
 <cfinclude template ="../section/dash-footer.cfm">
 
+INNER JOIN bookmyticket.moviepanel_showtimes st ON sh.screen_time_id =st.id
 
 
 
