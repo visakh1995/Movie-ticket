@@ -229,26 +229,27 @@ $('.crew').on('click',function(){
 
 
 $('.movieShowTime').on('click',function(){
-    var movieShowTime=$(this).data('id');    
-    if(movieShowTime>0){
-        $("#modal_title").text("Edit Movie Show time");
+    var movieShowTime_id=$(this).data('id');    
+    if(movieShowTime_id>0){
+        $("#modal_movie_showtime_title").text("Edit Movie Show time");
         $.ajax({   
-            url: "../components/moviefunctions.cfc",
+            url: "../components/movies.cfc",
             type: 'get',
             dataType:"json",
             data:{
             method:"editMovieShowTime",
-            theatre_id:theatre_id              
+            movieShowTime_id:movieShowTime_id              
             },
             success: function(data)
             {  
                 console.log(data);     
-                $('#movieShowTimeId').val(data.DATA[0][0]);                  
+                $('#movie_show_time_id').val(data.DATA[0][0]);                  
                 $('#movie').val(data.DATA[0][1]);
                 $('#theater').val(data.DATA[0][2]);
                 $('#screen').val(data.DATA[0][3]);                         
-                $('#show_name').val(data.DATA[0][5]);
-                $('#end_date').val(data.DATA[0][6]);                        
+                $('#show_name').val(data.DATA[0][4]);
+                $('#end_date').val(data.DATA[0][5]);    
+                $('#show_priority').val(data.DATA[0][6]);                                            
                 $('#total_seats').val(data.DATA[0][7]);                                                           
                 $('#movieShowTimeFormId').attr('action', '../components/movies.cfc?method=movieTicketUpdateMovieShowTime');             
             }         
@@ -267,4 +268,31 @@ $('.movieShowTime').on('click',function(){
         $('#movieShowTimeFormId').attr('action', '../components/movies.cfc?method=movieTicketCreateMovieShowTime'); 
     }
 });
+
+function screenList(){
+    var theat_id=$('#theater').val();
+    if(theat_id!="")
+    {
+        $.ajax({   
+            url: "../components/moviefunctions.cfc",
+            type: 'get',
+            dataType:"json",
+            data:{
+            method:"screenDetails",
+              theatre_id:theat_id           
+            },
+            success:function(data) {  
+                $('select[name="screen"]').empty();
+                //$("#screen option[value='"+data[0].s_id+"']").attr("selected", "selected");
+                $('select#screen').append($('<option>').text("--Select Screen--"));
+                $.each(data, function(key, value) {  
+                    $('#screen').append($('<option>').text(value.screen_name).attr('value', value.id));
+                });
+            }  
+        });       
+    }
+    else{
+        $('#screen').html('<option value="">Select Screen</option>'); 
+    }
+}
 

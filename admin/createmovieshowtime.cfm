@@ -13,7 +13,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4 id="movie_showtime_modal_title"></h4>
+                            <h4 id="modal_movie_showtime_title"></h4>
                         </div>
                         <div class="card-body">
                             <div class="basic-form">
@@ -30,8 +30,7 @@
                                                         </cfloop> 
                                                     </cfoutput>
                                                 </select>
-                                                <input type="hidden" name="TheaterId" 
-                                                id="TheaterId">
+                                                <input type="hidden" name="movieShowTimeId" id="movie_show_time_id">
                                             </div>
                                             <div class="col-sm-6">
                                                 <select  class="form-control" name = "theater" id="theater" required> 
@@ -46,7 +45,7 @@
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-sm-6">
-                                                <select  class="form-control" name = "screen" id="screen" required> 
+                                                <select  class="form-control" name = "screen" id="screen" onchange="screenList()" required> 
                                                     <option value = "">--- Select Screen ---</option> 
                                                     <cfoutput>
                                                       <cfloop query = screensList> 

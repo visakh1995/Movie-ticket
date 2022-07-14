@@ -1,8 +1,7 @@
 <cfinclude template="../section/dash-header.cfm">
 <cfset newInstance = createObject("component","movie-ticket/components.moviefunctions")> 
-<cfset allMovieShowTimeList = newInstance.findJoinList()> 
-<cfdump var =#allMovieShowTimeList#>
 <cfinclude template ="./createmovieshowtime.cfm"> 
+<cfset allMovieShowTimeList = newInstance.findJoinList()> 
 
 <div class="content-body">
     <div class="container-fluid">
@@ -43,6 +42,7 @@
                         <table id="example" class="display" style="min-width: 845px">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Poster</th>
                                     <th>Movie Name</th>
                                     <th>Theater</th>
@@ -57,39 +57,49 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <cfoutput>
-                                    <cfloop query = theatreList>
-                                        <tr>
-                                            <td>#theatreList.TheaterName#</td>
-                                            <td>#theatreList.TheaterName#</td>
-                                            <td>#theatreList.TheaterEmail#</td>
-                                            <td>#theatreList.TheaterName#</td>
-                                            <td>#theatreList.TheaterName#</td>
-                                            <td>#theatreList.TheaterEmail#</td>
-                                            <td>#theatreList.TheaterPhone#</td>
-                                            <td>#theatreList.TheaterAddress#</td>
-                                            <td>
-                                                <button class="btn btn-primary shadow btn-xs ">
-                                                    <a href="./screens-showtime.cfm?theatreValue=#theatreList.id#">
-                                                        Manage screen & show time
-                                                    </a>
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button class="teater btn btn-outline btn-show"
-                                                 data-id =#theatreList.id# 
-                                                data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">
-                                                    <i class="fas fa-pencil-alt"></i>
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <a href="./action.cfm?teatreDelete=#theatreList.id#">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    </cfloop>
-                                </cfoutput>
+                                <cfloop query = allMovieShowTimeList>
+                                    <tr>
+                                        <td>
+                                            <div class="accordion accordion-primary-solid" id="accordion-two">
+                                                <div class="accordion-item">
+                                                    <div class="accordion-header collapsed  rounded-sm" id="accord-3One" 
+                                                        data-bs-toggle="collapse" data-bs-target="#collapse3One" 
+                                                        aria-controls="collapse3One" aria-expanded="true" role="button">
+                                                            <span class="accordion-header-indicator"></span>
+                                                    </div>
+                                                    <div id="collapse3One" class="collapse accordion__body" 
+                                                        aria-labelledby="accord-3One" data-bs-parent="#accordion-three">
+                                                        <cfoutput>   
+                                                            <div class="accordion-body-text">
+                                                                <button type="button" class="movieShowTime  btn-primary btn-sm" data-id =#allMovieShowTimeList.id# 
+                                                                data-bs-toggle="modal" data-bs-target=".bd-movieShowTime-modal-lg">
+                                                                Edit
+                                                                </button>
+                                                                <button type="button" class=" btn-primary btn-sm">
+                                                                    <a href="./action.cfm?movieShowTimeDelete=#allMovieShowTimeList.id#">
+                                                                    Delete</a>
+                                                                </button>
+                                                            </div>
+                                                        </cfoutput>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <cfoutput>
+                                            <td>#allMovieShowTimeList.movieName#</td>
+                                            <td>#allMovieShowTimeList.movieName#</td>
+                                            <td>#allMovieShowTimeList.theaterName#</td>
+                                            <td>#allMovieShowTimeList.screenName#</td>
+                                            <td>#allMovieShowTimeList.releasedate#</td>
+                                            <td>#allMovieShowTimeList.showStartTime#</td>
+                                            <td>#allMovieShowTimeList.duration#</td>
+                                            <td>#allMovieShowTimeList.duration#</td>
+                                            <td>#allMovieShowTimeList.endDate#</td>
+                                            <td>Pending</td>
+                                            <td>#allMovieShowTimeList.showPriority#</td>
+                                        </cfoutput>
+                                    </tr>
+                                </cfloop>
                             </tbody>
                         </table>
                     </div>

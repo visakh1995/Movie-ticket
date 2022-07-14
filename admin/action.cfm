@@ -34,4 +34,13 @@
     <cfset deleteDirectory = createObject("component","movie-ticket/components.movies")> 
     <cfset res = deleteDirectory.crewDelete(deleteId)>
 </cfif>
+<cfif isDefined("url.movieShowTimeDelete")>
+    <cfset deleteId = url.movieShowTimeDelete>
+    <cfparam  name="deleteId" default="">
+    <cfset deleteDirectory = createObject("component","movie-ticket/components.movies")> 
+    <cfset res = deleteDirectory.movieShowTimeDelete(deleteId)>
+</cfif>
+
+
+
 

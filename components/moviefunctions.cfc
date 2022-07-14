@@ -483,7 +483,6 @@
             INNER JOIN bookmyticket.moviepanel_teaters th ON sh.theater=th.id 
             INNER JOIN bookmyticket.moviepanel_screens s ON sh.screen=s.id
             INNER JOIN bookmyticket.moviepanel_showtimes st ON sh.screen =st.screen
-
         </cfquery>
         <cfreturn allJoinList>
     </cffunction>
