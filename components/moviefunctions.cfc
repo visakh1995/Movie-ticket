@@ -386,11 +386,14 @@
         </cfif>
     </cffunction>
     
-    <cffunction name="findShowTimesList" access="remote" output="true">
-        <cfargument name="teatreId" type="string" required="yes">
-        <cfquery name="showTimesList" datasource="cruddb">
-            SELECT * FROM bookmyticket.moviepanel_showtimes
-            WHERE teatreId = <cfqueryparam  CFSQLType="cf_sql_integer" value="#arguments.teatreId#">
+    <cffunction name="findShowTimesList" access="remote" output="true" returnFormat = "json">
+        <cfargument  name="teatreId" type="integer">
+        <cfquery name="showTimesList" datasource="cruddb" result="res" returntype="array">
+            SELECT st.id, st.screen,s.screenName, st.teatreId,st.showStartTime,st.showName
+            FROM bookmyticket.moviepanel_showtimes st
+            INNER JOIN bookmyticket.moviepanel_screens s ON s.id = st.screen
+        WHERE 
+        st.teatreId= <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#arguments.teatreId#">
         </cfquery>
         <cfreturn showTimesList>
     </cffunction>
@@ -482,13 +485,63 @@
             INNER JOIN bookmyticket.moviepanel_movies m ON sh.movie =m.id
             INNER JOIN bookmyticket.moviepanel_teaters th ON sh.theater=th.id 
             INNER JOIN bookmyticket.moviepanel_screens s ON sh.screen=s.id
-            INNER JOIN bookmyticket.moviepanel_showtimes st ON sh.screen =st.screen
+            INNER JOIN bookmyticket.moviepanel_showtimes st ON sh.showName =st.id
         </cfquery>
         <cfreturn allJoinList>
     </cffunction>
 
+    <cffunction name="updatePassword" access="remote" output="true"> 
+        <cfargument name="oldPassword" type="string" required="true">
+        <cfargument name="newPassword" type="string" required="true">
+        <cfargument name="confirmPassword" type="string" required="true">
+
+        <cfset local.encodOldPassword = hash("#arguments.oldPassword#", "SHA-256", "UTF-8")>
+        <cfset local.encodNewPassword = hash("#arguments.newPassword#", "SHA-256", "UTF-8")>
+
+        <cfset local.aErrorMessages =  "">
+        <cfif arguments.oldPassword EQ ''>
+            <cfset local.aErrorMessages = 'Please fill old password'/>
+        </cfif>
+        <cfif arguments.newPassword EQ ''>
+            <cfset local.aErrorMessages = 'Please fill new Password'/>
+        </cfif>
+        <cfif arguments.confirmPassword EQ ''>
+            <cfset local.aErrorMessages = 'Please fill confirmPassword'/>
+        </cfif>
+        <cfif arguments.newPassword NEQ confirmPassword>
+            <cfset local.aErrorMessages = 'password donot match'/>
+        </cfif>
+
+        <cfif len(trim(local.aErrorMessages)) NEQ 0>
+            <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
+            <cflocation addtoken="no"  url="../admin/updatepassword.cfm?aMessages=#local.encryptedMessage#">
+        <cfelse>
+
+            <cfquery name="verifiedUserDetails" datasource="cruddb">
+                SELECT *FROM bookmyticket.moviepanel_users WHERE 
+                password = <cfqueryparam CFSQLType="cf_sql_varchar" value ="#local.encodOldPassword#"> AND
+                status = <cfqueryparam CFSQLType="cf_sql_varchar" value ="admin"> 
+            </cfquery>
+
+            <cfif verifiedUserDetails.RecordCount gt 0>
+                <cfquery name="update_pass" datasource="cruddb" result="pass_res">
+                    UPDATE bookmyticket.moviepanel_users SET 
+                    password=<cfqueryparam value="#encodNewPassword#" cfsqltype="CF_SQL_VARCHAR">
+                    WHERE status="admin"
+                </cfquery>
+                <cfset local.message  ="Password updated successfully">
+                <cfset local.encryptedMessage = ToBase64(local.message) />
+                <cflocation addtoken="no"  url="../admin/updatepassword.cfm?aMessages=#encryptedMessage#"> 
+            <cfelse>
+                <cfset local.message  ="Inavalid old password,please try again">
+                <cfset local.encryptedMessage = ToBase64(local.message) />
+                <cflocation addtoken="no"  url="../admin/updatepassword.cfm?aMessages=#encryptedMessage#">  
+            </cfif>
+        </cfif>
+    </cffunction>
 
 
 
+    
 
 </cfcomponent>

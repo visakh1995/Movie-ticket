@@ -73,15 +73,15 @@
                                                         <cfoutput>   
                                                             <div class="accordion-body-text">
                                                                 <p>Trailer</p> <p>#moviesList.trailerUrl#</p>
-                                                                <button type="button" class="btn btn-primary btn-sm">
+                                                                <button type="button" class="badge badge-pill badge-light">
                                                                     <a href="./cast-crew.cfm?movieId=#moviesList.id#">
                                                                         Manage cast and crew</a>
                                                                 </button>
-                                                                <button type="button" class="movie  btn-primary btn-sm" data-id =#moviesList.id# 
+                                                                <button type="button" class="movie badge badge-rounded badge-info mt-3" data-id =#moviesList.id# 
                                                                 data-bs-toggle="modal" data-bs-target=".bd-movie-modal-lg">
                                                                 Edit
                                                                 </button>
-                                                                <button type="button" class=" btn-primary btn-sm">
+                                                                <button type="button" class="badge badge-rounded badge-danger">
                                                                     <a href="./action.cfm?movieDelete=#moviesList.id#">
                                                                     Delete</a>
                                                                 </button>
@@ -93,11 +93,11 @@
                                         </td>
                                         <cfoutput>
                                             <td>
-                                                <img style="width:10px" class="avatar-img" 
+                                                <img class="avatar-img" 
                                                 src="../uploads/#moviesList.poster#">
                                             </td>
                                             <td>
-                                                <img  style="width:10px" class="avatar-img" 
+                                                <img class="avatar-img" 
                                                 src="../uploads/#moviesList.wallpaper#">
                                             </td>
                                             <td>#moviesList.movieName#</td>

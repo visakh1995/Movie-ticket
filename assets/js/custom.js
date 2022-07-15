@@ -241,8 +241,7 @@ $('.movieShowTime').on('click',function(){
             movieShowTime_id:movieShowTime_id              
             },
             success: function(data)
-            {  
-                console.log(data);     
+            {    
                 $('#movie_show_time_id').val(data.DATA[0][0]);                  
                 $('#movie').val(data.DATA[0][1]);
                 $('#theater').val(data.DATA[0][2]);
@@ -257,7 +256,7 @@ $('.movieShowTime').on('click',function(){
     }
     else
     {        
-        $("#modal_title").text("Add Movie Show Time");
+        $("#modal_movie_showtime_title").text("Add Movie Show Time");
         $('#movie').val("");
         $('#theater').val("");
         $('#screen').val("");        
@@ -274,7 +273,7 @@ function screenList(){
     if(theat_id!="")
     {
         $.ajax({   
-            url: "../components/moviefunctions.cfc",
+            url: "../components/movies.cfc",
             type: 'get',
             dataType:"json",
             data:{
@@ -286,7 +285,7 @@ function screenList(){
                 //$("#screen option[value='"+data[0].s_id+"']").attr("selected", "selected");
                 $('select#screen').append($('<option>').text("--Select Screen--"));
                 $.each(data, function(key, value) {  
-                    $('#screen').append($('<option>').text(value.screen_name).attr('value', value.id));
+                    $('#screen').append($('<option>').text(value.screenName).attr('value', value.id));
                 });
             }  
         });       
@@ -294,5 +293,31 @@ function screenList(){
     else{
         $('#screen').html('<option value="">Select Screen</option>'); 
     }
+}
+
+function timeList(){
+    var sc_id=$('#screen').val();
+    var th_sc_id=$('#theater').val();    
+    if(sc_id!="")
+    {
+        $.ajax({   
+            url: "../components/movies.cfc",
+            type: 'get',
+            dataType:"json",
+            data:{
+            method:"screenTimeDetails",
+              theatre_id:th_sc_id,
+              screen_id:sc_id           
+            },
+            success:function(data) {  
+                $('select[name="showName"]').empty();
+                $('select#show_name').append($('<option>').text("--Select Show Time--"));
+                $.each(data, function(key, value) {  
+                    $('#show_name').append($('<option>').text(value.showName).attr('value', value.id));
+                });
+            }  
+        });       
+    }
+    $('#show_name').html('<option value="">Select Show</option>'); 
 }
 

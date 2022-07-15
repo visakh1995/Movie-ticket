@@ -16,6 +16,7 @@
     <!--- added css --->
     <link href="../assets/dash/vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/dash.css">
+    <link rel="stylesheet" href="../assets/css/fewstyles.css">
 
 </head>
 <body>
@@ -95,22 +96,22 @@
                         <span class="nav-text">Manage Shows</span>
                         </a>
                     </li>
-                    <li><a class="ai-icon" href="javascript:void()" aria-expanded="false">
+                    <li><a class="ai-icon" href="./manage-users.cfm" aria-expanded="false">
                         <i class="flaticon-013-checkmark"></i>
                         <span class="nav-text">Manage Users</span>
                         </a>
                     </li>
-                    <li><a class="ai-icon" href="javascript:void()" aria-expanded="false">
+                    <li><a class="ai-icon" href="./manage-booking.cfm" aria-expanded="false">
                         <i class="flaticon-013-checkmark"></i>
                         <span class="nav-text">Manage Bookings</span>
                         </a>
                     </li>
-                    <li><a class="ai-icon" href="javascript:void()" aria-expanded="false">
+                    <li><a class="ai-icon" href="./manage-contact-info.cfm" aria-expanded="false">
                         <i class="flaticon-013-checkmark"></i>
                         <span class="nav-text">View Contact Info</span>
                         </a>
                     </li>
-                    <li><a class="ai-icon" href="javascript:void()" aria-expanded="false">
+                    <li><a class="ai-icon" href="./updatePassword.cfm" aria-expanded="false">
                         <i class="flaticon-013-checkmark"></i>
                         <span class="nav-text">Update Password</span>
                         </a>

@@ -7,8 +7,8 @@
     <div class="container-fluid">
         <div class="row page-titles">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active"><a href="javascript:void(0)">Theaters</a></li>
-                <li class="breadcrumb-item"><a href="javascript:void(0)">Manage Theaters</a></li>
+                <li class="breadcrumb-item active"><a href="javascript:void(0)">Show Time</a></li>
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Manage Show Time</a></li>
             </ol>
         </div>
     <div class="row">
@@ -71,11 +71,11 @@
                                                         aria-labelledby="accord-3One" data-bs-parent="#accordion-three">
                                                         <cfoutput>   
                                                             <div class="accordion-body-text">
-                                                                <button type="button" class="movieShowTime  btn-primary btn-sm" data-id =#allMovieShowTimeList.id# 
+                                                                <button type="button" class="movieShowTime  badge badge-rounded badge-primary" data-id =#allMovieShowTimeList.id# 
                                                                 data-bs-toggle="modal" data-bs-target=".bd-movieShowTime-modal-lg">
                                                                 Edit
                                                                 </button>
-                                                                <button type="button" class=" btn-primary btn-sm">
+                                                                <button type="button" class="badge badge-rounded badge-danger">
                                                                     <a href="./action.cfm?movieShowTimeDelete=#allMovieShowTimeList.id#">
                                                                     Delete</a>
                                                                 </button>

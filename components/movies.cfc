@@ -502,4 +502,27 @@
         <cflocation addtoken="no"  url="../admin/managemovieshowtime.cfm?aMessages=#local.encryptedMessage#"> 
     </cffunction>
 
+    <cffunction name="screenDetails" access="remote" output="true" returnFormat = "json">
+        <cfargument  name="theatre_id" type="integer">
+        <cfquery name="screen_details" datasource="cruddb" result="res" returntype="array" >
+            SELECT * FROM bookmyticket.moviepanel_screens 
+            WHERE theatreId=<cfqueryparam value="#arguments.theatre_id#" cfsqltype="CF_SQL_INTEGER">;
+        </cfquery>
+        <cfreturn screen_details>
+    </cffunction>
+
+    <cffunction name="screenTimeDetails" access="remote" output="true" returnFormat = "json">
+        <cfargument  name="theatre_id" type="integer">
+        <cfargument  name="screen_id" type="integer">
+        <cfquery name="time_details" datasource="cruddb" result="res" returntype="array">
+            SELECT st.id, st.screen,s.screenName, st.teatreId,st.showStartTime,st.showName
+            FROM bookmyticket.moviepanel_showtimes st
+            INNER JOIN bookmyticket.moviepanel_screens  s ON s.id = st.screen
+        WHERE 
+        st.teatreId= <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#arguments.theatre_id#"> AND
+        st.screen=<cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#arguments.screen_id#">
+        </cfquery>
+        <cfreturn time_details>
+    </cffunction> 
+
 </cfcomponent>

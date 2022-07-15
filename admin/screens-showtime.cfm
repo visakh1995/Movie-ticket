@@ -7,6 +7,7 @@
 <cfinclude template="../section/dash-header.cfm">
 <cfinclude template ="./createscreen.cfm"> 
 <cfinclude template ="./createshowtime.cfm"> 
+
 <div class="content-body">
     <div class="container-fluid">
         <div class="row">
@@ -96,20 +97,20 @@
                                 </thead>
                                 <tbody>
                                     <cfoutput>
-                                        <cfloop query = showTimesList >
+                                        <cfloop array = "#showTimesList#" index="timeList">
                                             <tr>
-                                                <td>#showTimesList.showName#</td>
-                                                <td>#showTimesList.screen#</td>
-                                                <td>#showTimesList.showStartTime#</td>
+                                                <td>#timeList.showName#</td>
+                                                <td>#timeList.screenName#</td>
+                                                <td>#timeList.showStartTime#</td>
                                                 <td>
-                                                    <button class="showTime btn btn-outline btn-show" data-id =#showTimesList.id# 
+                                                    <button class="showTime btn btn-outline btn-show" data-id =#timeList.id# 
                                                         data-bs-toggle="modal" data-bs-target=".bd-showTime-modal-lg">
                                                         Edit
                                                     </button>
                                                 </td>
                                                 <td>
                                                     <button class="btn btn-outline btn-show">
-                                                        <a href="./action.cfm?showTimeDelete=#showTimesList.id#">
+                                                        <a href="./action.cfm?showTimeDelete=#timeList.id#">
                                                         Delete</a>
                                                     </button>
                                                 </td>

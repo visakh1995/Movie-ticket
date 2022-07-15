@@ -33,7 +33,7 @@
                                                 <input type="hidden" name="movieShowTimeId" id="movie_show_time_id">
                                             </div>
                                             <div class="col-sm-6">
-                                                <select  class="form-control" name = "theater" id="theater" required> 
+                                                <select  class="form-control" name = "theater" id="theater" onchange="screenList()" required> 
                                                     <option value = "">--- Select Theatre---</option> 
                                                     <cfoutput>
                                                       <cfloop query = theatreList> 
@@ -45,21 +45,13 @@
                                         </div>
                                         <div class="row mt-3">
                                             <div class="col-sm-6">
-                                                <select  class="form-control" name = "screen" id="screen" onchange="screenList()" required> 
-                                                    <option value = "">--- Select Screen ---</option> 
-                                                    <cfoutput>
-                                                      <cfloop query = screensList> 
-                                                           <option value="#screensList.id#">#screensList.screenName#</option> 
-                                                       </cfloop> 
-                                                    </cfoutput>
+                                                <select name="screen" id="screen" class="form-control" required onchange="timeList()">
+                                                    <option value="">Select Screen</option>
                                                 </select>
                                             </div>
                                             <div class="col-sm-6">
-                                                <select  class="form-control" name = "showName" id="show_name" required> 
-                                                    <option value = "">--- Select ---</option> 
-                                                    <option value = "First_show">First show</option> 
-                                                    <option value = "Noon_show">Noon Show</option>  
-                                                    <option value = "Second_show">Second Show</option>  
+                                                <select name="showName" id="show_name" class="form-control" required >
+                                                    <option value="">Select Show Time</option>
                                                 </select>
                                             </div>
                                         </div>

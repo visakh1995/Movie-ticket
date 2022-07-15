@@ -1,65 +1,55 @@
-<div class="modal fade bd-screen-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal">
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="col-lg-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 id="modal_title"></h4>
+<cfinclude template="../section/dash-header.cfm">
+<div class="content-body">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-8 col-lg-8">
+                <div class="card">
+                    <cfif isDefined("aMessageSuccess")>
+                        <div class="alertSuccess" id="alertSuccess">
+                          <cfoutput>
+                              <span class="closebtndash" onclick="closeAlertBoxSuccess()">&times</span> 
+                              <cfset showMessageSuccess = ToString(ToBinary(aMessageSuccess))>
+                              <p>#showMessageSuccess#</p>
+                          </cfoutput>
                         </div>
-                        <div class="card-body">
-                            <div class="basic-form">
-                                <form class="my-4" method="post" enctype="multipart/form-data" 
-                                    action="" name="img_form" id="formId">
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control"  
-                                                name ="screenName" required
-                                                id ="screen_name" placeholder="Screen Name">
-                                                <cfoutput>
-                                                    <input type="hidden" name="theatreId" value="#teatreId#" id="theatreId">
-                                                    <input type="hidden" name="screenId" id="screen_id">
-                                                </cfoutput>
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control" 
-                                                 name ="goldRate" required
-                                                id ="gold_rate" placeholder="Gold Rate*">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mt-3">
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control"  
-                                                name ="silverRate" required
-                                                id ="silver_rate" placeholder="Silver Rate*">
-                                            </div>
-                                        </div>
-
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger light" 
-                                            data-bs-dismiss="modal">
-                                                Close
-                                            </button>
-                                            <button type="submit" class="btn btn-primary">
-                                                Save changes
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
+                    </cfif>
+                    <cfif isDefined("aMessages")>
+                        <div class="alertClass" id="alertClass">
+                            <cfoutput>
+                                <span class="closebtn" onclick="closeAlertBox()">&times</span> 
+                                <cfset showMessage = ToString(ToBinary(aMessages))>
+                                <p>#showMessage#</p>
+                            </cfoutput>
+                        </div>
+                    </cfif>
+                    <div class="card-header">
+                        <h4 class="card-title">Manage Password</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="basic-form">
+                            <form method="post" action="../components/moviefunctions.cfc?method=updatePassword" 
+                            name="passwordForm" id="password_form">
+                                <div class="mb-3">
+                                    <input type="text" class="form-control input-rounded" 
+                                    placeholder="Old Password" name ="oldPassword">
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control input-rounded" 
+                                    placeholder="New Password" name ="newPassword">
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control input-rounded"
+                                     placeholder="Confirm Password" name ="confirmPassword">
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    Update password
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div>    
 </div>
-
-
-
+<cfinclude template ="../section/dash-footer.cfm">

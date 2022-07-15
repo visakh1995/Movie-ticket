@@ -55,7 +55,10 @@
                                 <cfoutput>
                                     <cfloop query = theatreList>
                                         <tr>
-                                            <td>#theatreList.TheaterName#</td>
+                                            <td>
+                                                <img class="avatar-img" 
+                                                src="../uploads/#theatreList.theaterphoto#">
+                                            </td>
                                             <td>#theatreList.TheaterName#</td>
                                             <td>#theatreList.TheaterEmail#</td>
                                             <td>#theatreList.TheaterPhone#</td>
