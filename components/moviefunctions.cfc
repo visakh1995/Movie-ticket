@@ -32,6 +32,11 @@
 
     </cffunction>
 
+    <cffunction name="loggedOut" access="remote" output="true">
+        <cfset StructDelete(Session, "movieTicketCredentials")>
+        <cflocation addtoken="no"  url="../auth/signin.cfm">
+    </cffunction>
+
     <cffunction name="movieTicketCreateForm" access="remote" output="true">
         <cfargument name="theaterName" type="string" required="true">
         <cfargument name="email" type="string" required="true">
@@ -110,7 +115,7 @@
                     <cfqueryparam  CFSQLType="cf_sql_integer" value="1">
                 )
             </cfquery>
-            <cfset local.message  ="Contact created successfully">
+            <cfset local.message  ="Theater created successfully">
             <cfset local.encryptedMessage = ToBase64(local.message) />
             <cflocation addtoken="no"  url="../admin/manageTheaters.cfm?aMessageSuccess=#local.encryptedMessage#"> 
         </cfif>
@@ -129,7 +134,7 @@
             DELETE FROM bookmyticket.moviepanel_teaters WHERE 
             id = <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.deleteId#">
         </cfquery>
-        <cfset local.message  ="Contact deleted successfully">
+        <cfset local.message  ="Theater deleted successfully">
         <cfset local.encryptedMessage = ToBase64(local.message) />
         <cflocation addtoken="no"  url="../admin/manageTheaters.cfm?aMessages=#local.encryptedMessage#"> 
     </cffunction>
@@ -260,7 +265,7 @@
             </cfquery>
             <cfset local.message  ="Screen created successfully">
             <cfset local.encryptedMessage = ToBase64(local.message) />
-            <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?aMessageSuccess=#local.encryptedMessage#"> 
+            <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?theatreValue=#arguments.theatreId#&aMessageSuccess=#local.encryptedMessage#"> 
         </cfif>
     </cffunction>
 
@@ -275,13 +280,19 @@
 
     <cffunction name="theatreScreenDelete" access="remote">
         <cfargument name="deleteId" type="string" required="yes">
-        <cfquery name="deleteScreen" datasource="cruddb">
-            DELETE FROM bookmyticket.moviepanel_screens WHERE 
-            id = <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.deleteId#">
+        <cfquery name="findTheaterId" datasource="cruddb">
+            SELECT *FROM bookmyticket.moviepanel_screens WHERE id = "#arguments.deleteId#";
         </cfquery>
-        <cfset local.message  ="Screen deleted successfully">
-        <cfset local.encryptedMessage = ToBase64(local.message) />
-        <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?aMessages=#local.encryptedMessage#"> 
+        <cfif findTheaterId.RecordCount NEQ 0>
+            <cfset TheatreId = "#findTheaterId.theatreId#">
+            <cfquery name="deleteScreen" datasource="cruddb">
+                DELETE FROM bookmyticket.moviepanel_screens WHERE 
+                id = <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.deleteId#">
+            </cfquery>
+            <cfset local.message  ="Screen deleted successfully">
+            <cfset local.encryptedMessage = ToBase64(local.message) />
+            <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?theatreValue=#TheatreId#&aMessages=#local.encryptedMessage#"> 
+        </cfif> 
     </cffunction>
 
     <cffunction name="editSceenInfo" access="remote" returnFormat = "json">
@@ -334,7 +345,7 @@
 
             <cfset local.message  ="Screen updated successfully">
             <cfset local.encryptedMessage = ToBase64(local.message)/>
-            <cflocation addtoken="no"  url="../admin/manageTheaters.cfm?aMessageSuccess=#local.encryptedMessage#"> 
+            <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?theatreValue=#arguments.theatreId#&aMessageSuccess=#local.encryptedMessage#"> 
         </cfif>
     </cffunction>
 
@@ -358,7 +369,7 @@
 
         <cfif len(trim(local.aErrorMessages)) NEQ 0>
             <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
-            <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?aMessages=#local.encryptedMessage#">
+            <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?theatreValue=#arguments.theatreId#&aMessagesShow=#local.encryptedMessage#">
         <cfelse>
             <cfparam name="arguments.theatreId" default="">
             <cfparam name="arguments.showName" default="">
@@ -382,7 +393,7 @@
             </cfquery>
             <cfset local.message  ="Show time created successfully">
             <cfset local.encryptedMessage = ToBase64(local.message) />
-            <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?aMessageSuccess=#local.encryptedMessage#"> 
+            <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?theatreValue=#arguments.theatreId#&aMessageSuccessShow=#local.encryptedMessage#"> 
         </cfif>
     </cffunction>
     
@@ -427,7 +438,7 @@
 
         <cfif len(trim(local.aErrorMessages)) NEQ 0>
             <cfset local.encryptedMessage = ToBase64(local.aErrorMessages)/>
-            <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?aMessages=#local.encryptedMessage#">
+            <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?theatreValue=#arguments.theatreId#&aMessagesShow=#local.encryptedMessage#">
         <cfelse> 
             <cfparam name="arguments.theatreId" default="">
             <cfparam name="arguments.showId" default="">
@@ -448,19 +459,25 @@
 
             <cfset local.message  ="Screen updated successfully">
             <cfset local.encryptedMessage = ToBase64(local.message)/>
-            <cflocation addtoken="no"  url="../admin/manageTheaters.cfm?aMessageSuccess=#local.encryptedMessage#"> 
+            <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?theatreValue=#arguments.theatreId#&aMessageSuccessShow=#local.encryptedMessage#"> 
         </cfif>
     </cffunction>
 
     <cffunction name="theatreShowTimeDelete" access="remote">
         <cfargument name="deleteId" type="string" required="yes">
-        <cfquery name="deleteShowTime" datasource="cruddb">
-            DELETE FROM bookmyticket.moviepanel_showtimes WHERE 
-            id = <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.deleteId#">
+        <cfquery name="findTheaterId" datasource="cruddb">
+            SELECT *FROM bookmyticket.moviepanel_showtimes WHERE id = "#arguments.deleteId#";
         </cfquery>
-        <cfset local.message  ="Show Time deleted successfully">
-        <cfset local.encryptedMessage = ToBase64(local.message) />
-        <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?aMessages=#local.encryptedMessage#"> 
+        <cfif findTheaterId.RecordCount NEQ 0>
+            <cfset TheatreId = findTheaterId.teatreId>
+            <cfquery name="deleteShowTime" datasource="cruddb">
+                DELETE FROM bookmyticket.moviepanel_showtimes WHERE 
+                id = <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.deleteId#">
+            </cfquery>
+            <cfset local.message  ="Show Time deleted successfully">
+            <cfset local.encryptedMessage = ToBase64(local.message) />
+            <cflocation addtoken="no"  url="../admin/screens-showtime.cfm?theatreValue=#TheatreId#&aMessagesShow=#local.encryptedMessage#"> 
+        </cfif>
     </cffunction>
 
     <cffunction name="findAllScreensList" access="public">
@@ -539,9 +556,5 @@
             </cfif>
         </cfif>
     </cffunction>
-
-
-
-    
 
 </cfcomponent>

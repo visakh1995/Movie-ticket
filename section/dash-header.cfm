@@ -44,8 +44,10 @@
                         </div>
                         <ul class="navbar-nav header-right">
                             <li class="nav-item">
-								<a href="javascript:void(0);" class="btn btn-primary d-sm-inline-block d-none">
-                                    Signout<i class="las la-logout ms-3 scale5"></i>
+								<a href="../components/moviefunctions.cfc?method=loggedOut"
+                                    class="btn btn-primary d-sm-inline-block d-none">
+                                    Signout
+                                    <i class="las la-logout ms-3 scale5"></i>
                                 </a>
 							</li>
                         </ul>
@@ -58,10 +60,10 @@
 				<ul class="metismenu" id="menu">
 					<li class="dropdown header-profile">
 						<a class="nav-link" href="javascript:void(0);" role="button" data-bs-toggle="dropdown">
-							<img src="../assets/dash/images/profile/pic1.jpg" width="20" alt="">
+							<img src="../assets/dash/images/profile/pic.png" width="20" alt="">
 							<div class="header-info ms-3">
-								<span class="font-w600 ">Hi,<b>Admin</b></span>
-								<small class="text-end font-w400">admin@gmail.com</small>
+								<span class="font-w600 ">Hi,
+                                <b><cfoutput>#Session.movieTicketCredentials.userName#</cfoutput></b></span>
 							</div>
 						</a>
 						<div class="dropdown-menu dropdown-menu-end">
@@ -71,7 +73,7 @@
                             <a href="app-profile.html" class="dropdown-item ai-icon">
 								<span class="ms-2">password </span>
 							</a>
-                            <a href="app-profile.html" class="dropdown-item ai-icon">
+                            <a href="../components/moviefunctions.cfc?method=loggedOut" class="dropdown-item ai-icon">
 								<span class="ms-2">signout </span>
 							</a>
 						</div>

@@ -18,7 +18,7 @@
                 <h2><i class="fa-solid fa-clapperboard"></i></h2> 
                 <nav>
                     <ul>
-                        <li><a href="">Signout</a></li>
+                        <li><a href="../components/moviefunctions.cfc?method=loggedOut">Signout</a></li>
                     </ul>
                 </nav>
             </div>

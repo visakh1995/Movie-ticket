@@ -12,38 +12,45 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-6">
-                <cfif isDefined("aMessageSuccess")>
-                    <div class="alertSuccess" id="alertSuccess">
-                      <cfoutput>
-                          <span class="closebtndash" onclick="closeAlertBoxSuccess()">&times</span> 
-                          <cfset showMessageSuccess = ToString(ToBinary(aMessageSuccess))>
-                          <p>#showMessageSuccess#</p>
-                      </cfoutput>
-                    </div>
-                </cfif>
-                <cfif isDefined("aMessages")>
-                    <div class="alertClass" id="alertClass">
-                        <cfoutput>
-                            <span class="closebtn" onclick="closeAlertBox()">&times</span> 
-                            <cfset showMessage = ToString(ToBinary(aMessages))>
-                            <p>#showMessage#</p>
-                        </cfoutput>
-                    </div>
-                </cfif>
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">SCREEN</h4>
-                        <button type="button" class="screen btn btn-primary mb-2" data-bs-toggle="modal" 
+                        <h4 class="card-title">Screen</h4>
+                        <button type="button" class="screen btn btn-primary shadow btn-sm" data-bs-toggle="modal" 
                         data-bs-target=".bd-screen-modal-lg">Add Screen</button>
                     </div>
                     <div class="card-body">
+                        <cfif isDefined("aMessageSuccess")>
+                            <div>
+                                <cfoutput>
+                                    <cfset showMessageSuccess = ToString(ToBinary(aMessageSuccess))>
+                                    <div class="alert alert-primary solid alert-end-icon alert-dismissible fade show mt-3">
+                                        <span><i class="mdi mdi-account-search"></i></span>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+                                        </button> Success! #showMessageSuccess#
+                                    </div>
+                                </cfoutput>
+                            </div>
+                        </cfif>
+                        <cfif isDefined("aMessages")>
+                            <div>
+                                <cfoutput>
+                                    <cfset showMessage = ToString(ToBinary(aMessages))>
+                                    <div class="alert alert-danger solid alert-end-icon alert-dismissible fade show">
+                                        <span><i class="mdi mdi-help"></i></span>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+                                        </button>
+                                        <strong>Error!</strong> #showMessage#
+                                    </div>
+                                </cfoutput>
+                            </div>
+                        </cfif>
                         <div class="table-responsive">
-                            <table class="table table-responsive-md">
+                            <table class="table table-responsive-md" id="nonShowTab">
                                 <thead>
                                     <tr>
-                                        <th>Screen Name</th>
-                                        <th>Gold Ticket</th>
-                                        <th>Silver Ticket</th>
+                                        <th>Screen </th>
+                                        <th>Gold </th>
+                                        <th>Silver </th>
                                         <th>Update</th>
                                         <th>Delete</th>
                                     </tr>
@@ -53,18 +60,18 @@
                                         <cfloop query = screensList >
                                             <tr>
                                                 <td>#screensList.screenName#</td>
-                                                <td>#screensList.goldRate#</td>
-                                                <td>#screensList.silverRate#</td>
+                                                <td>#screensList.goldRate# Rs</td>
+                                                <td>#screensList.silverRate# Rs</td>
                                                 <td>
                                                     <button class="screen btn btn-outline btn-show" data-id =#screensList.id# 
                                                         data-bs-toggle="modal" data-bs-target=".bd-screen-modal-lg">
-                                                        Edit
+                                                        <i class="fas fa-pencil-alt"></i>
                                                     </button>
                                                 </td>
                                                 <td>
                                                     <button class="btn btn-outline btn-show">
                                                         <a href="./action.cfm?screenDelete=#screensList.id#">
-                                                        Delete</a>
+                                                            <i class="fa fa-trash"></i></a>
                                                     </button>
                                                 </td>
                                             </tr>
@@ -79,17 +86,42 @@
             <div class="col-lg-6">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">SHOWTIME</h4>
-                        <button type="button" class="showTime btn btn-primary mb-2" data-bs-toggle="modal" 
+                        <h4 class="card-title">Show Time</h4>
+                        <button type="button" class="showTime btn btn-primary shadow btn-sm" data-bs-toggle="modal" 
                         data-bs-target=".bd-showTime-modal-lg">Add Showtime</button>
                     </div>
                     <div class="card-body">
+                        <cfif isDefined("aMessageSuccessShow")>
+                            <div>
+                                <cfoutput>
+                                    <cfset showMessageSuccess = ToString(ToBinary(aMessageSuccessShow))>
+                                    <div class="alert alert-primary solid alert-end-icon alert-dismissible fade show mt-3">
+                                        <span><i class="mdi mdi-account-search"></i></span>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+                                        </button> Success! #showMessageSuccess#
+                                    </div>
+                                </cfoutput>
+                            </div>
+                        </cfif>
+                        <cfif isDefined("aMessagesShow")>
+                            <div>
+                                <cfoutput>
+                                    <cfset showMessage = ToString(ToBinary(aMessagesShow))>
+                                    <div class="alert alert-danger solid alert-end-icon alert-dismissible fade show">
+                                        <span><i class="mdi mdi-help"></i></span>
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+                                        </button>
+                                        <strong>Error!</strong> #showMessage#
+                                    </div>
+                                </cfoutput>
+                            </div>
+                        </cfif>
                         <div class="table-responsive">
-                            <table class="table table-responsive-md">
+                            <table class="table table-responsive-md" id="nonShowTabOne">
                                 <thead>
                                     <tr>
-                                        <th>Show Name</th>
-                                        <th>Screen Name</th>
+                                        <th>Show</th>
+                                        <th>Screen</th>
                                         <th>Start Time</th>
                                         <th>Update</th>
                                         <th>Delete</th>
@@ -105,13 +137,13 @@
                                                 <td>
                                                     <button class="showTime btn btn-outline btn-show" data-id =#timeList.id# 
                                                         data-bs-toggle="modal" data-bs-target=".bd-showTime-modal-lg">
-                                                        Edit
+                                                        <i class="fas fa-pencil-alt"></i>
                                                     </button>
                                                 </td>
                                                 <td>
                                                     <button class="btn btn-outline btn-show">
                                                         <a href="./action.cfm?showTimeDelete=#timeList.id#">
-                                                        Delete</a>
+                                                            <i class="fas fa-trash"></i></a>
                                                     </button>
                                                 </td>
                                             </tr>

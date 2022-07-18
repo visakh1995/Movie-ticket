@@ -27,10 +27,17 @@
 		  $('#example').DataTable({
 			dom: 'Bfrtip',
 			buttons: [
-			//  'copy', 'csv', 'excel', 'pdf', 'print'
+			'copy', 'csv', 'excel', 'pdf', 'print'
 			],
 			searching: false, paging: false, info: false,
 		  });
+		  $('#nonShowTab').DataTable({
+			searching: true, paging: false, info: false,
+		  });
+		  $('#nonShowTabOne').DataTable({
+			searching: true, paging: false, info: false,
+		  });
+		  
 		} );
 	</script>
 

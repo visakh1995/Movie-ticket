@@ -14,7 +14,6 @@
                 <h2><i class="fa-solid fa-clapperboard"></i>BOOK MY TICKET</h2> 
                 <nav>
                     <ul>
-                        <li><a href="">Signup</a></li>
                         <li><a href="../auth/signin.cfm">Signin</a></li>
                     </ul>
                 </nav>

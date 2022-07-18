@@ -39,7 +39,7 @@
         </cfif>
         <cfif len(trim(local.aErrorMessages)) NEQ 0>
             <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
-            <cflocation addtoken="no"  url="../admin/managemovies.cfm?aMessages=#local.encryptedMessage#">
+            <cflocation addtoken="no"  url="../admin/manage-shows.cfm?aMessages=#local.encryptedMessage#">
         <cfelse>
             <cfquery name="movieVerify" datasource="cruddb">
                 SELECT *FROM bookmyticket.moviepanel_movies WHERE movieName = "#arguments.movieName#";
@@ -47,7 +47,7 @@
             <cfif movieVerify.RecordCount NEQ 0>
                 <cfset local.aErrorMessages = 'The movie already entered'/>
                 <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
-                <cflocation addtoken="no"  url="../admin/managemovies.cfm?aMessages=#local.encryptedMessage#">
+                <cflocation addtoken="no"  url="../admin/manage-shows.cfm?aMessages=#local.encryptedMessage#">
             </cfif> 
             <cffile action="upload"
             fileField="poster"
@@ -90,7 +90,7 @@
             </cfquery>
             <cfset local.message  ="Movie created successfully">
             <cfset local.encryptedMessage = ToBase64(local.message) />
-            <cflocation addtoken="no"  url="../admin/managemovies.cfm?aMessageSuccess=#local.encryptedMessage#"> 
+            <cflocation addtoken="no"  url="../admin/manage-shows.cfm?aMessageSuccess=#local.encryptedMessage#"> 
         </cfif>
     </cffunction>
 
@@ -154,7 +154,7 @@
 
         <cfif len(trim(local.aErrorMessages)) NEQ 0>
             <cfset local.encryptedMessage = ToBase64(local.aErrorMessages)/>
-            <cflocation addtoken="no"  url="../admin/managemovies.cfm?aMessages=#local.encryptedMessage#">
+            <cflocation addtoken="no"  url="../admin/manage-shows.cfm?aMessages=#local.encryptedMessage#">
         <cfelse> 
         
             <cfif len(trim(arguments.poster)) NEQ 0>
@@ -204,7 +204,7 @@
             </cfquery>
             <cfset local.message  ="Movie updated successfully">
             <cfset local.encryptedMessage = ToBase64(local.message)/>
-            <cflocation addtoken="no"  url="../admin/managemovies.cfm?aMessageSuccess=#local.encryptedMessage#"> 
+            <cflocation addtoken="no"  url="../admin/manage-shows.cfm?aMessageSuccess=#local.encryptedMessage#"> 
         </cfif>
     </cffunction>
 
@@ -216,7 +216,7 @@
         </cfquery>
         <cfset local.message  ="Movie deleted successfully">
         <cfset local.encryptedMessage = ToBase64(local.message) />
-        <cflocation addtoken="no"  url="../admin/managemovies.cfm?aMessages=#local.encryptedMessage#"> 
+        <cflocation addtoken="no"  url="../admin/manage-shows.cfm?aMessages=#local.encryptedMessage#"> 
     </cffunction>
 
     <!---    cast crew --->

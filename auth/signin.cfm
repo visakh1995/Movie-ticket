@@ -15,15 +15,6 @@
                             </cfoutput>
                         </div>
                     </cfif>
-                    <cfif isDefined("aMessageSuccess")>
-                        <div class="alertSuccess" id="alertSuccess">
-                            <cfoutput>
-                                <span class="closebtndash" onclick="closeAlertBoxSuccess()">&times</span> 
-                                <cfset showMessageSuccess = ToString(ToBinary(aMessageSuccess))>
-                                <p>#showMessageSuccess#</p>
-                            </cfoutput>
-                        </div>
-                      </cfif>
                     <div class="form-control">
                         <input type="text" name ="username" id="username" 
                         placeholder="Username" required>
