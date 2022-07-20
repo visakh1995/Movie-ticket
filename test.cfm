@@ -177,3 +177,10 @@ INNER JOIN bookmyticket.moviepanel_showtimes st ON sh.screen_time_id =st.id
 
 
 
+<cfif NOT isDefined("Session.movieTicketCredentials")>
+	<cflocation url="./auth/signin.cfm" addtoken="no" /> 
+<cfelse>
+    <cflocation url="./admin/dashboard.cfm" addtoken="no" /> 
+</cfif>
+
+BETWEEN CAST ('2015-01-24' AS DATE) AND CAST ('2015-01-25' AS DATE); 

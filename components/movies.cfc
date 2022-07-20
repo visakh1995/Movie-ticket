@@ -240,7 +240,7 @@
 
         <cfif len(trim(local.aErrorMessages)) NEQ 0>
             <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
-            <cflocation addtoken="no"  url="../admin/managemovies.cfm?aMessages=#local.encryptedMessage#">
+            <cflocation addtoken="no"  url="../admin/cast-crew.cfm?movieId=#arguments.movieId#&aMessages=#local.encryptedMessage#">
         <cfelse>
 
             <cffile action="upload"
@@ -267,7 +267,7 @@
             </cfquery>
             <cfset local.message  ="Cast created successfully">
             <cfset local.encryptedMessage = ToBase64(local.message) />
-            <cflocation addtoken="no"  url="../admin/managemovies.cfm?aMessageSuccess=#local.encryptedMessage#"> 
+            <cflocation addtoken="no"  url="../admin/cast-crew.cfm?movieId=#arguments.movieId#&aMessageSuccess=#local.encryptedMessage#"> 
         </cfif>
     </cffunction>
 
@@ -291,7 +291,7 @@
 
         <cfif len(trim(local.aErrorMessages)) NEQ 0>
             <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
-            <cflocation addtoken="no"  url="../admin/managemovies.cfm?aMessages=#local.encryptedMessage#">
+            <cflocation addtoken="no"  url="../admin/cast-crew.cfm?movieId=#arguments.movieId#&aMessagesShow=#local.encryptedMessage#">
         <cfelse>
 
             <cffile action="upload"
@@ -318,7 +318,7 @@
             </cfquery>
             <cfset local.message  ="Crew created successfully">
             <cfset local.encryptedMessage = ToBase64(local.message) />
-            <cflocation addtoken="no"  url="../admin/managemovies.cfm?aMessageSuccess=#local.encryptedMessage#"> 
+            <cflocation addtoken="no"  url="../admin/cast-crew.cfm?movieId=#arguments.movieId#&aMessageSuccessShow=#local.encryptedMessage#"> 
         </cfif>
     </cffunction>
 
@@ -342,13 +342,36 @@
 
     <cffunction name="castDelete" access="remote">
         <cfargument name="deleteId" type="string" required="yes">
-        <cfquery name="deleteMovieCast" datasource="cruddb">
-            DELETE FROM bookmyticket.moviepanel_casts WHERE 
-            id = <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.deleteId#">
+        <cfquery name="findMovieId" datasource="cruddb">
+            SELECT *FROM bookmyticket.moviepanel_casts WHERE id = "#arguments.deleteId#";
         </cfquery>
-        <cfset local.message  ="Cast deleted successfully">
-        <cfset local.encryptedMessage = ToBase64(local.message) />
-        <cflocation addtoken="no"  url="../admin/managemovies.cfm?aMessages=#local.encryptedMessage#"> 
+        <cfif findMovieId.RecordCount NEQ 0>
+            <cfset local.movieId = findMovieId.movieId>
+            <cfquery name="deleteMovieCast" datasource="cruddb">
+                DELETE FROM bookmyticket.moviepanel_casts WHERE 
+                id = <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.deleteId#">
+            </cfquery>
+            <cfset local.message  ="Cast deleted successfully">
+            <cfset local.encryptedMessage = ToBase64(local.message) />
+            <cflocation addtoken="no"  url="../admin/cast-crew.cfm?movieId=#local.movieId#&aMessages=#local.encryptedMessage#"> 
+        </cfif>
+    </cffunction>
+
+    <cffunction name="crewDelete" access="remote">
+        <cfargument name="deleteId" type="string" required="yes">
+        <cfquery name="findMovieId" datasource="cruddb">
+            SELECT *FROM bookmyticket.moviepanel_crews WHERE id = "#arguments.deleteId#";
+        </cfquery>
+        <cfif findMovieId.RecordCount NEQ 0>
+            <cfset local.movieId = findMovieId.movieId>
+            <cfquery name="deleteMovieCast" datasource="cruddb">
+                DELETE FROM bookmyticket.moviepanel_crews WHERE 
+                id = <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.deleteId#">
+            </cfquery>
+            <cfset local.message  ="Crew deleted successfully">
+            <cfset local.encryptedMessage = ToBase64(local.message) />
+            <cflocation addtoken="no"  url="../admin/cast-crew.cfm?movieId=#local.movieId#&aMessagesShow=#local.encryptedMessage#"> 
+        </cfif>
     </cffunction>
 
     <cffunction name="movieTicketCreateMovieShowTime" access="remote" output="true">
@@ -385,7 +408,7 @@
         </cfif>
         <cfif len(trim(local.aErrorMessages)) NEQ 0>
             <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
-            <cflocation addtoken="no"  url="../admin/managemovies.cfm?aMessages=#local.encryptedMessage#">
+            <cflocation addtoken="no"  url="../admin/managemovieshowtime.cfm?aMessages=#local.encryptedMessage#">
         <cfelse>
             <cfparam name="arguments.movie" default="">
             <cfparam name="arguments.theater" default="">
