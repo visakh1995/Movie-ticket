@@ -158,6 +158,7 @@
         <cfargument name="street" type="string" required="true">
         <cfargument name="pinCode" type="string" required="true">
         <cfargument name="photo" type="string" required="true">
+        <cfargument name="defaultPhoto" type="string" required="true">
 
         <cfset local.aErrorMessages =  "">
         <cfif arguments.email EQ '' OR NOT isValid("email",arguments.email)>
@@ -174,9 +175,6 @@
         </cfif>
         <cfif arguments.pinCode EQ ''>
             <cfset local.aErrorMessages = 'Please provide valid Pincode'/>
-        </cfif>
-        <cfif arguments.photo EQ ''>
-            <cfset local.aErrorMessages = 'Please provide valid photo'/>
         </cfif>
 
         <cfif len(trim(local.aErrorMessages)) NEQ 0>

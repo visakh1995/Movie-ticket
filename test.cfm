@@ -184,3 +184,79 @@ INNER JOIN bookmyticket.moviepanel_showtimes st ON sh.screen_time_id =st.id
 </cfif>
 
 BETWEEN CAST ('2015-01-24' AS DATE) AND CAST ('2015-01-25' AS DATE); 
+
+
+SELECT sh.id,sh.movieName,sh.language,sh.genre,sh.releaseDate,sh.duration,sh.movieFormat,
+mc.characterName,mc.actorName,mc.actorPhoto,ms.roleName,ms.personsName,ms.crewPhoto    
+FROM bookmyticket.moviepanel_movies sh
+INNER JOIN bookmyticket.moviepanel_casts mc ON sh.id=mc.movieId 
+INNER JOIN bookmyticket.moviepanel_crews ms ON sh.id=ms.movieId
+WHERE sh.id = <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.movieId#">
+
+
+<div class="section-content pvb0">
+    <div class="container  pv8">
+        <div class="row">
+            <div class="col-sm-6">
+                <div id="comments" class="comments-area">
+                    <div class="comments-wrapper">
+                        <h2 class="comments-title">Comments (2)</h2>
+                        <ol class="comment-list">
+                            <li>
+                                <article>
+                                    <div class="comment-avatar">
+                                        <img alt="Image" src="../assets/web/images/blog/user-1.jpg" class="avatar">
+                                    </div>
+                                    <div class="comment-body">
+                                        <div class="meta-data">
+                                            <a href="#" class="comment-author">DANIAL RADCLIFFE</a>
+                                        </div>
+                                        <div class="comment-content">
+                                            Dramatically grow market positioning human capital rather than professional data. Authoritatively reconceptualize equity invested sources with adaptive materials.
+                                        </div>
+                                    </div>
+                                </article>
+                            </li>
+                            <li>
+                                <article>
+                                    <div class="comment-avatar">
+                                        <img alt="Image" src="../assets/web/images/blog/user-2.jpg" class="avatar">
+                                    </div>
+                                    <div class="comment-body">
+                                        <div class="meta-data">
+                                            <a href="#" class="comment-author">DANIEL CRAIG</a>
+                                        </div>
+                                        <div class="comment-content">
+                                            Progressively repurpose extensive partnerships and one-to-one technology. Competently impact market positioning solutions before user friendly alignments. Energistically deploy reliable process improvements via interdependent.
+                                        </div>
+                                    </div>
+                                </article>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+             </div>   
+            <div class="col-sm-6">
+                <div id="respond" class="comment-respond">
+                    <h3 id="reply-title" class="comment-reply-title">Leave a comment</h3>
+                    <form id="commentform" class="comment-form" novalidate="">
+                        <div class="row">
+                            <p class="comment-form-author col-sm-6">
+                                <input id="author" name="author" type="text" value="" size="30" placeholder="Name *">
+                            </p>
+                            <p class="comment-form-email col-sm-6">
+                                <input id="email" name="email" type="email" value="" size="30" placeholder="E-mail *">
+                            </p>
+                        </div>
+                        <p class="comment-form-comment">
+                            <textarea id="comment" name="comment" placeholder="Comments"></textarea>
+                        </p>
+                        <p class="form-submit">
+                            <button type="submit" class="button fill rectangle">Send to us</button>
+                        </p>                    
+                    </form>
+                </div>
+            </div> 
+        </div>
+    </div>
+</div>

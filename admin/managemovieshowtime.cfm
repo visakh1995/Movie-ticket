@@ -16,7 +16,7 @@
             <div class="card">
                 <div class="card-header">
                     <h4 class="card-title"></h4>
-                    <button type="button" class="movieShowTime btn btn-primary mb-2" data-bs-toggle="modal" 
+                    <button type="button" class="movieShowTime btn btn-primary shadow btn-sm" data-bs-toggle="modal" 
                     data-bs-target=".bd-movieShowTime-modal-lg">Create</button>
                 </div>
                 <div class="card-body">
@@ -55,7 +55,7 @@
                                     <th>Theater</th>
                                     <th>Screen</th>
                                     <th>Start Date</th>
-                                    <th>Starting Time</th>
+                                    <th>Start Time</th>
                                     <th>Duration</th>
                                     <th>Ending Time</th>
                                     <th>Show End Date</th>
@@ -93,16 +93,26 @@
                                             </div>
                                         </td>
                                         <cfoutput>
-                                            <td>#allMovieShowTimeList.movieName#</td>
+                                            <td><img class="avatar-img" 
+                                                src="../uploads/#allMovieShowTimeList.poster#">
+                                            </td>
                                             <td>#allMovieShowTimeList.movieName#</td>
                                             <td>#allMovieShowTimeList.theaterName#</td>
                                             <td>#allMovieShowTimeList.screenName#</td>
-                                            <td>#allMovieShowTimeList.releasedate#</td>
+                                            <td>#allMovieShowTimeList.releaseDate#</td>
                                             <td>#allMovieShowTimeList.showStartTime#</td>
                                             <td>#allMovieShowTimeList.duration#</td>
                                             <td>#allMovieShowTimeList.duration#</td>
                                             <td>#allMovieShowTimeList.endDate#</td>
-                                            <td>Pending</td>
+
+                                            <cfif dateCompare(allMovieShowTimeList.endDate, now()) EQ -1>
+                                                <td class="bg-danger">Inactive</td>
+                                            <cfelseif dateCompare(allMovieShowTimeList.releaseDate, now()) EQ 1>
+                                                <td class="bg-warning"> Pending</td>
+                                            <cfelseif dateCompare(allMovieShowTimeList.endDate, now()) EQ 1>
+                                                <td class="bg-success  ">Active</td>
+                                            </cfif>
+
                                             <td>#allMovieShowTimeList.showPriority#</td>
                                         </cfoutput>
                                     </tr>

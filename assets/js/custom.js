@@ -16,7 +16,8 @@ $('.teater').on('click',function(){
                 $('#TheaterId').val(data.DATA[0][0]);                  
                 $('#theatre_name').val(data.DATA[0][1]);
                 $('#email').val(data.DATA[0][2]);
-                $('#phone').val(data.DATA[0][3]);                         
+                $('#phone').val(data.DATA[0][3]); 
+                $("#default_photo").val(data.DATA[0][4]);                        
                 $('#address').val(data.DATA[0][5]);
                 $('#street').val(data.DATA[0][6]);                        
                 $('#pinCode').val(data.DATA[0][7]);                                                           

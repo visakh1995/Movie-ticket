@@ -406,36 +406,66 @@
         <cfif arguments.totalSeats EQ ''>
             <cfset local.aErrorMessages = 'Please provide valid totalSeats'/>
         </cfif>
+
         <cfif len(trim(local.aErrorMessages)) NEQ 0>
             <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
             <cflocation addtoken="no"  url="../admin/managemovieshowtime.cfm?aMessages=#local.encryptedMessage#">
         <cfelse>
-            <cfparam name="arguments.movie" default="">
-            <cfparam name="arguments.theater" default="">
-            <cfparam name="arguments.screen" default="">
-            <cfparam name="arguments.showName" default="">
-            <cfparam name="arguments.endDate" default="">
-            <cfparam name="arguments.showPriority" default="">
-            <cfparam name="arguments.totalSeats" default="">
-            <cfparam name="arguments.status" default="1">
 
-            <cfquery name="addData" result = result datasource="cruddb">
-                INSERT INTO bookmyticket.moviepanel_movieShowTimes(movie,theater,screen,showName,
-                endDate,showPriority,totalSeats,movieTimeStatus)
-                VALUES(
-                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.movie#">,
-                    <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.theater#">,
-                    <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.screen#">,
-                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.showName#">,
-                    <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.endDate#">,
-                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.showPriority#">,
-                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.totalSeats#">,
-                    <cfqueryparam  CFSQLType="cf_sql_integer" value="1">
-                )
+            <cfquery name="show_exists" result="exist_res" datasource="cruddb">
+                SELECT * FROM bookmyticket.moviepanel_movieShowTimes where 
+                movie=<cfqueryparam value="#arguments.movie#" cfsqltype="CF_SQL_INTEGER"> 
+                and theater=<cfqueryparam value="#arguments.theater#" cfsqltype="CF_SQL_INTEGER"> 
+                and screen=<cfqueryparam value="#arguments.screen#" cfsqltype="CF_SQL_INTEGER"> 
+                and showName=<cfqueryparam value="#arguments.showName#" cfsqltype="CF_SQL_INTEGER"> 
             </cfquery>
-            <cfset local.message  ="Movie Show Time created successfully">
-            <cfset local.encryptedMessage = ToBase64(local.message) />
-            <cflocation addtoken="no"  url="../admin/managemovieshowtime.cfm?aMessageSuccess=#local.encryptedMessage#"> 
+            <cfquery name="movie_res" result="movie_details" datasource="cruddb">
+                SELECT * FROM bookmyticket.moviepanel_movies WHERE 
+                id=<cfqueryparam value="#arguments.movie#" cfsqltype="CF_SQL_INTEGER">
+            </cfquery>
+            <cfoutput query='movie_res'>
+                <cfset start_date=#releaseDate#>
+            </cfoutput> 
+
+            <cfif dateCompare(arguments.endDate,start_date) NEQ -1>
+                <cfif exist_res.RecordCount EQ 0>
+                    <cfparam name="arguments.movie" default="">
+                    <cfparam name="arguments.theater" default="">
+                    <cfparam name="arguments.screen" default="">
+                    <cfparam name="arguments.showName" default="">
+                    <cfparam name="arguments.endDate" default="">
+                    <cfparam name="arguments.showPriority" default="">
+                    <cfparam name="arguments.totalSeats" default="">
+                    <cfparam name="arguments.status" default="1">
+        
+                    <cfquery name="addData" result = result datasource="cruddb">
+                        INSERT INTO bookmyticket.moviepanel_movieShowTimes(movie,theater,screen,showName,
+                        endDate,showPriority,totalSeats,movieTimeStatus)
+                        VALUES(
+                            <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.movie#">,
+                            <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.theater#">,
+                            <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.screen#">,
+                            <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.showName#">,
+                            <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.endDate#">,
+                            <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.showPriority#">,
+                            <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.totalSeats#">,
+                            <cfqueryparam  CFSQLType="cf_sql_integer" value="1">
+                        )
+                    </cfquery>
+                    <cfset local.message  ="Movie Show Time created successfully">
+                    <cfset local.encryptedMessage = ToBase64(local.message) />
+                    <cflocation addtoken="no"  url="../admin/managemovieshowtime.cfm?aMessageSuccess=#local.encryptedMessage#">
+                <cfelse>
+                    <cfset local.message  ="This movie Show is already exist,please try again">
+                    <cfset local.encryptedMessage = ToBase64(local.message) />
+                    <cflocation addtoken="no"  url="../admin/managemovieshowtime.cfm?aMessages=#local.encryptedMessage#">    
+                </cfif>
+            <cfelse>
+                <cfset local.message  ="Please select end date greater than release date">
+                <cfset local.encryptedMessage = ToBase64(local.message) />
+                <cflocation addtoken="no"  url="../admin/managemovieshowtime.cfm?aMessages=#local.encryptedMessage#">    
+            </cfif>
+
         </cfif>
     </cffunction>
 

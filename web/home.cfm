@@ -51,87 +51,7 @@
                     </div>
                 </div>
             </div>
-            <div class="item">
-                <div class="fill" data-bg-image="../assets/web/images/product/feature-item.jpg">
-                 <div class="bs-slider-overlay"></div>
-                    <div class="container movie-slider-container"> 
-                        <div class="row">
-                             <div class="col-sm-12 movie-slider-content"> 
-                                <div class="slider-content" >
-                                    <ul class="subtitle"  data-animation="animated bounceInRight">
-                                        <li>Action</li>
-                                        <li>Science Fiction</li>
-                                        <li>Adventure</li>
-                                    </ul>
-                                    <div class="title" data-animation="animated bounceInRight" >The Battle of Algiers (La Battaglia)  <i>(1967)</i></div>
-                                    <div class="slide_right" data-animation="animated bounceInRight">
-                                        <a href="javascript:;" class="btn-trailer">watch trailer</a> <a href="javascript:;" class="btn-ticket">buy ticket</a>
-                                        <ul class="award-logo">
-                                            <li><img src="../assets/web/images/header/icon1.png" alt="icon" ></li>
-                                            <li><img src="../assets/web/images/header/icon2.png" alt="icon"></li>
-                                            <li><img src="../assets/web/images/header/icon3.png" alt="icon"></li>
-                                            <li><img src="../assets/web/images/header/icon4.png" alt="icon"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="chart-cirle">
-                                        <div class="chart-circle-l" data-animation="animated bounceInUp">
-                                            <div class="circle-chart" data-circle-width="7" data-percent="94" data-text="9.4">
-                                            </div>
-                                            <span>IMDB Ratffing</span>
-                                        </div>
-                                        <div class="chart-circle-r" data-animation="animated bounceInUp">
-                                            <div class="circle-chart" data-circle-width="7" data-percent="84" data-text="8.4">
-                                            </div>
-                                            <span>Rotten Rating</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <div class="fill" data-bg-image="../assets/web/images/header/header.png">
-                 <div class="bs-slider-overlay"></div>
-                    <div class="container movie-slider-container"> 
-                        <div class="row">
-                             <div class="col-sm-12 movie-slider-content"> 
-                                <div class="slider-content" >
-                                    <ul class="subtitle"  data-animation="animated bounceInRight">
-                                        <li>Action</li>
-                                        <li>Science Fiction</li>
-                                    </ul>
-                                    <div class="title" data-animation="animated bounceInRight" >The Battle of Algiers (Di Algeri)<i>(1967)</i></div>
-                                    <div class="slide_right" data-animation="animated bounceInRight">
-                                        <a href="javascript:;" class="btn-trailer">watch trailer</a> <a href="javascript:;" class="btn-ticket">buy ticket</a>
-                                        <ul class="award-logo">
-                                            <li><img src="../assets/web/images/header/icon1.png" alt="icon" ></li>
-                                            <li><img src="../assets/web/images/header/icon2.png" alt="icon"></li>
-                                            <li><img src="../assets/web/images/header/icon3.png" alt="icon"></li>
-                                            <li><img src="../assets/web/images/header/icon4.png" alt="icon"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="chart-cirle" data-animation="animated bounceInUp">
-                                        <div class="chart-circle-l" data-animation="animated bounceInUp">
-                                            <div class="circle-chart" data-circle-width="7" data-percent="86" data-text="8.6">
-                                            </div>
-                                            <span>IMDB Ratffing</span>
-                                        </div>
-                                        <div class="chart-circle-r" data-animation="animated bounceInUp">
-                                            <div class="circle-chart" data-circle-width="7" data-percent="74" data-text="7.4">
-                                            </div>
-                                            <span>Rotten Rating</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-
         <!-- Controls -->
         <a class="carousel-control left" href="#headerslider" data-slide="prev">
             <i class="fa fa-angle-left"></i>
@@ -157,17 +77,14 @@
                                         <div class="movie-image" data-bg-image="../uploads/#nowShowing.poster#">
                                             <div class="entry-hover">
                                                 <div class="entry-actions">
-                                                    <a href="order" class="btn-ticket order_btn ">buy ticket</a>
+                                                   <cfset local.encryptId = ToBase64(nowShowing.id)/>
+                                                    <a href="./movie_details.cfm?movieId=#local.encryptId#" class="">Details</a>
                                                 </div>
                                             </div>
                                             <div class="entry-desc">
-                                                <h3 class="entry-title">#nowShowing.movieName#</h3>
-                                                <ul class="entry-date">
-                                                    <li>11 :00</li>  
-                                                    <li>13 :50</li>  
-                                                    <li>14 :00</li>  
-                                                    <li>18 :00</li>  
-                                                </ul>
+                                                <h3 class="entry-title">#nowShowing.movieName#</h3><br>
+                                                <span>duartion : #nowShowing.duration#</span><br>
+                                                <span>genre : #nowShowing.genre#</span>
                                             </div>
                                         </div>
                                     </div>
@@ -181,95 +98,92 @@
             </div>
         </div><br><br>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <h3 class="heading text-center">COMING SOON</h3>
-            <div class="ticket-carousel pvt85">
-                <div class="swiper-container carousel-container movie-images" data-col="5">
-                    <div class="swiper-wrapper">
-                    <cfloop query = comingSoon>
-                        <cfoutput>
-                            <div class="swiper-slide">
-                                <div class="movie-image" data-bg-image="../uploads/#comingSoon.poster#">
-                                    <div class="entry-hover">
-                                        <div class="entry-actions">
-                                            <a href="order" class="btn-ticket order_btn ">buy ticket</a>
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="heading text-center">COMING SOON</h3>
+                <div class="ticket-carousel pvt85">
+                    <div class="swiper-container carousel-container movie-images" data-col="5">
+                        <div class="swiper-wrapper">
+                        <cfloop query = comingSoon>
+                            <cfoutput>
+                                <div class="swiper-slide">
+                                    <div class="movie-image" data-bg-image="../uploads/#comingSoon.poster#">
+                                        <div class="entry-hover">
+                                            <div class="entry-actions">
+                                                <a href="order" class="btn-ticket order_btn ">buy ticket</a>
+                                            </div>
+                                        </div>
+                                        <div class="entry-desc">
+                                            <h3 class="entry-title">#comingSoon.movieName#</h3>
+                                            <ul class="entry-date">
+                                                <li>11 :00</li>  
+                                                <li>13 :50</li>  
+                                                <li>14 :00</li>  
+                                                <li>18 :00</li>  
+                                            </ul>
                                         </div>
                                     </div>
+                                </div>
+                            </cfoutput>
+                        </cfloop>
+                    </div>
+                    </div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </div>
+        </div>
+    </div>   
+
+    <div class="section-content pvb0 bg-cover" data-bg-image="../assets/web/images/coming-bg.jpg">
+        <div class="container pvt80">
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="slider_coming" class="flexslider">
+                        <ul class="slides">
+                            <li>
+                                <article class="product-item hover-dark">
+                                    <div class="entry-title">
+                                        <ul class="subtitle">
+                                            <li>Action</li>
+                                            <li>Science Fiction</li>
+                                            <li>Adventure</li>
+                                        </ul>
+                                        <a href="javascript:;" class="title">ALL MOVIES </a>
+                                        <div class="social-links">
+                                            <a href="javascript:;"><i class="fa fa-facebook"></i></a>
+                                            <a href="javascript:;"><i class="fa fa-twitter"></i></a>
+                                            <a href="javascript:;"><i class="fa fa-instagram"></i></a>
+                                        </div>
+                                    </div>
+                                </article>
+                            </li>     
+                        </ul>
+                    </div>
+                </div>
+            </div>	
+            <div id="carousel_coming" class="flexslider">
+            <ul class="slides">
+                    <cfloop query = allShowingMovies>
+                        <cfoutput>
+                            <li class="thumb_item bg-cover">
+                                <div class="movie-image">
+                                    <!--- <a href="" class="btn fill"></a> --->
+                                    <img src="../uploads/#allShowingMovies.poster#" class="wpc_img" alt="image"/>
                                     <div class="entry-desc">
-                                        <h3 class="entry-title">#comingSoon.movieName#</h3>
+                                        <h3 class="entry-title">#allShowingMovies.movieName#</h3>
                                         <ul class="entry-date">
-                                            <li>11 :00</li>  
-                                            <li>13 :50</li>  
-                                            <li>14 :00</li>  
-                                            <li>18 :00</li>  
+                                            <li>5 May 2017</li>  
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
+                            </li>
                         </cfoutput>
                     </cfloop>
-                </div>
-                </div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
+                </ul>
             </div>
         </div>
-    </div>
-</div>   
-
-
-<div class="section-content pvb0 bg-cover" data-bg-image="../assets/web/images/coming-bg.jpg">
-    <div class="container pvt80">
-        <div class="row">
-            <div class="col-md-12">
-				<div id="slider_coming" class="flexslider">
-				    <ul class="slides">
-                        <li>
-        				    <article class="product-item hover-dark">
-                                <div class="entry-title">
-                                    <ul class="subtitle">
-                                        <li>Action</li>
-                                        <li>Science Fiction</li>
-                                        <li>Adventure</li>
-                                    </ul>
-                                    <a href="javascript:;" class="title">ALL MOVIES </a>
-                                    <div class="social-links">
-                                        <a href="javascript:;"><i class="fa fa-facebook"></i></a>
-                                        <a href="javascript:;"><i class="fa fa-twitter"></i></a>
-                                        <a href="javascript:;"><i class="fa fa-instagram"></i></a>
-                                    </div>
-                                </div>
-                            </article>
-    				    </li>     
-				    </ul>
-				</div>
-			</div>
-		</div>	
-		<div id="carousel_coming" class="flexslider">
-		   <ul class="slides">
-            <cfloop query = allShowingMovies>
-                <cfoutput>
-                    <li class="thumb_item bg-cover">
-                        <div class="movie-image">
-                            <!--- <a href="" class="btn fill"></a> --->
-                            <img src="../uploads/#allShowingMovies.poster#" class="wpc_img" alt="image"/>
-                            <div class="entry-desc">
-                                <h3 class="entry-title">#allShowingMovies.movieName#</h3>
-                                <ul class="entry-date">
-                                    <li>5 May 2017</li>  
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-            </cfoutput>
-        </cfloop>
-
-                
-            </ul>
-	    </div>
-    </div>
-</div>       
+    </div>       
 
 <div class="section-content service pvb0">
         <div class="container  pv12">

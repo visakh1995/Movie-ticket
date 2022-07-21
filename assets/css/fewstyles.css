@@ -5,12 +5,22 @@
     border-radius: 50%;
     object-fit: cover;
 }
+.avatar-img-fav {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+
+}
 .avatar-img-middle {
     display: inline-block;
     width: 70px;
     height: 70px;
     border-radius: 50%;
     object-fit: cover;
+}
+img.cast-pic {
+    height: 87px;
+    width: 58px;
 }
 #alert{
     background-color: red;

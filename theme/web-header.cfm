@@ -14,6 +14,7 @@
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
     <link rel="stylesheet" type="text/css" href="../assets/web/css/packages.min.css">
     <link rel="stylesheet" type="text/css" href="../assets/web/css/default.css">
+    <link rel="stylesheet" href="../assets/web/css/web.css">
 </head>
 <body class="sticky-menu">
     <div id="loader">

@@ -39,11 +39,11 @@
 
                                     <div class="row mt-3">
                                         <div class="col-sm-6">
-                                            <input type="text" name ="pinCode" class="form-control" required
+                                            <input type="number" name ="pinCode" class="form-control" required
                                             id ="pinCode" placeholder="Pincode*">
                                         </div>
                                         <div class="col-sm-6">
-                                            <input type="text" name ="phone" class="form-control" required
+                                            <input type="number" name ="phone" class="form-control" required
                                             id ="phone" placeholder="Phone*">
                                         </div>
                                     </div>
@@ -54,7 +54,7 @@
                                                 <div class="form-file">
                                                     <input type="file" name ="photo" id="photo" 
                                                     accept=".jpeg,.png,.gif,.jpg" class="form-file-input form-control">
-                                                    <input type="hidden" name ="defaultPhoto" id="defaultPhoto" >
+                                                    <input type="hidden" name ="defaultPhoto" id="default_photo" >
                                                 </div>
                                             </div>
                                         </div>

@@ -20,7 +20,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <input type="date" class="form-control" name ="releaseDate" required
-                                            id ="release_date" placeholder="Release Date">
+                                            id ="release_date" placeholder="dd-mm-yyyy" min="01-01-1920" max="01-01-2120">
                                             <label>Release Date</label>
                                         </div>
                                     </div>
