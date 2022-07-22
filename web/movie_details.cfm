@@ -56,14 +56,15 @@
                                     </div>
                                 </div>                       
                                 <div class="content-footer"> 
-<!---                                     <span>Available time:</span> --->
-<!---                                     <ul class="mdate"> --->
-<!---                                         <li><a href="javascript:;"><i>16:40</i></a></li> --->
-<!---                                         <li><a href="javascript:;"><i>18:10</i></a></li> --->
-<!---                                         <li><a href="javascript:;"><i>20:20</i></a></li> --->
-<!---                                         <li><a href="javascript:;"><i>21:20</i></a></li> --->
-<!---                                     </ul> --->
-                                    <a href="order" class="order_btn btn order text-right"> Buy ticket</a>
+                                    <span>Available time:</span>
+                                    <ul class="mdate"> 
+                                        <li><a href="javascript:;"><i>16:40</i></a></li> 
+                                        <li><a href="javascript:;"><i>18:10</i></a></li> 
+                                        <li><a href="javascript:;"><i>20:20</i></a></li> 
+                                        <li><a href="javascript:;"><i>21:20</i></a></li> 
+                                    </ul> 
+                                    <cfset local.encryptId = ToBase64(movie_details.id)/>
+                                    <a href="./prebooking.cfm?movieId=#local.encryptId#" class="btn order text-right"> Buy ticket</a>
                                 </div>
                             </div>
                         </div>

@@ -466,7 +466,7 @@
                             </fieldset>
                             <fieldset class="seat-content">
                                 <div class="wpc-content">
-                                    <h3 class="seat_title">seat</h3>
+                                    <h3 class="seat_title">seats</h3>
                                     <div id="seat-map"></div>
                                     <div id="legend"></div>
                                 </div>
@@ -479,7 +479,7 @@
                 <div class="col-sm-4 col-xs-12 order_sidebar ph0">
                     <h2>Your Information</h2>
                     <div class="order-details">
-                        <span> Location:</span><p id="locationp">Tenguu Cinema Tysons corner</p>
+                        <span> Location:</span><p id="locationp">Tenguu Cinema Tysons cornerss</p>
                         <span>Time:</span>  <p>2016.3.8 18:30</p>
                         <span>Seat: </span>
                         <ul id="selected-seats"></ul>

@@ -231,13 +231,7 @@
                         <li class="wpc-box-item" > 
                             <ol>
                                 <li class="bx-item-t"><img src="../assets/web/images/boxoffice/thumb-2.jpg" alt="thumb"></li>
-                                <li class="bx-item-c">1</li>
-                                <li class="bx-item-title">
-                                    <h4>X-Men: Apocalypse</h4>
-                                    <span>Action, thriller</span>
-                                </li>
-                                <li class="bx-item-d">1 week</li>
-                                <li class="bx-item-m">1.1m</li>
+
                             </ol>
                         </li>
                         <li class="wpc-box-item" > 

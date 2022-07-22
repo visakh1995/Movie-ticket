@@ -175,8 +175,6 @@
 INNER JOIN bookmyticket.moviepanel_showtimes st ON sh.screen_time_id =st.id
 
 
-
-
 <cfif NOT isDefined("Session.movieTicketCredentials")>
 	<cflocation url="./auth/signin.cfm" addtoken="no" /> 
 <cfelse>

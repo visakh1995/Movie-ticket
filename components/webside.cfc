@@ -55,9 +55,33 @@
         <cfreturn fetchShowCrews> 
     </cffunction>
 
-    
+    <cffunction name="webMovieSchedulesById" access="public">
+        <cfargument name="movieId" type="string" required="yes">
+        <cfquery name="allScheduledList" datasource="cruddb">
+            SELECT sh.id,sh.theater,m.poster,m.movieName,m.genre,th.theaterName,m.releaseDate,m.duration,
+            s.screenName,st.showStartTime,st.showName,sh.endDate,sh.showPriority
+            FROM bookmyticket.moviepanel_movieshowtimes sh
+            INNER JOIN bookmyticket.moviepanel_movies m ON sh.movie =m.id
+            INNER JOIN bookmyticket.moviepanel_teaters th ON sh.theater=th.id 
+            INNER JOIN bookmyticket.moviepanel_screens s ON sh.screen=s.id
+            INNER JOIN bookmyticket.moviepanel_showtimes st ON sh.showName =st.id
+            WHERE m.id = <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.movieId#">
+            GROUP BY th.theaterName
+        </cfquery>
+        <cfreturn allScheduledList>
+    </cffunction>
 
-
-
+    <cffunction name="webMovieScheduleTimesById" access="remote" returnFormat = "json">
+        <cfargument name="theaterId" type="string" required="yes">
+        <cfargument name="movieId" type="string" required="yes">
+        <cfquery name="fetchShowTimes" datasource="cruddb">
+            SELECT s.id, s.movie,s.theater,st.showName,st.showStartTime
+            FROM bookmyticket.moviepanel_movieshowtimes s
+            INNER JOIN bookmyticket.moviepanel_showtimes st ON s.theater = st.teatreId
+            WHERE s.movie =  <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.movieId#"> 
+            AND st.teatreId =  <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.theaterId#">
+        </cfquery>
+        <cfreturn fetchShowTimes> 
+    </cffunction>
 
 </cfcomponent>
