@@ -15,6 +15,10 @@
     <link rel="stylesheet" type="text/css" href="../assets/web/css/packages.min.css">
     <link rel="stylesheet" type="text/css" href="../assets/web/css/default.css">
     <link rel="stylesheet" href="../assets/web/css/web.css">
+
+
+
+
 </head>
 <body class="sticky-menu">
     <div id="loader">
@@ -56,7 +60,7 @@
   <nav class="overlay-menu">
     <ul >
         <li ><a href="home.cfm">Home</a></li>
-        <li><a href="blog.cfm">Shows</a></li>
+        <li><a href="shows.cfm">Shows</a></li>
         <li><a href="single.cfm">About</a></li>
         <li><a href="blog.cfm">Contact</a></li>
         <li><a href="single.cfm">Single</a></li>

@@ -144,9 +144,13 @@
 </div>
 
 <!-- Include jQuery and Scripts -->
+<script src="../assets/js/jquery.min.js"></script> 
 <script type="text/javascript" src="../assets/web/js/jquery.min.js"></script>
 <script type="text/javascript" src="../assets/web/js/packages.min.js"></script>
 <script type="text/javascript" src="../assets/web/js/scripts.min.js"></script>
+<script src="../assets/web/js/webcustom.js"></script> 
 <!-- jQuery easing plugin -->
+
+
 </body>
 </html>

@@ -258,3 +258,13 @@ WHERE sh.id = <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.movi
         </div>
     </div>
 </div>
+
+
+
+<cfset theaterId = movie_schedules.theater>
+<cfinvoke component ="movie-ticket/components.webside"  method="webMovieScheduleTimesById"
+returnVariable = "results">
+    <cfinvokeargument  name="theaterId"  value="#theaterId#">
+    <cfinvokeargument  name="movieId"  value="#movieId#">
+</cfinvoke>
+<cfdump var =#results#>

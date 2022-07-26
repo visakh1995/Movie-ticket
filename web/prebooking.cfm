@@ -1,4 +1,3 @@
-
  <cfinclude template="../theme/web-header.cfm">  
  <cfif isDefined("movieId")>
     <cfset movieId = ToString(ToBinary(movieId))>
@@ -31,24 +30,23 @@
                                                 <span>#movie_schedules.genre#</span>
                                             </li>
                                             <li class="bx-item-m">#movie_schedules.screenName#</li>
-                                            <cfset theaterId = movie_schedules.theater>
-                                            <cfinvoke component ="movie-ticket/components.webside"  method="webMovieScheduleTimesById"
-                                            returnVariable = "results">
-                                                <cfinvokeargument  name="theaterId"  value="#theaterId#">
-                                                <cfinvokeargument  name="movieId"  value="#movieId#">
-                                            </cfinvoke>
-                                            <cfdump var =#results#>
-
                                         
-
                                              <li class="bx-item-d">
-                                                <button class="order btn">#movie_schedules.showStartTime#</button>
+                                                <button  onclick ="return onMovieBookLogin()" 
+                                                class="order btn">#movie_schedules.showStartTime#</button>
                                             </li> 
                                         </ol>
                                     </li>
                                 </cfloop>
                             </cfoutput>    
                             <a href="#order" class="order_btn">test</a>
+                            <cfquery dbtype="query" name="GetSomeUsers">
+                                select showStartTime
+                                from movie_schedules
+                               
+                                </cfquery>
+                                <cfoutput query="GetSomeUsers">
+                                    #showStartTime#<br></cfoutput>
                         </ul>
                     </div>
                 </div>

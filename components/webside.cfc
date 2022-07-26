@@ -66,7 +66,7 @@
             INNER JOIN bookmyticket.moviepanel_screens s ON sh.screen=s.id
             INNER JOIN bookmyticket.moviepanel_showtimes st ON sh.showName =st.id
             WHERE m.id = <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.movieId#">
-            GROUP BY th.theaterName
+            -- GROUP BY th.theaterName
         </cfquery>
         <cfreturn allScheduledList>
     </cffunction>
@@ -83,5 +83,46 @@
         </cfquery>
         <cfreturn fetchShowTimes> 
     </cffunction>
+
+    <cffunction name="dateMovieSelector" access="remote" returnFormat = "json">
+        <cfargument name="selectDate" type="string" required="yes">
+        <cfset local.selDate = #dateFormat(arguments.selectDate,"yyyy-mm-dd")#>      
+        <cfquery name="show_details" datasource="cruddb" result="show_data">
+            SELECT DISTINCT
+                m.movieName,sh.id,m.poster,m.trailerUrl,
+                m.language,m.releaseDate,m.description,
+                m.duration,sh.totalSeats,            
+                sh.endDate,sh.showPriority,
+                sh.id,m.genre,
+                th.theaterName,                  
+                s.screenName,st.showStartTime,
+                st.showName,m.id as m_id,th.id as t_id,s.id as s_id,st.id as st_id
+            FROM bookmyticket.moviepanel_movieshowtimes sh
+            INNER JOIN bookmyticket.moviepanel_movies m ON sh.movie =m.id
+            INNER JOIN bookmyticket.moviepanel_teaters th ON sh.theater=th.id 
+            INNER JOIN bookmyticket.moviepanel_screens s ON sh.screen=s.id
+            INNER JOIN bookmyticket.moviepanel_showtimes st ON sh.showName =st.id
+            WHERE m.releaseDate < <cfqueryparam value="#local.selDate#" cfsqltype="cf_sql_date"> 
+            AND  sh.endDate > <cfqueryparam value="#local.selDate#" cfsqltype="cf_sql_date">
+            OR sh.endDate = <cfqueryparam value="#local.selDate#" cfsqltype="cf_sql_date">   
+            OR  m.releaseDate = <cfqueryparam value="#local.selDate#" cfsqltype="cf_sql_date">         
+            ORDER BY m.movieName
+        </cfquery>  
+    <cfreturn show_details> 
+    </cffunction>
+
+    <cffunction name="authorizeRelocation" access="remote" returnFormat = "json">
+        <cfif isDefined("Session.UsermovieTicketCredentials")>
+        </cfelse>
+
+        </cfif> 
+
+    </cffunction>
+
+    
+
+
+
+    
 
 </cfcomponent>
