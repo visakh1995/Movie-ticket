@@ -36,8 +36,8 @@
             <div class="col-md-6 col-sm-6 col-xs-4">
                 <a href="./" id="logo" title="Tenguu" class="logo-image" data-bg-image="../assets/web/images/logo.png">Tenguu
                 </a>
-                <a href="javascript:;" class="btn">Signup</a>
-                <a href="javascript:;" class="btn">Signin</a>
+                <a href="../web/user-signup.cfm" class="btn">Signup</a>
+                <a href="../web/user-signin.cfm" class="btn">Signin</a>
             </div>
             <div class="col-md-5 col-md-offset-1 col-sm-6 col-xs-8 phl0">
                 <div class="header_author">

@@ -2,3 +2,7 @@ img.cast-pic {
     height: 87px;
     width: 58px;
 }
+
+button.btn.text-black {
+    color: #333;
+}

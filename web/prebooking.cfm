@@ -24,7 +24,9 @@
                                     <li class="wpc-box-item"> 
                                         <ol>
                                             <li class="bx-item-t">
-                                                <img class="cast-pic" src="../uploads/#movie_schedules.poster#" alt="thumb"></li>
+                                                <img class="cast-pic" src="../uploads/#movie_schedules.poster#" 
+                                                alt="thumb">
+                                            </li>
                                             <li class="bx-item-title">
                                                 <h4>#movie_schedules.theaterName#</h4>
                                                 <span>#movie_schedules.genre#</span>
@@ -32,8 +34,13 @@
                                             <li class="bx-item-m">#movie_schedules.screenName#</li>
                                         
                                              <li class="bx-item-d">
-                                                <button  onclick ="return onMovieBookLogin()" 
-                                                class="order btn">#movie_schedules.showStartTime#</button>
+                                                <cfset local.encryptMovieShowTime = ToBase64(movie_schedules.id) />
+                                                <button 
+                                                    class="order btn">
+                                                    <a href="./web_action.cfm?movieShowId=#local.encryptMovieShowTime#">
+                                                        #movie_schedules.showStartTime#
+                                                    </a>
+                                                </button>
                                             </li> 
                                         </ol>
                                     </li>
@@ -43,10 +50,10 @@
                             <cfquery dbtype="query" name="GetSomeUsers">
                                 select showStartTime
                                 from movie_schedules
-                               
-                                </cfquery>
-                                <cfoutput query="GetSomeUsers">
-                                    #showStartTime#<br></cfoutput>
+                            </cfquery>
+                            <cfoutput query="GetSomeUsers">
+                                #showStartTime#<br>
+                            </cfoutput>
                         </ul>
                     </div>
                 </div>

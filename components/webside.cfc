@@ -111,18 +111,113 @@
     <cfreturn show_details> 
     </cffunction>
 
-    <cffunction name="authorizeRelocation" access="remote" returnFormat = "json">
+    <cffunction name="authorizeRelocation" access="remote">
+        <cfargument name="movieShowId" type="string" required="yes">
         <cfif isDefined("Session.UsermovieTicketCredentials")>
-        </cfelse>
-
+            <cflocation addtoken="no" url="../web/seat-selection.cfm?moviesShowId=#arguments.movieShowId#">
+        <cfelse>
+            <cflocation addtoken="no" url="../web/user-signin.cfm">
         </cfif> 
+    </cffunction>
+
+    <!---Authorization --->
+
+    <cffunction name="UserMovieTicketSignin" access="remote" output="true" returnType="string">
+        <cfargument name="email" type="string" required="yes">
+        <cfargument  name="password" type="string" required="yes">
+        <cfset local.encodedPassword = hash("#arguments.password#", "SHA-256", "UTF-8")>
+
+        <cfquery name="userVerifiedDetails" datasource="cruddb">
+            SELECT *FROM bookmyticket.moviepanel_webusers WHERE 
+            email = <cfqueryparam CFSQLType="cf_sql_varchar" value ="#arguments.email#"> AND
+            password = <cfqueryparam CFSQLType="cf_sql_varchar" value ="#local.encodedPassword#"> AND
+            role = <cfqueryparam CFSQLType="cf_sql_varchar" value ="user"> 
+        </cfquery>
+
+        <cfif userVerifiedDetails.RecordCount gt 0>
+            <cfif NOT structKeyExists(Session,"UsermovieTicketCredentials")>
+                <cflock timeout="20" scope="Session" type="Exclusive">
+                    <cfset Session.UsermovieTicketCredentials = structNew()>
+                </cflock>
+            </cfif>
+            <cfif structKeyExists(Session,"UsermovieTicketCredentials")>
+                <cfset Session.UsermovieTicketCredentials["id"] = "#userVerifiedDetails.id#">
+                <cfset Session.UsermovieTicketCredentials["email"] = "#userVerifiedDetails.email#">
+                <cfset Session.UsermovieTicketCredentials["password"] = "#userVerifiedDetails.password#">
+                <cfset Session.UsermovieTicketCredentials["isAuthenticated"] = "True">
+            </cfif>
+            <cflocation addtoken="no"  url="../web/seat-selection.cfm"> 
+        <cfelse>
+            <cfset local.message  ="Invalid username or password">
+            <cfset local.encryptedMessage = ToBase64(local.message) />
+            <cflocation addtoken="no"  url="../web/user-signin.cfm?aMessages=#encryptedMessage#">  
+        </cfif>
 
     </cffunction>
 
+    <cffunction  name="UserMovieTicketSignup" access="remote" output="true" returnType="string">
+
+        <cfargument  name="email" type="string" required="yes">
+        <cfargument  name="password" type="string" required="yes">
+        <cfargument  name="confirmPassword" type="string" required="yes">
+        <cfset local.encodedPassword = hash("#arguments.password#", "SHA-256", "UTF-8")>
+
+        <cfset local.aErrorMessages =  "">
+        <cfif arguments.email EQ '' OR NOT isValid("email",arguments.email)>
+            <cfset local.aErrorMessages = 'Please provide valid email ID'/>
+         </cfif>
+        <cfif arguments.password EQ ''>
+            <cfset local.aErrorMessages = 'Please provide valid password'/>
+        </cfif>
+        <cfif arguments.confirmPassword EQ ''>
+            <cfset local.aErrorMessages = 'Confirm password field cant be empty'/>
+        </cfif>
+        <cfif arguments.confirmPassword NEQ arguments.password>
+            <cfset local.aErrorMessages = 'password does not match!'/>
+        </cfif>
+
+        <cfif len(trim(local.aErrorMessages)) NEQ 0>
+            <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
+            <cflocation addtoken="no"  url="../web/user-signup.cfm?aMessages=#local.encryptedMessage#">
+        <cfelse>
+   
+            <cfparam name="arguments.email" default="">
+            <cfparam name="arguments.password" default="">
+            <cfparam name="arguments.confirmPassword" default="">
+
+            <cfquery name="emailVerify" datasource="cruddb">
+                SELECT *FROM bookmyticket.moviepanel_webusers WHERE email = "#arguments.email#";
+            </cfquery>
+
+            <cfif emailVerify.RecordCount neq 0>
+                <cfset local.aErrorMessages = 'The email already registered'/>
+                <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
+                <cflocation addtoken="no"  url="../web/user-signup.cfm?aMessages=#local.encryptedMessage#">
+            </cfif> 
+
+            <cfquery name="addData" result = result datasource="cruddb">
+                INSERT INTO bookmyticket.moviepanel_webusers(email,password,role,status)
+                VALUES(
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.email#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#local.encodedPassword#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="user">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="1">      
+                )
+            </cfquery>
+            <cfset local.message  ="User registered successfully">
+            <cfset local.encryptedMessage = ToBase64(local.message) />
+            <cflocation addtoken="no"   url="../web/user-signin.cfm?aMessageSuccess=#encryptedMessage#">   
+            </cfif>
+    </cffunction>
+
+    <cffunction name="findAvailableSeats" access="remote">
+        <cfargument name="showMovieId" type="string" required="yes">
+        <cfquery name="fetchShowDataBySeats" datasource="cruddb">
+            SELECT totalSeats FROM bookmyticket.moviepanel_movieshowtimes WHERE 
+            id = <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.showMovieId#">
+        </cfquery>
+        <cfreturn fetchShowDataBySeats> 
+    </cffunction>
+
     
-
-
-
-    
-
 </cfcomponent>
