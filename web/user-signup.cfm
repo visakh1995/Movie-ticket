@@ -16,6 +16,10 @@
                         </div>
                     </cfif>
                     <div class="form-control">
+                        <input type="text" name ="userName" id="username" 
+                        placeholder="Username" required>
+                    </div>
+                    <div class="form-control">
                         <input type="email" name ="email" id="email" 
                         placeholder="Email" required>
                     </div>

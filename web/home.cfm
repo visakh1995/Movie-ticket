@@ -11,12 +11,15 @@
             <li data-target="#headerslider" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
+            <cfloop query = nowShowing>
+                <cfoutput>
+            
             <div class="item active">
-                <div class="fill" data-bg-image="../assets/web/images/header/header.png">
+                <div class="fill" data-bg-image="../uploads/#nowShowing.poster#">
                  <div class="bs-slider-overlay"></div>
                     <div class="container movie-slider-container"> 
                         <div class="row">
-                             <div class="col-sm-12 movie-slider-content"> 
+                            <div class="col-sm-12 movie-slider-content"> 
                                 <div class="slider-content" >
                                     <ul class="subtitle"  data-animation="animated bounceInRight">
                                         <li>Action</li>
@@ -51,6 +54,12 @@
                     </div>
                 </div>
             </div>
+
+        </cfoutput>
+    </cfloop>
+
+
+
         </div>
         <!-- Controls -->
         <a class="carousel-control left" href="#headerslider" data-slide="prev">

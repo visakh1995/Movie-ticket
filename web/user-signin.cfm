@@ -6,12 +6,15 @@
                 <div id="alert"></div>
                 <form method="post" action="../components/webside.cfc?method=UserMovieTicketSignin">
                     <h1><i class="fa-duotone fa-projector"></i>USER SIGNIN</h1>
-                    <cfif isDefined("aMessages")>
-                        <div class="alertClass" id="alertClass">
+                    <cfif isDefined("aMessageSuccess")>
+                        <div>
                             <cfoutput>
-                                <span class="closebtn" onclick="closeAlertBox()">&times</span> 
-                                <cfset showMessage = ToString(ToBinary(aMessages))>
-                                <p>#showMessage#</p>
+                                <cfset showMessageSuccess = ToString(ToBinary(aMessageSuccess))>
+                                <div class="alert alert-primary solid alert-end-icon alert-dismissible fade show mt-3">
+                                    <span><i class="mdi mdi-account-search"></i></span>
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+                                    </button> Success! #showMessageSuccess#
+                                </div>
                             </cfoutput>
                         </div>
                     </cfif>

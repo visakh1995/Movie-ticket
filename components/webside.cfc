@@ -157,12 +157,16 @@
 
     <cffunction  name="UserMovieTicketSignup" access="remote" output="true" returnType="string">
 
-        <cfargument  name="email" type="string" required="yes">
+        <cfargument  name="userName" type="string" required="yes">
+        <cfargument  name="email" type="string" required="yes"> 
         <cfargument  name="password" type="string" required="yes">
         <cfargument  name="confirmPassword" type="string" required="yes">
         <cfset local.encodedPassword = hash("#arguments.password#", "SHA-256", "UTF-8")>
 
         <cfset local.aErrorMessages =  "">
+        <cfif arguments.userName EQ ''>
+            <cfset local.aErrorMessages = 'Please provide valid user name'/>
+         </cfif>
         <cfif arguments.email EQ '' OR NOT isValid("email",arguments.email)>
             <cfset local.aErrorMessages = 'Please provide valid email ID'/>
          </cfif>
@@ -180,10 +184,12 @@
             <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
             <cflocation addtoken="no"  url="../web/user-signup.cfm?aMessages=#local.encryptedMessage#">
         <cfelse>
-   
+            <cfparam name="arguments.userName" default="">
             <cfparam name="arguments.email" default="">
             <cfparam name="arguments.password" default="">
             <cfparam name="arguments.confirmPassword" default="">
+            <cfset local.registered = Now()>
+            <cfset local.registeredOn = DateFormat(local.registered,'yyyy-mm-dd')>
 
             <cfquery name="emailVerify" datasource="cruddb">
                 SELECT *FROM bookmyticket.moviepanel_webusers WHERE email = "#arguments.email#";
@@ -196,14 +202,17 @@
             </cfif> 
 
             <cfquery name="addData" result = result datasource="cruddb">
-                INSERT INTO bookmyticket.moviepanel_webusers(email,password,role,status)
+                INSERT INTO bookmyticket.moviepanel_webusers(userName,email,password,registeredOn,role,status)
                 VALUES(
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.userName#">,
                     <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.email#">,
                     <cfqueryparam  CFSQLType="cf_sql_varchar" value="#local.encodedPassword#">,
+                    <cfqueryparam  CFSQLType="cf_sql_varchar" value="#local.registeredOn#">,
                     <cfqueryparam  CFSQLType="cf_sql_varchar" value="user">,
                     <cfqueryparam  CFSQLType="cf_sql_varchar" value="1">      
                 )
             </cfquery>
+
             <cfset local.message  ="User registered successfully">
             <cfset local.encryptedMessage = ToBase64(local.message) />
             <cflocation addtoken="no"   url="../web/user-signin.cfm?aMessageSuccess=#encryptedMessage#">   

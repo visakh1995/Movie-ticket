@@ -1,4 +1,7 @@
 <cfinclude template="../section/dash-header.cfm">
+<cfset newInstance = createObject("component","movie-ticket/components.users")> 
+<cfset usersList = newInstance.findUsersList()> 
+
 <div class="content-body">
     <div class="container-fluid">
         <div class="row page-titles">
@@ -10,20 +13,27 @@
     <div class="row">
         <div class="col-12">
             <cfif isDefined("aMessageSuccess")>
-                <div class="alertSuccess" id="alertSuccess">
-                  <cfoutput>
-                      <span class="closebtndash" onclick="closeAlertBoxSuccess()">&times</span> 
-                      <cfset showMessageSuccess = ToString(ToBinary(aMessageSuccess))>
-                      <p>#showMessageSuccess#</p>
-                  </cfoutput>
-                </div>
+                <div>
+                    <cfoutput>
+                        <cfset showMessageSuccess = ToString(ToBinary(aMessageSuccess))>
+                        <div class="alert alert-primary solid alert-end-icon alert-dismissible fade show mt-3">
+                            <span><i class="mdi mdi-account-search"></i></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+                            </button> Success! #showMessageSuccess#
+                        </div>
+                    </cfoutput>
+                </di>
             </cfif>
             <cfif isDefined("aMessages")>
-                <div class="alertClass" id="alertClass">
+                <div>
                     <cfoutput>
-                        <span class="closebtn" onclick="closeAlertBox()">&times</span> 
                         <cfset showMessage = ToString(ToBinary(aMessages))>
-                        <p>#showMessage#</p>
+                        <div class="alert alert-danger solid alert-end-icon alert-dismissible fade show">
+                            <span><i class="mdi mdi-help"></i></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="btn-close">
+                            </button>
+                            <strong>Error!</strong> #showMessage#
+                        </div>
                     </cfoutput>
                 </div>
             </cfif>
@@ -45,12 +55,21 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>a</td>
-                                    <td>b</td>
-                                    <td>c</td>
-                                    <td><button class="btn">delete</button></td>
-                                </tr>
+                                <cfoutput>
+                                    <cfloop query = usersList>
+                                        <tr>
+                                            <td>#usersList.userName#</td>
+                                            <td>#usersList.email#</td>
+                                            <td>#usersList.registeredOn#</td>
+                                            <td>
+                                            <button class="btn">
+                                                <a href="./action.cfm?userDelete=#usersList.id#">
+                                                    delete
+                                                </a>
+                                            </button></td>
+                                        </tr>
+                                    </cfloop>
+                                </cfoutput>
                             </tbody>
                         </table>
                     </div>
