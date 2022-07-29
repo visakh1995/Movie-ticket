@@ -38,33 +38,11 @@
                                         <li><span>Type:</span>  <p>#movie_details.movieFormat#</p></li>
                                         <li><span>Release Date:</span> <p>#movie_details.releaseDate#</p></li>
                                     </ul>
-                                    <div class="item-info-rate">
-                                        <div class="chart-cirle">
-                                            <div class="chart-circle-l">
-                                                <div class="circle-chart" data-circle-width="7" data-percent="64" 
-                                                data-text="6.4">
-                                                </div>
-                                                <span>AMDB Rating</span> 
-                                            </div>
-                                            <div class="chart-circle-r">
-                                                <div class="circle-chart" data-circle-width="7" data-percent="84"
-                                                data-text="8.4">
-                                                </div>
-                                                <span>Rotten Rating</span> 
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>                       
                                 <div class="content-footer"> 
-                                    <span>Available time:</span>
-                                    <ul class="mdate"> 
-                                        <li><a href="javascript:;"><i>16:40</i></a></li> 
-                                        <li><a href="javascript:;"><i>18:10</i></a></li> 
-                                        <li><a href="javascript:;"><i>20:20</i></a></li> 
-                                        <li><a href="javascript:;"><i>21:20</i></a></li> 
-                                    </ul> 
                                     <cfset local.encryptId = ToBase64(movie_details.id)/>
-                                    <a href="./prebooking.cfm?movieId=#local.encryptId#" class="btn order text-right"> Buy ticket</a>
+                                    <a href="./prebooking.cfm?movieId=#local.encryptId#" 
+                                    class="btn text-right"> Buy ticket</a>
                                 </div>
                             </div>
                         </div>

@@ -3,8 +3,6 @@
     <cfset this.applicationTimeout = createTimespan(0,2,0,0)/>
     <cfset this.sessionManagement  = "true">
     <cfset this.sessionTimeout = createTimespan(0,0,30,0)/>
-
-
 <cffunction 
     name="OnApplicationStart" 
     access="public" 
@@ -58,15 +56,7 @@
     </cfscript>
 </cffunction>
 
-<cffunction name="onError">
-    <cfargument name="Exception" required=true/>
-    <cfargument type="String" name="EventName" required=true/>
-    <cfscript>
-        writeOutput('<center><h1>An error occurred</h1>
-        <p>Please Contact the developer</p>
-        <p>Error details: #Exception.message#</p></center>');
-    </cfscript>
-</cffunction>
+
 
 <cffunction name="onMissingTemplate">
     <cfargument

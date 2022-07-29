@@ -11,3 +11,9 @@
     <cfset res = dateSelector.authorizeRelocation(movieShowId)>
 </cfif>
 
+<cfif isDefined("url.urlWebSignout")>
+    <cfset signOut = url.urlWebSignout>
+    <cfset signouts = createObject("component","movie-ticket/components.webside")> 
+    <cfset res = signouts.webUserSignout()>
+</cfif>
+

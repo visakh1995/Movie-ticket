@@ -11,67 +11,41 @@
             <li data-target="#headerslider" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner" role="listbox">
-            <cfloop query = nowShowing>
-                <cfoutput>
-            
-            <div class="item active">
-                <div class="fill" data-bg-image="../uploads/#nowShowing.poster#">
-                 <div class="bs-slider-overlay"></div>
-                    <div class="container movie-slider-container"> 
-                        <div class="row">
-                            <div class="col-sm-12 movie-slider-content"> 
-                                <div class="slider-content" >
-                                    <ul class="subtitle"  data-animation="animated bounceInRight">
-                                        <li>Action</li>
-                                        <li>Science Fiction</li>
-                                        <li>Adventure</li>
-                                    </ul>
-                                    <div class="title" data-animation="animated bounceInRight" >Lord of the rings: The return of the kings <i>(2017)</i></div>
-                                    <div class="slide_right" data-animation="animated bounceInRight">
-                                        <a href="javascript:;" class="btn-trailer">watch trailer</a> <a href="javascript:;" class="btn-ticket">buy ticket</a>
-                                        <ul class="award-logo">
-                                            <li><img src="../assets/web/images/header/icon1.png" alt="icon" ></li>
-                                            <li><img src="../assets/web/images/header/icon2.png" alt="icon"></li>
-                                            <li><img src="../assets/web/images/header/icon3.png" alt="icon"></li>
-                                            <li><img src="../assets/web/images/header/icon4.png" alt="icon"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="chart-cirle">
-                                        <div class="chart-circle-l" data-animation="animated bounceInUp">
-                                            <div class="circle-chart" data-circle-width="7" data-percent="64" data-text="6.4" >
+                    <div class="item active">
+                        <div class="fill" data-bg-image="../assets/web/images/header-slider.jpg">
+                        <div class="bs-slider-overlay"></div>
+                            <div class="container movie-slider-container"> 
+                                <div class="row">
+                                    <div class="col-sm-12 movie-slider-content"> 
+                                        <div class="slider-content" >
+                                            <ul class="subtitle"  data-animation="animated bounceInRight">
+                                                <li></li>
+                                                <li></li>
+                                            </ul>
+                                            <div class="title" data-animation="animated bounceInRight">
+                                                BOOK YOUR TICKETS
                                             </div>
-                                            <span>IMDB Ratffing</span>
-                                        </div>
-                                        <div class="chart-circle-r" data-animation="animated bounceInUp">
-                                            <div class="circle-chart" data-circle-width="7" data-percent="84" data-text="8.4" >
+                                            <div class="slide_right" data-animation="animated bounceInRight">
+                                                <a href="javascript:;" class="btn">Feel the experience</a> 
+                                                <a href="javascript:;" class="btn">stay tune</a>
+                                                <ul class="award-logo">
+                                                    <li><img src="../assets/web/images/header/icon1.png" alt="icon" ></li>
+                                                    <li><img src="../assets/web/images/header/icon2.png" alt="icon"></li>
+                                                    <li><img src="../assets/web/images/header/icon3.png" alt="icon"></li>
+                                                    <li><img src="../assets/web/images/header/icon4.png" alt="icon"></li>
+                                                </ul>
                                             </div>
-                                            <span>Rotten Rating</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-        </cfoutput>
-    </cfloop>
-
-
 
         </div>
-        <!-- Controls -->
-        <a class="carousel-control left" href="#headerslider" data-slide="prev">
-            <i class="fa fa-angle-left"></i>
-        </a>
-        <a class="carousel-control right" href="#headerslider" data-slide="next">
-            <i class="fa fa-angle-right"></i>
-        </a>
     </div>  
 </div>
       
-         
 <section class="section-content">
     <div class="container-fluid pv11 ">
         <div class="row">
@@ -87,7 +61,9 @@
                                             <div class="entry-hover">
                                                 <div class="entry-actions">
                                                    <cfset local.encryptId = ToBase64(nowShowing.id)/>
-                                                    <a href="./movie_details.cfm?movieId=#local.encryptId#" class="">Details</a>
+                                                    <a href="./movie_details.cfm?movieId=#local.encryptId#" class="">
+                                                        Details
+                                                    </a>
                                                 </div>
                                             </div>
                                             <div class="entry-desc">
@@ -193,44 +169,7 @@
             </div>
         </div>
     </div>       
-
-<div class="section-content service pvb0">
-        <div class="container  pv12">
-            <div class="row">
-                <div class="col-sm-12">
-                 <h3 class="heading text-center mb9">Your experience is gonna be exquisite.</h3>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4 ph0">
-                    <h2>IMAX®</h2>
-                    <p> IMAX® provides an exceptional movie experience with ../assets/web/images of immersive size, striking clarity.</p>
-                </div>
-                <div class="col-sm-4 ph0">
-                    <h2>REALD™ 3D</h2>
-                    <p>RealD™ Digital 3D is the new generation of entertainment, with crisp, bright, ultra-realistic ../assets/web/images.</p>
-                </div>
-                <div class="col-sm-4 ph0">
-                    <h2>Dolby®  Laboratories</h2>
-                    <p>(NYSE:DLB) is the global leader in technologies that are essential elements in the best entertainment.</p>
-                </div>
-            </div>
-            <div class="row mt8">
-                <div class="col-sm-4 ph0">
-                    <h2>Great Environment</h2>
-                    <p> IMAX® provides an exceptional movie experience with ../assets/web/images of immersive size, striking clarity.</p>
-                </div>
-                <div class="col-sm-4 ph0">
-                    <h2>Entertainment Center</h2>
-                    <p>RealD™ Digital 3D is the new generation of entertainment, with crisp, bright, ultra-realistic ../assets/web/images.</p>
-                </div>
-                <div class="col-sm-4 ph0">
-                    <h2> So Much More...</h2>
-                    <p>(NYSE:DLB) is the global leader in technologies that are essential elements in the best entertainment.</p>
-                </div>
-            </div>
-        </div>
-    </div>        
+     
     <div class="fullscreen-section bg-black pvb0">
         <div class="container wpc-boxoffice pv8">
             <div class="row">
@@ -240,7 +179,6 @@
                         <li class="wpc-box-item" > 
                             <ol>
                                 <li class="bx-item-t"><img src="../assets/web/images/boxoffice/thumb-2.jpg" alt="thumb"></li>
-
                             </ol>
                         </li>
                         <li class="wpc-box-item" > 

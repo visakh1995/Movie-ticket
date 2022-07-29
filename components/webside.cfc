@@ -135,18 +135,22 @@
         </cfquery>
 
         <cfif userVerifiedDetails.RecordCount gt 0>
-            <cfif NOT structKeyExists(Session,"UsermovieTicketCredentials")>
+            <cfif NOT structKeyExists(Session,"UserwebMovieTicketCredentials")>
                 <cflock timeout="20" scope="Session" type="Exclusive">
-                    <cfset Session.UsermovieTicketCredentials = structNew()>
+                    <cfset Session.UserwebMovieTicketCredentials = structNew()>
                 </cflock>
             </cfif>
-            <cfif structKeyExists(Session,"UsermovieTicketCredentials")>
-                <cfset Session.UsermovieTicketCredentials["id"] = "#userVerifiedDetails.id#">
-                <cfset Session.UsermovieTicketCredentials["email"] = "#userVerifiedDetails.email#">
-                <cfset Session.UsermovieTicketCredentials["password"] = "#userVerifiedDetails.password#">
-                <cfset Session.UsermovieTicketCredentials["isAuthenticated"] = "True">
+            <cfif structKeyExists(Session,"UserwebMovieTicketCredentials")>
+                <cfset Session.UserwebMovieTicketCredentials["id"] = "#userVerifiedDetails.id#">
+                <cfset Session.UserwebMovieTicketCredentials["email"] = "#userVerifiedDetails.email#">
+                <cfset Session.UserwebMovieTicketCredentials["password"] = "#userVerifiedDetails.password#">
+                <cfset Session.UserwebMovieTicketCredentials["isAuthenticated"] = "True">
+            <cfelse>
+                <cfdump var ="tap">
+                <cfabort>
             </cfif>
-            <cflocation addtoken="no"  url="../web/seat-selection.cfm"> 
+
+            <cflocation addtoken="no"  url="../web/home.cfm"> 
         <cfelse>
             <cfset local.message  ="Invalid username or password">
             <cfset local.encryptedMessage = ToBase64(local.message) />
@@ -217,6 +221,11 @@
             <cfset local.encryptedMessage = ToBase64(local.message) />
             <cflocation addtoken="no"   url="../web/user-signin.cfm?aMessageSuccess=#encryptedMessage#">   
             </cfif>
+    </cffunction>
+
+    <cffunction  name="webUserSignout" access="remote">
+        <cfset structDelete(Session,"UserwebMovieTicketCredentials")>
+        <cflocation addtoken="no" url ="../web/home.cfm">
     </cffunction>
 
     <cffunction name="findAvailableSeats" access="remote">
