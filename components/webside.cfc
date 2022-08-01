@@ -113,7 +113,7 @@
 
     <cffunction name="authorizeRelocation" access="remote">
         <cfargument name="movieShowId" type="string" required="yes">
-        <cfif isDefined("Session.UsermovieTicketCredentials")>
+        <cfif isDefined("Session.UserwebMovieTicketCredentials")>
             <cflocation addtoken="no" url="../web/seat-selection.cfm?moviesShowId=#arguments.movieShowId#">
         <cfelse>
             <cflocation addtoken="no" url="../web/user-signin.cfm">
@@ -150,7 +150,7 @@
                 <cfabort>
             </cfif>
 
-            <cflocation addtoken="no"  url="../web/home.cfm"> 
+            <cflocation addtoken="no"  url="../web/seat-selection.cfm"> 
         <cfelse>
             <cfset local.message  ="Invalid username or password">
             <cfset local.encryptedMessage = ToBase64(local.message) />
@@ -236,6 +236,32 @@
         </cfquery>
         <cfreturn fetchShowDataBySeats> 
     </cffunction>
+
+    <cffunction  name="ticketBooking" access="remote">
+        <cfargument name="seats" type="string" required="yes">
+        <cfargument name="movieShowId" type="string" required="yes">
+        <cfset local.seatCount = ToBase64(arguments.seats) />
+        <cfset local.movieShowId = ToBase64(arguments.movieShowId) />
+        <cflocation  addtoken="no" 
+        url="../web/ticket-booking.cfm?seatCount=#local.seatCount#&movieShowId=#local.movieShowId#">
+    </cffunction>
+
+    <cffunction  name="webMovieFindBookingDetails" access="remote">
+        <cfargument name="movieShowId" type="string" required="yes">
+        <cfset local.webMovieShowId = ToString(ToBinary(arguments.movieShowId))>
+        <cfquery name="webTicketDetailJoinList" datasource="cruddb">
+            SELECT sh.id,m.poster,m.movieName,th.theaterName,m.releaseDate,m.duration,
+            s.screenName,s.silverRate,s.goldRate,st.showStartTime,st.showName,sh.endDate,sh.showPriority
+            FROM bookmyticket.moviepanel_movieshowtimes sh
+            INNER JOIN bookmyticket.moviepanel_movies m ON sh.movie =m.id
+            INNER JOIN bookmyticket.moviepanel_teaters th ON sh.theater=th.id 
+            INNER JOIN bookmyticket.moviepanel_screens s ON sh.screen=s.id
+            INNER JOIN bookmyticket.moviepanel_showtimes st ON sh.showName =st.id
+            WHERE sh.id =  <cfqueryparam  CFSQLType = "cf_sql_integer" value="#local.webMovieShowId#"> 
+        </cfquery>
+        <cfreturn webTicketDetailJoinList>
+    </cffunction>
+    
 
     
 </cfcomponent>

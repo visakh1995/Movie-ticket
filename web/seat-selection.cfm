@@ -28,9 +28,12 @@
                                 <h4 class="modal-title">Welcome ! plan your seating.</h4>
                             </div>
                             <div class="modal-body">
-                                <form method="post" action="../components/webside.cfc?method=UserMovieTicketSignin">
+                                <form method="post" action="../components/webside.cfc?method=ticketBooking">
                                     <input type="number" class="form-control" name ="seats" id="seats" 
                                     placeholder="Enter number of seats required" required><br>
+                                    <cfif isDefined("moviesShowId")>
+                                    <input type="hidden" name="movieShowId" value=<cfoutput>#showMovieId#</cfoutput>>
+                                    </cfif>
                                     <button type="submit" class="btn text-black">Seats plan</button>
                                     <cfif isDefined("totalSeatsAvail")>
                                         <cfoutput>

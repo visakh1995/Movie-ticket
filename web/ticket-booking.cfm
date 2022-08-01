@@ -15,6 +15,15 @@
 </head>
 
 <body>
+
+<cfif isDefined("movieShowId")>
+	<cfset webSeatCount = ToString(ToBinary(seatCount))>
+	<cfset webMovieShowId = ToString(ToBinary(movieShowId))>
+	<cfset webBookingDetailsById = createObject("component","movie-ticket/components.webside")> 
+	<cfset movie_details = webBookingDetailsById.webMovieFindBookingDetails(movieShowId)>
+</cfif>
+
+
 <div class="content">
 	<h2>Seat Booking</h2>
 	<div class="main">
@@ -22,40 +31,69 @@
 			<div id="seat-map">
 				<div class="front">SCREEN</div>					
 			</div>
-			<div class="booking-details">
-				<ul class="book-left">
-					<li>Movie </li>
-					<li>Time </li>
-					<li>Tickets</li>
-					<li>Total</li>
-					<li>Selected Seats</li>
-				</ul>
-				<ul class="book-right">
-					<li>: Commando 3</li>
-					<li>: April 12, 22:00</li>
-					<li>: <span id="counter">0</span></li>
-					<li>: <b><i>RS.</i><span id="total">0</span></b></li>
-				</ul>
-				<div class="clear"></div>
-				<ul id="selected-seats" class="scrollbar scrollbar1"></ul>
-			
-						
-				<div id="legend"></div>
-			</div>
+			<form id="form">
+				<div class="booking-details">
+					<ul class="book-left">
+						<li>Movie</li>
+						<li>Date </li>
+						<li>Time </li>
+						<li>Tickets</li>
+						<li>Total</li>
+						<li>Selected Seats</li>
+					</ul>
+					<cfoutput>
+						<ul class="book-right">
+							<li>: #movie_details.movieName#</li>
+							<li>: #DateFormat(Now())#</li>
+							<li>: #movie_details.showStartTime#</li>
+							<li>: <span id="counter">0</span></li>
+							<li>: <b><i>RS.</i><span id="total">0</span></b></li>
+						</ul>
+					</cfoutput>
+					<div class="clear"></div>
+					<ul id="selected-seats" class="scrollbar scrollbar1"></ul>
+					<div id="legend"></div>
+				</div>
+				<cfoutput>
+				<input type="hidden" value="#movie_details.silverRate#" id="silverPrice">
+
+				<input type="hidden" name="userId" value="2">
+				<input type="hidden" name="movieShowTimeId" value="#webMovieShowId#">
+				<input type="hidden" name="ticketCount" value="#webSeatCount#">
+				<input type="text" name="selectedSeats" id="selectedSeats">
+				<input type="hidden" name="totalPrice" id="total" value="">
+				<input type="hidden" name="bookingTime" value="#movie_details.showStartTime#">
+
+				</cfoutput>
+				<fieldset>
+					<br>
+					<input type="submit" name="next-step" class="next-step" value="Confirm Selection" />
+					<input type="button" name="previous-step" class="previous-step" value="Back" />
+				</fieldset>
+				
+
+
+
+			</form>
 
 			<script type="text/javascript">
-				var price = 110; //price
+				var priceValue = $('#silverPrice').val();
+				// alert(price);
+				var price =priceValue;
 				$(document).ready(function () {
+
+
 					var $cart = $('#selected-seats'), //Sitting Area
 						$counter = $('#counter'), //Votes
 						$total = $('#total'); //Total money
+						// $seatNr = $('#selectedSeats');
 
 					var sc = $('#seat-map').seatCharts({
 						map: [ //Seating chart
 							'aaaaaaaaaa',
 							'aaaaaaaaaa',
 							'__________',
-							'aaaaaaaa__',
+							'aaaaaaaaaa',
 							'aaaaaaaaaa',
 							'aaaaaaaaaa',
 							'aaaaaaaaaa',
@@ -84,7 +122,18 @@
 									.data('seatId', this.settings.id)
 									.appendTo($cart);
 
+								$seatId = $((this.settings.row + 1) + '_' + this.settings.label)
+								.attr('id', + this.settings.id)
+								.data('seatId', this.settings.id);
+								
+								
+								$seatNumbers = $seatId.selector;
+		
+
+								$('#selectedSeats').append($($seatNumbers).val());
+
 								$counter.text(sc.find('selected').length + 1);
+							
 								$total.text(recalculateTotal(sc) + price);
 
 								return 'selected';
@@ -122,6 +171,9 @@
 			</script>
 		</div>
 	</div>
+
+
+
 	<script type="text/javascript" src="../assets/web/booking/js/theme-change-seat-sel.js"></script>
 	<script src="../assets/web/booking/js/jquery.nicescroll.js"></script>
 	<script src="../assets/web/booking/js/scripts.js"></script>
