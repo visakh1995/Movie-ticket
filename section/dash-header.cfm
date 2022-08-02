@@ -63,7 +63,7 @@
 							<img src="../assets/dash/images/profile/pic.png" width="20" alt="">
 							<div class="header-info ms-3">
 								<span class="font-w600 ">Hi,
-                                <b><cfoutput>#Session.movieTicketCredentials.userName#</cfoutput></b></span>
+<!---                                 <b><cfoutput>#Session.movieTicketCredentials.userName#</cfoutput></b></span> --->
 							</div>
 						</a>
 						<div class="dropdown-menu dropdown-menu-end">

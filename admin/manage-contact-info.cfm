@@ -1,4 +1,7 @@
 <cfinclude template="../section/dash-header.cfm">
+<cfset newInstance = createObject("component","movie-ticket/components.users")> 
+<cfset contactsList = newInstance.findContactsList()> 
+
 <div class="content-body">
     <div class="container-fluid">
         <div class="row page-titles">
@@ -47,13 +50,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>a</td>
-                                    <td>b</td>
-                                    <td>c</td>
-                                    <td>b</td>
-                                    <td>c</td>
-                                </tr>
+                                <cfoutput>
+                                    <cfloop query = contactsList>
+                                        <tr>
+                                            <td>#contactsList.name#</td>
+                                            <td>#contactsList.email#</td>
+                                            <td>#contactsList.subject#</td>
+                                            <td>#contactsList.message#</td>
+                                            <td>#contactsList.submitDate#</td>
+                                        </tr>
+                                    </cfloop>
+                                </cfoutput>
                             </tbody>
                         </table>
                     </div>

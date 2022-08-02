@@ -40,14 +40,14 @@
                     <form class="contact_form transparent">
                         <div class="row">
                             <div class="col-sm-12">
-                                <input type="text" class="inputValidation" name="name" placeholder="Name *">
+                                <input type="text" class="" name="name" placeholder="Name *">
                             </div>
                             <div class="col-sm-12">
-                                <input type="text" class="inputValidation" name="email" placeholder="Email *">
+                                <input type="text" class="" name="email" placeholder="Email *">
                             </div>
                             <div class="col-sm-12 ">
-                                <textarea class="inputValidation" placeholder="Message *"></textarea>
-                                <button type="submit" class="button fill rectangle">Send to us</button>
+                                <textarea class="" placeholder="Message *"></textarea>
+                                <button type="button" class="button fill rectangle">Send to us</button>
                             </div>
                         </div>
                     </form>

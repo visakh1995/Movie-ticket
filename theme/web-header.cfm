@@ -59,8 +59,8 @@
                                 <ul>
                                     <li ><a href="home.cfm">Home</a></li>
                                     <li><a href="shows.cfm">Shows</a></li>
-                                    <li><a href="single.cfm">About</a></li>
-                                    <li><a href="blog.cfm">Contact</a></li>
+                                    <li><a href="about.cfm">About</a></li>
+                                    <li><a href="contact-us.cfm">Contact</a></li>
                                 </ul>
                             </nav>
                         </div>            

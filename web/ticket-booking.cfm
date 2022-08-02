@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -23,7 +24,7 @@
 	<cfset movie_details = webBookingDetailsById.webMovieFindBookingDetails(movieShowId)>
 </cfif>
 
-
+<br><br><br><br><br>
 <div class="content">
 	<h2>Seat Booking</h2>
 	<div class="main">
@@ -58,35 +59,35 @@
 				<input type="hidden" value="#movie_details.silverRate#" id="silverPrice">
 
 				<input type="hidden" name="userId" value="2">
-				<input type="hidden" name="movieShowTimeId" value="#webMovieShowId#">
-				<input type="hidden" name="ticketCount" value="#webSeatCount#">
-				<input type="text" name="selectedSeats" id="selectedSeats">
+				<input type="hidden" name="movieShowTimeId" id="movie_show_time_id" value="#webMovieShowId#">
+				<input type="hidden" name="ticketCount" id="web_seat_count" value="#webSeatCount#">
+				<input type="text" name="selectedSeats" id="selectedSeats" value="">
 				<input type="hidden" name="totalPrice" id="total" value="">
 				<input type="hidden" name="bookingTime" value="#movie_details.showStartTime#">
+
+				<!--- <p id="selectedSeats"></p> --->
 
 				</cfoutput>
 				<fieldset>
 					<br>
-					<input type="submit" name="next-step" class="next-step" value="Confirm Selection" />
+					<input type="submit" name="next-step" class="confirm next-step" value="Confirm Selection" />
 					<input type="button" name="previous-step" class="previous-step" value="Back" />
 				</fieldset>
-				
-
-
-
+			
 			</form>
 
 			<script type="text/javascript">
-				var priceValue = $('#silverPrice').val();
+				// var priceValue = $('#silverPrice').val();
 				// alert(price);
-				var price =priceValue;
+				var price = 110;
+				var seatNumbers = [];
 				$(document).ready(function () {
 
 
 					var $cart = $('#selected-seats'), //Sitting Area
 						$counter = $('#counter'), //Votes
 						$total = $('#total'); //Total money
-						// $seatNr = $('#selectedSeats');
+						
 
 					var sc = $('#seat-map').seatCharts({
 						map: [ //Seating chart
@@ -125,16 +126,13 @@
 								$seatId = $((this.settings.row + 1) + '_' + this.settings.label)
 								.attr('id', + this.settings.id)
 								.data('seatId', this.settings.id);
-								
-								
-								$seatNumbers = $seatId.selector;
-		
 
-								$('#selectedSeats').append($($seatNumbers).val());
-
+								seatNumbers.push($seatId.selector);
+								
 								$counter.text(sc.find('selected').length + 1);
-							
 								$total.text(recalculateTotal(sc) + price);
+								console.log($total.text(recalculateTotal(sc) + price));
+								confirmSeats(seatNumbers);
 
 								return 'selected';
 							} else if (this.status() == 'selected') { //Checked
@@ -165,18 +163,42 @@
 					sc.find('selected').each(function () {
 						total += price;
 					});
-
 					return total;
 				}
+				function confirmSeats(seats) {
+
+					$('.confirm').on('click',function(){
+    				var priceValue = $('#silverPrice').val();
+					var movie_show_time_id = $('#movie_show_time_id').val();
+					var web_seat_count = $('#web_seat_count').val();
+					var sel_seats = seats;
+					var total = $('#total').val();  
+
+					$.ajax({   
+						url: "../components/webside.cfc",
+						type: 'get',
+						dataType:"json",
+						data:{
+						method:"saveUserSeatInfo",
+						theatre_id:theatre_id              
+						},
+						success: function(data)
+						{   
+							           
+						}         
+					});  
+				});
+
+				};
 			</script>
 		</div>
 	</div>
-
-
-
 	<script type="text/javascript" src="../assets/web/booking/js/theme-change-seat-sel.js"></script>
 	<script src="../assets/web/booking/js/jquery.nicescroll.js"></script>
 	<script src="../assets/web/booking/js/scripts.js"></script>
+
+
 </body>
 
 </html>
+

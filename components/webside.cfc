@@ -261,7 +261,7 @@
         </cfquery>
         <cfreturn webTicketDetailJoinList>
     </cffunction>
-    
 
-    
+   
+
 </cfcomponent>
