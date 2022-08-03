@@ -186,6 +186,7 @@
                     "mousewheel" == c ? (g.deltaY = -0.025 * b.wheelDelta, b.wheelDeltaX && (g.deltaX = -0.025 * b.wheelDeltaX)) : g.deltaY = b.detail;
                     return f.call(d, g)
                 }, g)
+                
             }
 
             function t(d, c, f) {

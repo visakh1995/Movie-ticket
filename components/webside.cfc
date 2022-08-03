@@ -262,6 +262,44 @@
         <cfreturn webTicketDetailJoinList>
     </cffunction>
 
+    <cffunction name="saveUserSeatInfo" access="remote">
+        <cfargument name="movie_show_time_id" type="integer" required="yes">
+        <cfargument name="seats" type="string" required="yes">
+        <cfargument name="ticket_count" type="integer" required="yes">
+        <cfset local.bookTime = dateFormat(Now())>
+
+        <cfif isDefined("Session.UserwebMovieTicketCredentials.id") >
+            <cfset local.userId = #Session.UserwebMovieTicketCredentials.id#>
+        <cfelse>
+            <cfset local.userId = 0>
+        </cfif>
+
+        <cfquery name="addData" result = result datasource="cruddb">
+            INSERT INTO bookmyticket.moviepanel_reservation(userId,movieShowTimeId,ticketCount,selectedSeats,
+            totalPrice,bookingTime,bookingStatus)
+            VALUES(
+                <cfqueryparam  CFSQLType="cf_sql_varchar" value="#local.userId#">,
+                <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.movie_show_time_id#">,
+                <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.ticket_count#">,
+                <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.seats#">,
+                <cfqueryparam  CFSQLType="cf_sql_varchar" value="0000">,
+                <cfqueryparam  CFSQLType="cf_sql_varchar" value="#local.bookTime#">,
+                <cfqueryparam  CFSQLType="cf_sql_varchar" value="onHold">
+            )
+        </cfquery>
+        <cflocation  addtoken="no" 
+        url="../web/ticket-booking.cfm?seatCount=#arguments.ticket_count#&movieShowId=#arguments.movie_show_time_id#">
+    </cffunction>
+
+    <cffunction name="webMovieTheaterFilledSeats" datasource="cruddb">
+        <cfquery name="filledSeats" datasource="cruddb">
+            SELECT selectedSeats FROM bookmyticket.moviepanel_reservation 
+        </cfquery>
+        <cfreturn filledSeats>
+    </cffunction>
+
+    
+
    
 
 </cfcomponent>
