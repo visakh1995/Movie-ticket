@@ -268,3 +268,166 @@ returnVariable = "results">
     <cfinvokeargument  name="movieId"  value="#movieId#">
 </cfinvoke>
 <cfdump var =#results#>
+
+
+
+<cfloop index="item" from="1" to="#filledSeats.recordCount#" >
+    <cfoutput>#item#
+    
+    <cfset seats = filledSeats.selectedSeats[item]>
+        var #toScript(seats, "jsVariable")#
+        
+        </cfoutput>
+        <script>
+         alert(jsVariable);
+            sc.get(jsVariable).status('unavailable'); 
+        </script>
+        
+</cfloop>
+
+<cfloop from="1" to="#ArrayLen(storeSeats)#" index="i">
+    <cfoutput>
+    <cfloop from="1" to="#ArrayLen(storeSeats[i])#" index="j">
+        Album: #i# Song #j#: #storeSeats[i][j]#</br>
+    </cfloop>
+    </cfoutput>
+</cfloop>
+
+
+for (var i = 1; i < <cfoutput>#filledSeats.recordCount#</cfoutput>; i++){
+    // console.log(<cfoutput>#filledSeats.selectedSeats#</cfoutput>);
+    // console.log("countValue" + countValue);
+    var cube = <cfoutput>#filledSeats.selectedSeats#</cfoutput>
+    for(var j = 0; j < cube.length; j++) {
+        // console.log(cube[i][j]);
+    }
+    // var seats = <cfoutput>#filledSeats.selectedSeats#</cfoutput>;
+    // sc.get(seats).status('unavailable');
+
+}
+
+
+
+console.log("here it is" + <cfoutput>#storeSeats[1]#</cfoutput>)
+let arrayCount = <cfoutput>#ArrayLen(storeSeats)#</cfoutput>;
+
+
+
+
+let countValue = <cfoutput>#filledSeats.recordCount#</cfoutput>;
+// console.log(countValue);
+for (var i = 1; i < countValue; i++){
+    let iterator = i;
+
+    // alert(iterator);
+    retrieveIterator(iterator);
+
+
+
+    // first this iterator assign to id field
+    // $iter.text(iterator);
+    // document.getElementById("keyValue").value = iterator;
+    // fetch that id using document.get element by id
+    // var trying = <cfoutput>#filledSeats.selectedSeats[Session.movieKeyValues.keys]#</cfoutput>
+    console.log(i);
+
+    // console.log("test" + key);
+}
+
+<cfloop index="item" from="1" to="#filledSeats.recordCount#" >
+<cfoutput>#item#
+
+<cfset seats = filledSeats.selectedSeats[item]>
+    var #toScript(seats, "jsVariable")#
+    
+    </cfoutput>
+    // alert(jsVariable);
+        sc.get(jsVariable).status('unavailable'); 
+    
+</cfloop>
+
+
+<cfoutput>
+    <cfloop index="item" from="1" to="#filledSeats.recordCount#" >
+<!--- 				The loop index is <cfoutput>#item#</cfoutput> --->
+        <cfset seats = filledSeats.selectedSeats[item]>
+<!--- 				<cfdump var ="#seats#"> --->
+<!--- 				sc.get(seats).status('unavailable'); --->
+    </cfloop>
+</cfoutput>
+
+
+
+
+
+
+
+
+<cfset thisString="hello world">
+<script type="text/javascript" language="JavaScript">
+<cfoutput>
+// var #toScript(thisString, "jsVar")#;
+</cfoutput>
+// alert(jsVar);
+</script>
+
+<!--- 		<cfif isDefined("Session.movieKeyValues")> --->
+<!--- 			<cfset key = Session.movieKeyValues.keys> --->
+<!--- 			<cfdump var ="#key#"> --->
+<!--- 		<cfelse> --->
+<!--- 			<cfdump var="didnt find it yet"> --->
+<!--- 		</cfif> --->
+
+<!--- <cfdump var = #filledSeats.selectedSeats[2]#> --->
+<cfset storeSeats = arrayNew(1)>
+<cfloop query = filledSeats>
+<!--- 			<cfdump var="#filledSeats.selectedSeats#"><br><br> --->
+     <cfset arrayAppend(storeSeats, #filledSeats.selectedSeats#)> 
+</cfloop>
+
+<cfoutput>
+    <cfloop array="#storeSeats#" index="foo">
+        <cfloop index="item" from="1" to="#filledSeats.recordCount#" >
+            #storeSeats[item]# 
+        </cfloop>
+    </cfloop>
+</cfoutput>
+
+
+<cfdump var = #deserializeJSON(storeSeats[1])#>
+<cfloop from="1" to="#filledSeats.recordCount#" index="i">
+    <cfoutput>
+<!--- 				<cfdump var =#i#> --->
+<!--- 				<cfdump var =#ArrayLen(deserializeJSON(storeSeats[i]))#> --->
+    <cfloop from="1" to="#ArrayLen(deserializeJSON(storeSeats[i]))#" index="j">
+<!--- 				#filledSeats.selectedSeats[i][j]#</br> --->
+                Album: #i# Song #j#: #filledSeats.selectedSeats[i][j]#</br> 
+
+    </cfloop>
+    </cfoutput>
+</cfloop>
+
+<cfloop array="#storeSeats#" index="i">
+    <cfoutput>
+     The population of #i#<br>
+    </cfoutput>
+ </cfloop>
+
+
+
+
+
+-- --------------------------------------------------------------------------
+
+
+<cfloop index="item" from="1" to="#filledSeats.recordCount#" >
+    <cfset seatByPerson = filledSeats.selectedSeats[item]>
+    <cfset local.parsedData = DeserializeJSON(seatByPerson)>
+    <cfloop index="its" from="1" to="#ArrayLen(local.parsedData)#">
+        <cfset local.seatByPesonIn = local.parsedData[its]>
+        <cfset scValues = "' "&local.seatByPesonIn & " ',">
+    </cfloop>	
+</cfloop>
+
+
+

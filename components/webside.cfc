@@ -266,6 +266,8 @@
         <cfargument name="movie_show_time_id" type="integer" required="yes">
         <cfargument name="seats" type="string" required="yes">
         <cfargument name="ticket_count" type="integer" required="yes">
+        <cfargument name="total" type="integer" required="yes">
+
         <cfset local.bookTime = dateFormat(Now())>
 
         <cfif isDefined("Session.UserwebMovieTicketCredentials.id") >
@@ -282,20 +284,32 @@
                 <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.movie_show_time_id#">,
                 <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.ticket_count#">,
                 <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.seats#">,
-                <cfqueryparam  CFSQLType="cf_sql_varchar" value="0000">,
+                <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.total#">,
                 <cfqueryparam  CFSQLType="cf_sql_varchar" value="#local.bookTime#">,
                 <cfqueryparam  CFSQLType="cf_sql_varchar" value="onHold">
             )
         </cfquery>
-        <cflocation  addtoken="no" 
-        url="../web/ticket-booking.cfm?seatCount=#arguments.ticket_count#&movieShowId=#arguments.movie_show_time_id#">
+        <cfreturn "success"> 
+
     </cffunction>
 
     <cffunction name="webMovieTheaterFilledSeats" datasource="cruddb">
         <cfquery name="filledSeats" datasource="cruddb">
-            SELECT selectedSeats FROM bookmyticket.moviepanel_reservation 
+            SELECT * FROM bookmyticket.moviepanel_reservation 
         </cfquery>
         <cfreturn filledSeats>
+    </cffunction>
+
+    <cffunction name="retrieveKey" access="remote">
+        <cfargument name="key" type="integer" required="yes">
+        <cfif NOT structKeyExists(Session,"movieKeyValues")>
+            <cflock timeout="20" scope="Session" type="Exclusive">
+                <cfset Session.movieKeyValues = structNew()>
+            </cflock>
+        </cfif>
+        <cfif structKeyExists(Session,"movieKeyValues")>
+            <cfset Session.movieKeyValues["keys"] = "#arguments.key#">
+        </cfif>
     </cffunction>
 
     

@@ -17,6 +17,7 @@
 		<cfset webBookingDetailsById = createObject("component","movie-ticket/components.webside")> 
 		<cfset movie_details = webBookingDetailsById.webMovieFindBookingDetails(movieShowId)>
 		<cfset filledSeats = webBookingDetailsById.webMovieTheaterFilledSeats()>
+		
 	</cfif>
 
 	<div class="content">
@@ -67,13 +68,13 @@
 					var movie_show_time_id = $('#movie_show_time_id').val();
 
 					$(document).ready(function () {
-						var $cart = $('#selected-seats'), 
-							$counter = $('#counter'), 
-							$total = $('#total'); 
+						var $cart = $('#selected-seats'), //Sitting Area
+							$counter = $('#counter'), //Votes
+							$total = $('#total'); //Total money
 							$iter = $('#keyValue');
 
 						var sc = $('#seat-map').seatCharts({
-							map: [ 
+							map: [ //Seating chart
 								'aaaaaaaaaa',
 								'aaaaaaaaaa',
 								'__________',
@@ -158,20 +159,39 @@
 						});
 						<cfset listArray = arrayNew(1)>
 						<cfloop index="item" from="1" to="#filledSeats.recordCount#" >
-							<cfset seatByPerson = filledSeats.selectedSeats[item]>
-							<cfset local.parsedData = DeserializeJSON(seatByPerson)>
-								<cfloop index="its" from="1" to="#ArrayLen(local.parsedData)#">
-									<cfset local.seatByPesonIn = local.parsedData[its]>
-									<cfset scValues = local.seatByPesonIn>
-									<cfset arrayAppend(listArray, scValues)>
+						<cfset seatByPerson = filledSeats.selectedSeats[item]>
+						<cfset local.parsedData = DeserializeJSON(seatByPerson)>
+						
+							<cfloop index="its" from="1" to="#ArrayLen(local.parsedData)#">
+								<cfset local.seatByPesonIn = local.parsedData[its]>
+								<cfset scValues = local.seatByPesonIn>
+								
+								<cfset arrayAppend(listArray, scValues)>
+								
+
+								
 									<cfoutput>
 										var #toScript(listArray, "jsVar")#;
 									</cfoutput>
-									// console.log(jsVar);
-									sc.get(jsVar).status('unavailable');
-								</cfloop>	
-						</cfloop>
+									
+									console.log(jsVar);
+
+									sc.get(jsVar).status(
+							'unavailable');
+
+									
 								
+
+
+
+
+							</cfloop>	
+						</cfloop>
+									
+
+
+
+
 						//sold seat
 						// sc.get(['1_2', '4_4', '4_5', '6_6']).status(
 						// 	'unavailable');
@@ -210,7 +230,7 @@
 							var movie_show_time_id = $('#movie_show_time_id').val();
 							var web_seat_count = $('#web_seat_count').val();
 							var total =  document.getElementById('total').innerHTML;
-							// console.log(seats);
+							console.log(seats);
 							var seat_data = JSON.stringify(seats);
 							// \\\var obj = JSON.parse(data_to_send);
 
@@ -230,12 +250,12 @@
 							"total":total
 							},
 							success: function(data){   
-								console.log(data.responseText);
+								alert(data);
 							},error:function(error){
-								window.location.href = "http://www.w3schools.com";								// console.log(error);
+								console.log(error);
 							}         
 						});  
-						// die();
+						die();
 					});
 					};
 
