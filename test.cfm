@@ -430,4 +430,27 @@ for (var i = 1; i < countValue; i++){
 </cfloop>
 
 
+function retrieveIterator(key){
+    var movie_show_time_id = $('#movie_show_time_id').val();
+    var web_seat_count = $('#web_seat_count').val();
+    // alert(key);
+    $.ajax({   
+        url: "../components/webside.cfc",
+        type: 'post',
+        dataType:"json",
+        data:{
+        method:"retrieveKey",
+        "movie_show_time_id":movie_show_time_id,       
+        "key":key,
+        "ticket_count":web_seat_count
+        },
+        success: function(data){   
+            alert(data);
+        },error:function(error){
+            console.log(error);
+        }         
+    });  
+}
+
+
 

@@ -147,7 +147,6 @@
                 <cfset Session.UserwebMovieTicketCredentials["isAuthenticated"] = "True">
             <cfelse>
                 <cfdump var ="tap">
-                <cfabort>
             </cfif>
 
             <cflocation addtoken="no"  url="../web/seat-selection.cfm"> 
@@ -262,7 +261,7 @@
         <cfreturn webTicketDetailJoinList>
     </cffunction>
 
-    <cffunction name="saveUserSeatInfo" access="remote">
+    <cffunction name="saveUserSeatInfo" access="remote" returnFormat = "json">
         <cfargument name="movie_show_time_id" type="integer" required="yes">
         <cfargument name="seats" type="string" required="yes">
         <cfargument name="ticket_count" type="integer" required="yes">
@@ -276,7 +275,7 @@
             <cfset local.userId = 0>
         </cfif>
 
-        <cfquery name="addData" result = result datasource="cruddb">
+        <cfquery name="addData" result = result datasource="cruddb" >
             INSERT INTO bookmyticket.moviepanel_reservation(userId,movieShowTimeId,ticketCount,selectedSeats,
             totalPrice,bookingTime,bookingStatus)
             VALUES(
@@ -289,7 +288,9 @@
                 <cfqueryparam  CFSQLType="cf_sql_varchar" value="onHold">
             )
         </cfquery>
-        <cfreturn "success"> 
+            <cfset local.NewPrimaryKey = result.generatedkey>
+            <cfset local.reservId = ToBase64(local.NewPrimaryKey) /> 
+        <cfreturn local.reservId> 
 
     </cffunction>
 
@@ -312,8 +313,101 @@
         </cfif>
     </cffunction>
 
+    <cffunction name="findCheckoutDetails" access="remote">
+        <cfargument name="reservationId" type="integer" required="yes">
+        <cfif isDefined("Session.UserwebMovieTicketCredentials.id") >
+            <cfset local.userId = #Session.UserwebMovieTicketCredentials.id#>
+        <cfelse>
+            <cfset local.userId = 0>
+        </cfif>
+        <cfquery name="reservationByDetail" datasource="cruddb">
+            SELECT sh.id,m.poster,m.movieName,th.theaterName,m.releaseDate,m.duration,
+            s.screenName,s.silverRate,s.goldRate,st.showStartTime,st.showName,sh.endDate,sh.showPriority,
+            wb.userName,wb.email,rs.totalPrice,rs.id as reservId
+            FROM bookmyticket.moviepanel_movieshowtimes sh
+            INNER JOIN bookmyticket.moviepanel_movies m ON sh.movie = m.id
+            INNER JOIN bookmyticket.moviepanel_teaters th ON sh.theater=th.id 
+            INNER JOIN bookmyticket.moviepanel_screens s ON sh.screen=s.id
+            INNER JOIN bookmyticket.moviepanel_showtimes st ON sh.showName =st.id
+            INNER JOIN bookmyticket.moviepanel_reservation rs ON sh.id =rs.movieShowTimeId
+            INNER JOIN bookmyticket.moviepanel_webusers wb ON rs.userId =wb.id
+            WHERE rs.id =  <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.reservationId#">
+            AND wb.id =  <cfqueryparam  CFSQLType = "cf_sql_integer" value="#local.userId#">; 
+        </cfquery>
+        <cfreturn reservationByDetail>
+    </cffunction>
+
+    <cffunction name="saveUserPaymentInfo" access="remote" returnFormat = "json">
+        <cfargument name="amount" type="integer" required="yes">
+        <cfargument name="reservId" type="integer" required="yes">
+        <cfargument name="paymentId" type="string" required="yes">
+        <cfset local.paymentDate = dateFormat(Now())>
+
+        <cfif isDefined("Session.UserwebMovieTicketCredentials.id") >
+            <cfset local.userId = #Session.UserwebMovieTicketCredentials.id#>
+        <cfelse>
+            <cfset local.userId = 0>
+        </cfif>
+
+        <cfquery name="addPaymentData" result = result datasource="cruddb">
+            INSERT INTO bookmyticket.moviepanel_payment(userId,reservId,paymentId,dateOfBooking,amountPayable,
+            paymentStatus)
+            VALUES(
+                <cfqueryparam  CFSQLType="cf_sql_integer" value="#local.userId#">,
+                <cfqueryparam  CFSQLType="cf_sql_integer" value ="#arguments.reservId#">,
+                <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.paymentId#">,
+                <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#local.paymentDate#">,
+                <cfqueryparam  CFSQLType="cf_sql_integer" value="#arguments.amount#">,
+                <cfqueryparam  CFSQLType="cf_sql_varchar" value="PAYMENTED">
+            )
+        </cfquery>
+
+        <cfif result.recordCount eq 1>
+            <cfquery name="updateReservationStatus" result="updateStatusResult" datasource="cruddb">
+                UPDATE bookmyticket.moviepanel_reservation SET bookingStatus = "PAYMENTED" 
+                WHERE id = <cfqueryparam CFSQLType ="cf_sql_integer" value="#arguments.reservId#">
+            </cfquery>
+            <cfset local.NewPaymentKey = result.generatedkey>
+            <cfset local.paymentkey = ToBase64(local.NewPaymentKey) /> 
+            <cfif updateStatusResult.recordCount eq 1>
+                <cfreturn local.paymentkey>
+            <cfelse>
+                <cfreturn "FAILED">
+            </cfif>
+        <cfelse>
+            <cfreturn "FAILED">
+        </cfif>
+    </cffunction>
+
+    <cffunction  name="findTicketConfirmDetails" access="remote" returnFormat="json">
+        <cfargument  name="paymentId" type="integer" required="yes">
+        <cfif isDefined("Session.UserwebMovieTicketCredentials.id") >
+            <cfset local.userId = #Session.UserwebMovieTicketCredentials.id#>
+        <cfelse>
+            <cfset local.userId = 0>
+        </cfif>
+        <cfquery name="confirmTicketByDetail" result = result datasource="cruddb">
+            SELECT sh.id,m.poster,m.movieName,th.theaterName,m.releaseDate,m.duration,m.language,
+            s.screenName,s.silverRate,s.goldRate,st.showStartTime,st.showName,sh.endDate,sh.showPriority,
+            wb.userName,wb.email,rs.totalPrice,rs.ticketCount,rs.selectedSeats,
+            rs.id as reservId,py.dateOfBooking,py.amountPayable
+            FROM bookmyticket.moviepanel_movieshowtimes sh
+            INNER JOIN bookmyticket.moviepanel_movies m ON sh.movie = m.id
+            INNER JOIN bookmyticket.moviepanel_teaters th ON sh.theater = th.id 
+            INNER JOIN bookmyticket.moviepanel_screens s ON sh.screen= s.id
+            INNER JOIN bookmyticket.moviepanel_showtimes st ON sh.showName = st.id
+            INNER JOIN bookmyticket.moviepanel_reservation rs ON sh.id = rs.movieShowTimeId
+            INNER JOIN bookmyticket.moviepanel_webusers wb ON rs.userId = wb.id
+            INNER JOIN bookmyticket.moviepanel_payment py ON rs.id = py.reservId
+            WHERE py.id =  <cfqueryparam  CFSQLType = "cf_sql_integer" value="#arguments.paymentId#">
+            AND wb.id =  <cfqueryparam  CFSQLType = "cf_sql_integer" value="#local.userId#">; 
+        </cfquery>
+        <cfreturn confirmTicketByDetail>
+    </cffunction>
+
     
 
-   
+    
 
+    
 </cfcomponent>

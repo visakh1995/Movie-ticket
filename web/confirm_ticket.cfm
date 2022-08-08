@@ -1,3 +1,4 @@
+<cfinclude template="../theme/web-header.cfm">  
 <!DOCTYPE html>
 <html>
 
@@ -19,44 +20,74 @@
 </head>
 
 <body>
+<br><br><br><br>
+<cfif isDefined("url.paymentId")>
+  <cfset payEncryptedId = url.paymentId>
+  <cfset paymentId = ToString(ToBinary(payEncryptedId))>
+</cfif>
+<cfset newPayment = createObject("component","movie-ticket/components.webside")> 
+<cfset confirmResults = newPayment.findTicketConfirmDetails(paymentId)>
+
 
 <div class="container">
 <fieldset>
+  <cfoutput>
     <h2>E-Ticket</h2>
     <div class="ticket-body">
       <div class="ticket">
         <div class="holes-top"></div>
         <div class="title">
-          <p class="cinema">MyShowz Entertainment</p>
-          <p class="movie-title">Movie Name</p>
+          <p class="cinema">#confirmResults.theaterName#</p>
+          <p class="movie-title">#confirmResults.movieName#</p>
+          <p>CONFIRMED</p>
         </div>
         <div class="poster">
-          <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/25240/only-god-forgives.jpg"
+          <img src="../uploads/#confirmResults.poster#"
             alt="Movie: Only God Forgives" />
         </div>
         <div class="info">
           <table class="info-table ticket-table">
             <tr>
               <th>SCREEN</th>
-              <th>ROW</th>
-              <th>SEAT</th>
+              <th>SHOW DATE</th>
+              <th>SHOW TIME</th>
             </tr>
             <tr>
-              <td class="bigger">18</td>
-              <td class="bigger">H</td>
-              <td class="bigger">24</td>
+              <td class="bigger">#confirmResults.screenName#</td>
+              <td class="bigger">#confirmResults.dateOfBooking#</td>
+              <td class="bigger">#confirmResults.showStartTime#</td>
             </tr>
           </table>
           <table class="info-table ticket-table">
             <tr>
-              <th>PRICE</th>
-              <th>DATE</th>
-              <th>TIME</th>
+              <th>LANGUAGE</th>
+              <th>PRINTED DATE</th>
+              <th>TICKET NO</th>
             </tr>
             <tr>
-              <td>RS.12.00</td>
-              <td>4/13/21</td>
-              <td>19:30</td>
+              <td class="bigger">#confirmResults.language#</td>
+              <td class="bigger">#dateFormat(Now())#</td>
+              <td class="bigger">#confirmResults.reservId#</td>
+            </tr>
+          </table>
+          <table class="info-table ticket-table">
+            <tr>
+              <th>TOTAL TICKETS</th>
+              <th>TOTAL PRICE</th>
+              <th>SEATS</th>
+            </tr>
+            <tr>
+              <td>#confirmResults.ticketCount#</td>
+              <td>#confirmResults.amountPayable#</td>
+              
+                <cfset confSeats = confirmResults.selectedSeats>
+                <cfset local.confParsedData = DeserializeJSON(confSeats)>
+                <cfloop index="its" from="1" to="#ArrayLen(local.confParsedData)#">
+                  <cfset local.seatByPesonIn = local.confParsedData[its]>
+                  <cfset seatsDetails = local.seatByPesonIn>
+                  <td>#seatsDetails#</td>
+                </cfloop>	
+              
             </tr>
           </table>
         </div>
@@ -213,6 +244,7 @@
     </div>
     <input type="button" name="previous-step" class="home-page-btn" value="Browse to Home Page"
       onclick="location.href='index.html';" />
+  </cfoutput>
   </fieldset>
 
 
@@ -247,3 +279,5 @@
 <script type="text/javascript" src="../assets/web/booking2/js/ticket-booking.js"></script>
 
 </html>
+
+<cfinclude template="../theme/web-footer.cfm"> 

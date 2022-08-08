@@ -230,36 +230,14 @@
 							"total":total
 							},
 							success: function(data){   
-								console.log(data.responseText);
-							},error:function(error){
-								window.location.href = "http://www.w3schools.com";								// console.log(error);
-							}         
-						});  
-						// die();
-					});
-					};
-
-					function retrieveIterator(key){
-						var movie_show_time_id = $('#movie_show_time_id').val();
-						var web_seat_count = $('#web_seat_count').val();
-						// alert(key);
-						$.ajax({   
-							url: "../components/webside.cfc",
-							type: 'post',
-							dataType:"json",
-							data:{
-							method:"retrieveKey",
-							"movie_show_time_id":movie_show_time_id,       
-							"key":key,
-							"ticket_count":web_seat_count
-							},
-							success: function(data){   
-								alert(data);
+								window.location.href = "http://127.0.0.1:8500/movie-ticket/web/checkout.cfm?reservId="+data;								
 							},error:function(error){
 								console.log(error);
 							}         
 						});  
-					}
+						 die();
+					});
+					};
 				</script>
 			</div>
 		</div>
