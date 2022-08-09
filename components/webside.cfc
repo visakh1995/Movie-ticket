@@ -405,7 +405,18 @@
         <cfreturn confirmTicketByDetail>
     </cffunction>
 
-    
+    <cffunction name="searchResults" access="remote" returnFormat="json">
+        <cfquery name="searchResults" result="result" datasource="cruddb">
+            SELECT *FROM bookmyticket.moviepanel_movies;
+        </cfquery>
+        <cfreturn searchResults>
+    </cffunction>
+
+    <cffunction name="findDetailsBySearchResults" access="remote">
+        <cfargument name="movie" type="string" required="yes">
+        <cfset local.encryptId = ToBase64(movie)/>
+        <cflocation addtoken="no"  url="../web/movie_details.cfm?movieId=#local.encryptId#">
+    </cffunction>
 
     
 
