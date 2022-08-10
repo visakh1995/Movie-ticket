@@ -313,7 +313,7 @@ ul.seatCharts-legendList {
 .seatCharts-legendItem {
 	margin-top: 10px;
 	line-height: 2;
-	color: var(--theme-title);
+	color: #fff;
 }
 
 span.seatCharts-legendDescription {
@@ -392,17 +392,21 @@ ul.book-right {
 }
 
 ul.book-left li {
-    font-size: 0.9rem;
+    font-size: 13px;
     font-weight: 600;
     color: #df0e62;
     line-height: 1.9em;
 }
 
 .book-right li {
-    font-size: 0.9rem;
+    font-size: 13px;
     font-weight: 500;
-    color: var(--theme-title);
+    color: #df0e62;
     line-height: 1.9em;
+}
+.buttons-tickets {
+    padding: 317px 20px;
+    border: 52px;
 }
 
 /* .booking-details .book-right li{

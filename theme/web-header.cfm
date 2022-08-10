@@ -14,6 +14,8 @@
     <link rel="stylesheet" type="text/css" href="../assets/web/css/default.css">
     <link rel="stylesheet" href="../assets/web/css/web.css">
 
+    <link href="../assets/web/booking/css/style.css" rel="stylesheet" type="text/css" media="all" />
+
 </head>
 <cfset searchSelector = createObject("component","movie-ticket/components.webside")> 
 <cfset searchResults = searchSelector.searchResults()>
@@ -93,56 +95,3 @@ select {
                 </div>
             </div>
         </header>
-
-        <script>
-            /* When the user clicks on the button,
-            toggle between hiding and showing the dropdown content */
-            function myFunction() {
-              document.getElementById("myDropdown").classList.toggle("show");
-            }
-            
-            function filterFunction() {
-              var input, filter, ul, li, a, i;
-              input = document.getElementById("myInput");
-              filter = input.value.toUpperCase();
-              div = document.getElementById("myDropdown");
-              a = div.getElementsByTagName("a");
-              console.log("a value", a);
-
-
-            if(filter){
-                alert(filter);
-
-                    $.ajax({   
-                    url: "../components/webside.cfc",
-                    type: 'get',
-                    dataType:"json",
-                    data:{
-                    method:"searchResults"
-                    },
-                    success: function(data){  
-                        console.log(data.DATA[1][1]);
-                        for(i = 0;i<data.DATA.length;i++){
-                            txtValue = data.DATA[i][1];
-                            console.log("filter",filter);
-                            console.log(txtValue.toUpperCase().indexOf(filter));
-                            if(txtValue.toUpperCase().indexOf(filter) > -1){
-                                console.log("exist");
-                                console.log("if exist",txtValue);
-                                $("#sel_user").append("<option value=''>"+txtValue+"</option>");
-                            }else{
-                                console.log("not exist");
-                                a[i].style.display = "none";
-                            }
-                        }
-                    },error:function(error){
-                        console.log(error);
-                    }         
-                });  
-
-            }else{
-                alert('hee');
-            }
-
-            }
-        </script>

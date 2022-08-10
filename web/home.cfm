@@ -7,7 +7,7 @@
     <div id="headerslider" class="carousel slide"> 
         <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <div class="fill" data-bg-image="../assets/web/images/header-slider.jpg">
+                <div class="fill" data-bg-image="../assets/web/images/level-header.jpg">
                 <div class="bs-slider-overlay"></div>
                     <div class="container movie-slider-container"> 
                         <div class="row">
@@ -56,14 +56,12 @@
                                                 <div class="entry-actions">
                                                    <cfset local.encryptId = ToBase64(nowShowing.id)/>
                                                     <a href="./movie_details.cfm?movieId=#local.encryptId#" class="">
-                                                        Details
+                                                        Book Now
                                                     </a>
                                                 </div>
                                             </div>
                                             <div class="entry-desc">
                                                 <h3 class="entry-title">#nowShowing.movieName#</h3><br>
-                                                <!--- <span>duartion : #nowShowing.duration#</span><br>
-                                                <span>genre : #nowShowing.genre#</span> --->
                                             </div>
                                         </div>
                                     </div>
@@ -89,7 +87,8 @@
                                     <div class="movie-image" data-bg-image="../uploads/#comingSoon.poster#">
                                         <div class="entry-hover">
                                             <div class="entry-actions">
-                                                <a href="order" class="btn-ticket">Show Details</a>
+                                                <cfset local.encryptId = ToBase64(comingSoon.id)/>
+                                                <a href="./movie_specifics.cfm?movieId=#local.encryptId#" class="btn-fill">more</a>
                                             </div>
                                         </div>
                                         <div class="entry-desc">
@@ -150,26 +149,52 @@
                     </div>
                 </div>
             </div>	
-            <div id="carousel_coming" class="flexslider">
-            <ul class="slides">
-                    <cfloop query = allShowingMovies>
-                        <cfoutput>
-                            <li class="thumb_item bg-cover">
-                                <div class="movie-image">
-                                    <!--- <a href="" class="btn fill"></a> --->
-                                    <img src="../uploads/#allShowingMovies.poster#" class="wpc_img" alt="image"/>
-                                    <div class="entry-desc">
-                                        <h3 class="entry-title">#allShowingMovies.movieName#</h3>
-                                        <ul class="entry-date">
-                                            <li>5 May 2017</li>  
-                                        </ul>
-                                    </div>
-                                </div>
-                            </li>
-                        </cfoutput>
-                    </cfloop>
-                </ul>
+            <div class="row">
+                <div class="col-md-12 mt4">
+                    <div class="single-slider">
+                        <div class="swiper-container movie-../assets/web/images" id="singleslider" data-col="5">
+                            <div class="swiper-wrapper">
+                                <cfloop query = allShowingMovies>
+                                    <cfoutput>
+                                        <div class="swiper-slide">
+                                            <div class="movie-image" data-bg-image="../uploads/#allShowingMovies.poster#">
+                                                <div class="entry-hover">
+                                                    <div class="entry-actions">
+                                                        <cfset local.encryptId = ToBase64(allShowingMovies.id)/>
+                                                        <a href="./movie_specifics.cfm?movieId=#local.encryptId#" class="btn fill">More</a>
+                                                    </div>
+                                                </div>
+                                                <div class="entry-desc">
+                                                    <div class="rating">
+                                                        <input name="stars" type="radio">
+                                                        <label>☆</label>
+                                                        <input name="stars" type="radio">
+                                                        <label>☆</label>
+                                                        <input name="stars" type="radio">
+                                                        <label>☆</label>
+                                                        <input name="stars" type="radio">
+                                                        <label>☆</label>
+                                                        <input name="stars" type="radio">
+                                                        <label>☆</label>
+                                                    </div>
+                                                    <h3 class="entry-title">#allShowingMovies.movieName#</h3>
+                                                    <ul class="entry-date">
+                                                        <li>#allShowingMovies.releaseDate#</li>  
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </cfoutput>
+                                </cfloop>
+                            </div>
+                        </div>
+                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>
+                    </div>
+                </div>
             </div>
+
+
         </div>
     </div>       
      

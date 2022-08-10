@@ -25,6 +25,12 @@
                     <div class="form-control">
                         <input type="password" name ="password" id="password" 
                         placeholder="Password" required>
+                    <cfif isDefined("url.movieShowId")>
+                        <cfset local.movieShowId = url.movieShowId>
+                        <cfoutput>
+                            <input type="hidden" name="movieShowValue" value="#local.movieShowId#">
+                        </cfoutput>
+                    </cfif>
                     </div>
                     <button class="btn btn-outline btn-login" type="submit">Signin</button>
                     <div class="movieticket-form-footer">

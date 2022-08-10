@@ -454,3 +454,14 @@ function retrieveIterator(key){
 
 
 
+
+
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<link href="../assets/web/booking/css/style.css" rel="stylesheet" type="text/css" media="all" />
+		<script src="../assets/web/booking/js/jquery-1.11.0.min.js"></script>
+		<script src="../assets/web/booking/js/jquery.seat-charts.js"></script>
+	</head>
+	<body>

@@ -46,7 +46,7 @@
                                     </li>
                                 </cfloop>
                             </cfoutput>    
-                            <a href="#order" class="order_btn">test</a>
+<!---                             <a href="#order" class="order_btn">test</a> --->
                             <cfquery dbtype="query" name="GetSomeUsers">
                                 select showStartTime
                                 from movie_schedules

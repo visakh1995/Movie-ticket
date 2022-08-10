@@ -69,6 +69,22 @@
         <cfreturn showContacts>
     </cffunction>
 
+    <cffunction name="findUsersBookingList" access="remote">
+        <cfquery name="showBookingUsersDetail" result = result datasource="cruddb">
+            SELECT sh.id,m.poster,m.movieName,th.theaterName,st.showStartTime,st.showName,
+            wb.userName,wb.email,rs.totalPrice,rs.ticketCount,rs.bookingTime,rs.id as reservId
+            FROM bookmyticket.moviepanel_movieshowtimes sh
+            INNER JOIN bookmyticket.moviepanel_movies m ON sh.movie = m.id
+            INNER JOIN bookmyticket.moviepanel_teaters th ON sh.theater = th.id 
+            INNER JOIN bookmyticket.moviepanel_screens s ON sh.screen= s.id
+            INNER JOIN bookmyticket.moviepanel_showtimes st ON sh.showName = st.id
+            INNER JOIN bookmyticket.moviepanel_reservation rs ON sh.id = rs.movieShowTimeId
+            INNER JOIN bookmyticket.moviepanel_webusers wb ON rs.userId = wb.id
+            WHERE rs.bookingStatus = <cfqueryparam  CFSQLType = "cf_sql_varchar" value="PAYMENTED">
+        </cfquery>
+        <cfreturn showBookingUsersDetail>
+    </cffunction>
+
     
 
 </cfcomponent>

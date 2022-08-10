@@ -49,8 +49,7 @@
                                         <li><span>Theater:</span> <p>#checkResults.theaterName#</p></li>
                                         <li><span>Screen:</span> <p>#checkResults.screenName#</p></li>
                                         <li><span>Show Time:</span> <p>#checkResults.showStartTime#</p></li>
-                                        <li><span>Amount Payable:</span><p>#checkResults.totalPrice + 25# Rs
-                                            (Gst inc)
+                                        <li><span>Amount Payable:</span><p>#checkResults.totalPrice# Rs
                                         </p></li>
                                     </ul>
                                 </div>                       
@@ -62,9 +61,9 @@
                     </article>     
                     <form>
                         <input type="hidden" id="amountPayable" name="amountPayable"
-                        value="#checkresults.totalPrice+25&00#">
+                        value="#checkresults.totalPrice&00#">
                         <input type="hidden" name="reservId" id="reservId" value="#checkResults.reservId#">
-                        <input type="hidden" name="amount" id="amount" value="#checkResults.totalPrice+25#">
+                        <input type="hidden" name="amount" id="amount" value="#checkResults.totalPrice#">
                     </form>
                 </cfoutput>
             </div> 

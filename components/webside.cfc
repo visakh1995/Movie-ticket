@@ -11,7 +11,8 @@
 
     <cffunction name="nowShowingMovies" access="remote" output="true">
         <cfquery name="nowShowingMovies" datasource="cruddb">
-            SELECT sm.id,sm.movieName,sm.releaseDate,sm.movieFormat,sm.genre,sm.language,sm.duration,sm.poster,s.movie
+            SELECT sm.id,sm.movieName,sm.releaseDate,
+            sm.movieFormat,sm.genre,sm.language,sm.duration,sm.poster,s.movie
             FROM bookmyticket.moviepanel_movies sm
             INNER JOIN bookmyticket.moviepanel_movieshowtimes s ON s.movie = sm.id
             WHERE CURDATE() BETWEEN sm.releaseDate AND s.endDate GROUP BY sm.movieName; 
@@ -116,7 +117,7 @@
         <cfif isDefined("Session.UserwebMovieTicketCredentials")>
             <cflocation addtoken="no" url="../web/seat-selection.cfm?moviesShowId=#arguments.movieShowId#">
         <cfelse>
-            <cflocation addtoken="no" url="../web/user-signin.cfm">
+            <cflocation addtoken="no" url="../web/user-signin.cfm?movieShowId=#arguments.movieShowId#">
         </cfif> 
     </cffunction>
 
@@ -125,6 +126,8 @@
     <cffunction name="UserMovieTicketSignin" access="remote" output="true" returnType="string">
         <cfargument name="email" type="string" required="yes">
         <cfargument  name="password" type="string" required="yes">
+        <cfargument  name="movieShowValue" type="string" required="no">
+
         <cfset local.encodedPassword = hash("#arguments.password#", "SHA-256", "UTF-8")>
 
         <cfquery name="userVerifiedDetails" datasource="cruddb">
@@ -145,11 +148,13 @@
                 <cfset Session.UserwebMovieTicketCredentials["email"] = "#userVerifiedDetails.email#">
                 <cfset Session.UserwebMovieTicketCredentials["password"] = "#userVerifiedDetails.password#">
                 <cfset Session.UserwebMovieTicketCredentials["isAuthenticated"] = "True">
+            </cfif>
+            <cfif isDefined("arguments.movieShowValue")>
+                <cflocation addtoken="no"  url="../web/seat-selection.cfm?moviesShowId=#arguments.movieShowValue#"> 
             <cfelse>
-                <cfdump var ="tap">
+                <cflocation addtoken="no"  url="../web/home.cfm"> 
             </cfif>
 
-            <cflocation addtoken="no"  url="../web/seat-selection.cfm"> 
         <cfelse>
             <cfset local.message  ="Invalid username or password">
             <cfset local.encryptedMessage = ToBase64(local.message) />
@@ -297,6 +302,7 @@
     <cffunction name="webMovieTheaterFilledSeats" datasource="cruddb">
         <cfquery name="filledSeats" datasource="cruddb">
             SELECT * FROM bookmyticket.moviepanel_reservation 
+            WHERE bookingStatus = <cfqueryparam  CFSQLType="cf_sql_varchar" value="PAYMENTED">
         </cfquery>
         <cfreturn filledSeats>
     </cffunction>
@@ -415,10 +421,31 @@
     <cffunction name="findDetailsBySearchResults" access="remote">
         <cfargument name="movie" type="string" required="yes">
         <cfset local.encryptId = ToBase64(movie)/>
-        <cflocation addtoken="no"  url="../web/movie_details.cfm?movieId=#local.encryptId#">
+        <cflocation addtoken="no"  url="../web/movie_specifics.cfm?movieId=#local.encryptId#">
     </cffunction>
 
-    
+    <cffunction name="showsNowShowing" access="remote" returnFormat = "json">
+        <cfquery name="show_details" datasource="cruddb" result="show_data">
+            SELECT DISTINCT
+                m.movieName,sh.id,m.poster,m.trailerUrl,
+                m.language,m.releaseDate,m.description,
+                m.duration,sh.totalSeats,            
+                sh.endDate,sh.showPriority,
+                sh.id,m.genre,
+                th.theaterName,                  
+                s.screenName,st.showStartTime,
+                st.showName,m.id as m_id,th.id as t_id,s.id as s_id,st.id as st_id
+            FROM bookmyticket.moviepanel_movieshowtimes sh
+            INNER JOIN bookmyticket.moviepanel_movies m ON sh.movie =m.id
+            INNER JOIN bookmyticket.moviepanel_teaters th ON sh.theater=th.id 
+            INNER JOIN bookmyticket.moviepanel_screens s ON sh.screen=s.id
+            INNER JOIN bookmyticket.moviepanel_showtimes st ON sh.showName =st.id
+            WHERE CURDATE() BETWEEN m.releaseDate AND sh.endDate GROUP BY m.movieName; 
+        </cfquery>  
+    <cfreturn show_details> 
+    </cffunction>
+
+
 
     
 </cfcomponent>

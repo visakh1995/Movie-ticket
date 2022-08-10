@@ -5,6 +5,7 @@
    <cfset movie_cast_details = findmovieDetails.webMovieCastById(movieId)>
    <cfset movie_crew_details = findmovieDetails.webMovieCrewById(movieId)>
    <cfset allShowingMovies = findmovieDetails.frontEndShowAllMovies()> 
+
 </cfif>
 <cfinclude template="../theme/web-header.cfm">  
 
@@ -62,7 +63,7 @@
                                             <div class="entry-hover">
                                                 <div class="entry-actions">
                                                     <cfset local.encryptId = ToBase64(allShowingMovies.id)/>
-                                                    <a href="./movie_details.cfm?movieId=#local.encryptId#" class="btn fill">More</a>
+                                                    <a href="./movie_specifics.cfm?movieId=#local.encryptId#" class="btn fill">More</a>
                                                 </div>
                                             </div>
                                             <div class="entry-desc">

@@ -1,4 +1,7 @@
 <cfinclude template="../section/dash-header.cfm">
+<cfset newInstance = createObject("component","movie-ticket/components.users")> 
+<cfset usersBookingList = newInstance.findUsersBookingList()> 
+<!--- <cfdump var =#usersBookingList#> --->
 <div class="content-body">
     <div class="container-fluid">
         <div class="row page-titles">
@@ -40,7 +43,7 @@
                                 <tr>
                                     <th>Username</th>
                                     <th>Email</th>
-                                    <th>Movie on</th>
+                                    <th>Movie</th>
                                     <th>Booking Date</th>
                                     <th>Show Time</th>
                                     <th>Seats&amount</th>
@@ -49,16 +52,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>a</td>
-                                    <td>b</td>
-                                    <td>c</td>
-                                    <td>a</td>
-                                    <td>b</td>
-                                    <td>c</td>
-                                    <td>a</td>
-                                    <td>b</td>
-                                </tr>
+                                <cfoutput>
+                                    <cfloop query = usersBookingList>
+                                        <tr>
+                                            <td>#usersBookingList.userName#</td>
+                                            <td>#usersBookingList.email#</td>
+                                            <td>#usersBookingList.movieName#</td>
+                                            <td>#usersBookingList.bookingTime#</td>
+                                            <td>#usersBookingList.showStartTime#</td>
+                                            <td>#usersBookingList.ticketCount#seats&#usersBookingList.totalPrice#rupees</td>
+                                            <td>#usersBookingList.reservId#</td>
+                                            <td>#usersBookingList.theaterName#</td>
+                                        </tr>
+                                    </cfloop>
+                                </cfoutput>
                             </tbody>
                         </table>
                     </div>

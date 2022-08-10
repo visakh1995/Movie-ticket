@@ -152,5 +152,9 @@
 <!-- jQuery easing plugin -->
 
 
+<script src="../assets/web/booking/js/jquery.nicescroll.js"></script>
+<script type="text/javascript" src="../assets/web/booking/js/theme-change-seat-sel.js"></script>
+<script src="../assets/web/booking/js/scripts.js"></script>
+
 </body>
 </html>
