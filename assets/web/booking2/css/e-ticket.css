@@ -1,6 +1,7 @@
 .ticket-body {
-  background-color: var(--theme-bg);
+  background-color: #c32a2a;
   font-family: "Yanone Kaffeesatz", sans-serif;
+  height: 1000px;
   /* font-weight: 600; */
 }
 
@@ -87,13 +88,13 @@ img {
 }
 
 .info {
-  padding: 15px 25px;
+  padding: 0px 14px;
 }
 
 .ticket-table {
   width: 100%;
   font-size: 18px;
-  margin-bottom: 15px;
+  margin-bottom: -1px;
 }
 
 .ticket-table tr {
@@ -115,14 +116,16 @@ img {
 .ticket-table th:nth-of-type(3) {
   width: 15%;
 }
-
-.ticket-table td {
-  width: 33%;
-  font-size: 26px;
+.ticket-table th:nth-of-type(4) {
+  width: 15%;
 }
 
+.ticket-table td {
+    width: 26%;
+    font-size: 16px;
+}
 .info-table th {
-  color: rgb(63, 62, 62)
+  color: rgb(160, 29, 29)
 }
 
 .bigger {
