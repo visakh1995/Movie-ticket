@@ -80,15 +80,6 @@
                             </cfoutput>
                         </cfloop>
                     </div>
-                    <div class="post-navigation mv3">
-                        <ul>
-                            <li><a href="javascript:;">1</a></li>
-                            <li><a href="javascript:;">2</a></li>
-                            <li><a href="javascript:;">3</a></li>
-                            <li><a href="javascript:;">4</a></li>
-                            <li><a href="javascript:;" class="arrow">&raquo;</a></li>
-                        </ul>
-                    </div>
                 </div>
             </div>        
         </div> 
@@ -133,15 +124,6 @@
                                 </article> 
                             </cfoutput>
                         </cfloop>
-                    </div>
-                    <div class="post-navigation mv3">
-                        <ul>
-                            <li><a href="javascript:;">1</a></li>
-                            <li><a href="javascript:;">2</a></li>
-                            <li><a href="javascript:;">3</a></li>
-                            <li><a href="javascript:;">4</a></li>
-                            <li><a href="javascript:;" class="arrow">&raquo;</a></li>
-                        </ul>
                     </div>
                 </div>
             </div>        

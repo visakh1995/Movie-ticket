@@ -145,6 +145,7 @@
             </cfif>
             <cfif structKeyExists(Session,"UserwebMovieTicketCredentials")>
                 <cfset Session.UserwebMovieTicketCredentials["id"] = "#userVerifiedDetails.id#">
+                <cfset Session.UserwebMovieTicketCredentials["userName"] = "#userVerifiedDetails.userName#">
                 <cfset Session.UserwebMovieTicketCredentials["email"] = "#userVerifiedDetails.email#">
                 <cfset Session.UserwebMovieTicketCredentials["password"] = "#userVerifiedDetails.password#">
                 <cfset Session.UserwebMovieTicketCredentials["isAuthenticated"] = "True">

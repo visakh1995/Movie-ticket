@@ -18,8 +18,6 @@
        <div class="container wpc-boxoffice pv8">
            <div class="row">
             <div class="container">
-            <!--- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" 
-                data-target="#myModal">Open Modal</button> --->
                 <div class="modal show" id="myModal" role="dialog">
                     <div class="modal-dialog">
                         <div class="modal-content">

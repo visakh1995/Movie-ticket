@@ -39,13 +39,13 @@
                             <div class="col-md-5 col-md-offset-1 col-sm-6 col-xs-8 phl0">
                                 <cfif isDefined("Session.UserwebMovieTicketCredentials")>
                                     <div class="header_author">
-                                        <a href="#"><cfoutput>User</cfoutput></a>
+                                        <a href="#"><cfoutput>#Session.UserwebMovieTicketCredentials.userName#</cfoutput></a>
                                         <img src="../assets/web/images/user.png" class="user" alt="user">
                                     </div>
-                                    <div class="header_ticket">
+                                    <!--- <div class="header_ticket">
                                         <a href="#order" class="order_btn">My tickets</a>
                                         <span>3</span>
-                                    </div>
+                                    </div> --->
                                 </cfif>
                                 <div class="button_container" id="toggle">
                                     <span class="top"></span>

@@ -32,9 +32,7 @@
             </cfif>
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title"></h4>
-                    <button type="button" class="teater btn btn-primary mb-2" data-bs-toggle="modal" 
-                    data-bs-target=".bd-example-modal-lg">Create</button>
+                    <h4 class="card-title"></h4> 
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
