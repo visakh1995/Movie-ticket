@@ -505,7 +505,7 @@
         <cfreturn allJoinList>
     </cffunction>
 
-    <cffunction name="updatePassword" access="remote" output="true"> 
+    <cffunction name="updateWebPassword" access="remote" output="true"> 
         <cfargument name="oldPassword" type="string" required="true">
         <cfargument name="newPassword" type="string" required="true">
         <cfargument name="confirmPassword" type="string" required="true">
@@ -529,13 +529,13 @@
 
         <cfif len(trim(local.aErrorMessages)) NEQ 0>
             <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
-            <cflocation addtoken="no"  url="../admin/updatepassword.cfm?aMessages=#local.encryptedMessage#">
+            <cflocation addtoken="no"  url="../web/update_password.cfm?aMessages=#local.encryptedMessage#">
         <cfelse>
 
             <cfquery name="verifiedUserDetails" datasource="cruddb">
-                SELECT *FROM bookmyticket.moviepanel_users WHERE 
+                SELECT *FROM bookmyticket.moviepanel_webusers WHERE 
                 password = <cfqueryparam CFSQLType="cf_sql_varchar" value ="#local.encodOldPassword#"> AND
-                status = <cfqueryparam CFSQLType="cf_sql_varchar" value ="admin"> 
+                email = <cfqueryparam CFSQLType="cf_sql_varchar" value ="#local.encodOldPassword#"> 
             </cfquery>
 
             <cfif verifiedUserDetails.RecordCount gt 0>
@@ -555,4 +555,62 @@
         </cfif>
     </cffunction>
 
+    <cffunction name="fetchScreenDetails" access="remote" output="true" returnFormat = "json">
+        <cfargument  name="theatre_id" type="integer">
+        <cfquery name="screen_details"  result="res" returntype="array" >
+            SELECT * FROM bookmyticket.moviepanel_screens
+            WHERE theatreId=<cfqueryparam value="#arguments.theatre_id#" cfsqltype="CF_SQL_INTEGER">;
+        </cfquery>
+        <cfreturn screen_details>
+    </cffunction>
+
+    <cffunction name="fetchScreenTimeDetails" access="remote" output="true" returnFormat = "json">
+        <cfargument  name="theatre_id" type="integer">
+        <cfargument  name="screen_id" type="integer">
+        <cfquery name="time_details"  result="res" returntype="array"  datasource="cruddb">
+            SELECT st.id, st.screen,s.screenName,st.teatreId,st.showName,st.showStartTime
+            FROM bookmyticket.moviepanel_showtimes st
+            INNER JOIN bookmyticket.moviepanel_screens s ON s.id = st.screen
+        WHERE 
+        st.teatreId= <cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#arguments.theatre_id#"> AND
+        st.screen=<cfqueryparam CFSQLType="CF_SQL_INTEGER" value="#arguments.screen_id#">
+        </cfquery>
+        <cfreturn time_details>
+    </cffunction> 
+
+    <cffunction name="findMovieCount" access="remote" output="true">
+        <cfquery name ="movieCount" result ="result" datasource="cruddb">
+            SELECT * FROM bookmyticket.moviepanel_movies;
+        </cfquery>
+        <cfreturn movieCount.recordCount>
+    </cffunction>
+
+    <cffunction name="findTheaterCount" access="remote" output="true">
+        <cfquery name ="theaterCount" result ="result" datasource="cruddb">
+            SELECT * FROM bookmyticket.moviepanel_teaters;
+        </cfquery>
+        <cfreturn theaterCount.recordCount>
+    </cffunction>
+
+    <cffunction name="findUserCount" access="remote" output="true">
+        <cfquery name ="userCount" result ="result" datasource="cruddb">
+            SELECT * FROM bookmyticket.moviepanel_webusers;
+        </cfquery>
+        <cfreturn userCount.recordCount>
+    </cffunction>
+
+    <cffunction name="findBookingCount" access="remote" output="true">
+        <cfquery name ="bookingCount" result ="result" datasource="cruddb">
+            SELECT * FROM bookmyticket.moviepanel_reservation WHERE
+             bookingStatus = <cfqueryparam CFSQLType="CF_SQL_VARCHAR" value="PAYMENTED">
+        </cfquery>
+        <cfreturn bookingCount.recordCount>
+    </cffunction>
+
+
+
+
+
+
 </cfcomponent>
+

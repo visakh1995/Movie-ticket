@@ -85,6 +85,62 @@
         <cfreturn showBookingUsersDetail>
     </cffunction>
 
+    <cffunction name="updateWebPassword" access="remote" output="true"> 
+        <cfargument name="oldPassword" type="string" required="true">
+        <cfargument name="newPassword" type="string" required="true">
+        <cfargument name="confirmPassword" type="string" required="true">
+
+        <cfset local.encodOldPassword = hash("#arguments.oldPassword#", "SHA-256", "UTF-8")>
+        <cfset local.encodNewPassword = hash("#arguments.newPassword#", "SHA-256", "UTF-8")>
+
+        <cfset local.aErrorMessages =  "">
+        <cfif arguments.oldPassword EQ ''>
+            <cfset local.aErrorMessages = 'Please fill old password'/>
+        </cfif>
+        <cfif arguments.newPassword EQ ''>
+            <cfset local.aErrorMessages = 'Please fill new Password'/>
+        </cfif>
+        <cfif arguments.confirmPassword EQ ''>
+            <cfset local.aErrorMessages = 'Please fill confirmPassword'/>
+        </cfif>
+        <cfif arguments.newPassword NEQ confirmPassword>
+            <cfset local.aErrorMessages = 'password donot match'/>
+        </cfif>
+
+        <cfif len(trim(local.aErrorMessages)) NEQ 0>
+            <cfset local.encryptedMessage = ToBase64(local.aErrorMessages) />
+            <cflocation addtoken="no"  url="../web/update_password.cfm?aMessages=#local.encryptedMessage#">
+        <cfelse>
+            <cfif isDefined("Session.UserwebMovieTicketCredentials.id") >
+                <cfset local.userId = #Session.UserwebMovieTicketCredentials.id#>
+                <cfset local.email = #Session.UserwebMovieTicketCredentials.email#>
+            <cfelse>
+                <cfset local.userId = 0>
+            </cfif>
+            <cfquery name="verifiedUserDetails" datasource="cruddb">
+                SELECT *FROM bookmyticket.moviepanel_webusers WHERE 
+                password = <cfqueryparam CFSQLType="cf_sql_varchar" value ="#local.encodOldPassword#"> AND
+                email = <cfqueryparam CFSQLType="cf_sql_varchar" value ="#local.email#"> 
+            </cfquery>
+
+            <cfif verifiedUserDetails.RecordCount gt 0>
+                <cfquery name="update_pass" datasource="cruddb" result="pass_res">
+                    UPDATE bookmyticket.moviepanel_webusers SET 
+                    password=<cfqueryparam value="#encodNewPassword#" cfsqltype="CF_SQL_VARCHAR">
+                    WHERE id = <cfqueryparam CFSQLType="cf_sql_varchar" value ="#local.userId#"> 
+                </cfquery>
+                <cfset local.message  ="Password updated successfully">
+                <cfset local.encryptedMessage = ToBase64(local.message) />
+                <cflocation addtoken="no"  url="../web/user-signin.cfm?aMessageSuccess=#encryptedMessage#"> 
+            <cfelse>
+                <cfset local.message  ="Invalid old password,please try again">
+                <cfset local.encryptedMessage = ToBase64(local.message) />
+                <cflocation addtoken="no"  url="../web/update_password.cfm?aMessages=#encryptedMessage#">  
+            </cfif>
+        </cfif>
+    </cffunction>
+
+
     
 
 </cfcomponent>

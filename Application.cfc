@@ -50,6 +50,7 @@
         required="true"
     />
     <cfscript>
+
         if(!structKeyExists(Session, "movieTicketCredentials")){
             if(findNoCase("/movie-ticket/admin/dashboard.cfm",arguments.targetPage) > 0 ||
             findNoCase("/movie-ticket/admin/cast-crew.cfm",arguments.targetPage) > 0 ||
@@ -76,7 +77,6 @@
         }
     </cfscript>
 </cffunction>
-
 
 
 <cffunction name="onMissingTemplate">
@@ -122,6 +122,6 @@
     returnType="void"
     output="false"
     hint="Fires when the application is terminated.">
-
 </cffunction>
+
 </cfcomponent>

@@ -8,6 +8,7 @@
             <div class="modal-body">
                 <div class="col-lg-12">
                     <div class="card">
+                        <div id="alert"></div>
                         <div class="card-body">
                             <div class="basic-form">
                                 <form class="my-4" method="post" enctype="multipart/form-data" 
@@ -46,8 +47,9 @@
                                             id ="language" placeholder="Language">
                                         </div>
                                         <div class="col-sm-6">
-                                            <input type="time" class="form-control" name ="duration" required
-                                            id ="duration" placeholder="Duration(h:m:s)">
+                                            <input type="time" class="without_ampm form-control" name ="duration" required
+                                            id ="duration" value="" step="1">
+                                            <label>Duration(h:m:s)</label>
                                         </div>
                                     </div>
 
@@ -103,7 +105,7 @@
                                             Close
                                         </button>
                                         <button type="submit" class="btn btn-primary" 
-                                        onclick ="return onAddressBookContactValidate()">
+                                        onclick ="return onMovieTicketFilmsValidate()">
                                             Save changes
                                         </button>
                                     </div>

@@ -243,11 +243,14 @@ $('.movieShowTime').on('click',function(){
             },
             success: function(data)
             {    
+                console.log(data);
                 $('#movie_show_time_id').val(data.DATA[0][0]);                  
                 $('#movie').val(data.DATA[0][1]);
                 $('#theater').val(data.DATA[0][2]);
-                $('#screen').val(data.DATA[0][3]);                         
-                $('#show_name').val(data.DATA[0][4]);
+                // $('#screen').val(data.DATA[0][3]);     
+                editScreenList(data.DATA[0][3]);   
+                editTimeList(data.DATA[0][2],data.DATA[0][3]);                       
+                // $('#show_name').val(data.DATA[0][4]);
                 $('#end_date').val(data.DATA[0][5]);    
                 $('#show_priority').val(data.DATA[0][6]);                                            
                 $('#total_seats').val(data.DATA[0][7]);                                                           
@@ -268,6 +271,71 @@ $('.movieShowTime').on('click',function(){
         $('#movieShowTimeFormId').attr('action', '../components/movies.cfc?method=movieTicketCreateMovieShowTime'); 
     }
 });
+
+function editScreenList(screen_id)
+{
+    var theat_id=$('#theater').val();
+    
+    if(theat_id!="")
+    {
+        
+        $.ajax({   
+            url: "../components/moviefunctions.cfc",
+            type: 'get',
+            dataType:"json",
+            data:{
+            method:"fetchScreenDetails",
+              theatre_id:theat_id           
+            },
+            success:function(data) { 
+                $('select[name="screen"]').empty();
+                
+                //$('select#screen').append($('<option>').text("--Select Screen--"));
+                $.each(data, function(key, value) {  
+                   
+                    $('#screen').append($('<option>').text(value.screenName).attr('value', value.id));
+                });
+                $("#screen option[value='"+screen_id+"']").attr("selected", "selected");
+            }  
+        });       
+    }
+    else{
+        $('#screen').html('<option value="">Select Screen</option>'); 
+    }
+}
+
+function editTimeList(screen_time_id,sc_id){
+    var th_sc_id=$('#theater').val(); 
+    
+    if(sc_id!="")
+    {
+        
+        $.ajax({   
+            url: "../components/moviefunctions.cfc",
+            type: 'get',
+            dataType:"json",
+            data:{
+            method:"fetchScreenTimeDetails",
+              theatre_id:th_sc_id,
+              screen_id:sc_id           
+            },
+            success:function(data) {  
+                $('select[name="showName"]').empty();
+                //$("#screen_time option[value='"+data[0].st_id+"']").attr("selected", "selected");
+                //$('select#screen_time').append($('<option>').text("--Select Show Time--"));
+                $.each(data, function(key, value) {  
+                    $('#show_name').append($('<option>').text(value.showName+"("+value.showStartTime+")").attr('value', value.id));
+                });
+                $("#screen_time option[value='"+screen_time_id+"']").attr("selected", "selected");
+            }  
+        });       
+    }
+    $('#screen_time').html('<option value="">Select Show</option>'); 
+}
+
+
+
+
 
 function screenList(){
     var theat_id=$('#theater').val();
@@ -321,4 +389,72 @@ function timeList(){
     }
     $('#show_name').html('<option value="">Select Show</option>'); 
 }
+
+function onMovieTicketTheaterValidate(){
+ 
+        var TheaterName = document.getElementById("theatre_name").value;
+        var email = document.getElementById("email").value;
+        var address = document.getElementById("address").value;
+        var street = document.getElementById("street").value;
+        var pinCode = document.getElementById("pinCode").value;
+        var phone = document.getElementById("phone").value;
+        
+        if(TheaterName == "" ||  email == "" || address == "" ||  street =="" || 
+        pinCode == "" ||phone == "") {
+            document.getElementById("alert").innerHTML ="Please fill all required fields";
+            return false;
+        }
+        if(isNaN(pinCode)) {
+        document.getElementById("alert").innerHTML ="Invalid pincode";
+        return false;
+        }
+        var phoneNum = phone.replace(/[^\d]/g, '');
+        if(phoneNum.length > 6 && phoneNum.length < 11) { 
+        return true;
+        }else{
+        document.getElementById("alert").innerHTML ="please provide valid phone number";
+        return false;
+        } 
+    }
+
+    function onMovieTicketFilmsValidate(){
+
+        var movie_name = document.getElementById("movie_name").value;
+        var release_date = document.getElementById("release_date").value;
+        var movie_formats = document.getElementById("movie-formats").value;
+        var genre = document.getElementById("genre").value;
+        var language = document.getElementById("language").value;
+        var duration = document.getElementById("duration").value;
+        var trailer_url = document.getElementById("trailer_url").value;
+        var desc = document.getElementById("desc").value;
+
+        if(movie_name == "" ||  release_date == "" || movie_formats == "" ||  genre =="" || 
+        language == "" ||duration == "" ||trailer_url == "" ||desc == "") {
+            document.getElementById("alert").innerHTML ="Please fill all required fields";
+            return false;
+        }
+    }
+
+    function onMovieTicketShowTimeValidate(){
+
+        var movie = document.getElementById("movie").value;
+        var theater = document.getElementById("theater").value;
+        var screen = document.getElementById("screen").value;
+        var show_name = document.getElementById("show_name").value;
+        var end_date = document.getElementById("end_date").value;
+        var show_priority = document.getElementById("show_priority").value;
+        var total_seats = document.getElementById("total_seats").value;
+
+        if(movie == "" ||  theater == "" || screen == "" ||  show_name =="" || 
+        end_date == "" ||show_priority == "" ||total_seats == "" ){
+            document.getElementById("alert").innerHTML ="Please fill all required fields";
+            return false;
+        }
+    }
+
+
+
+
+
+
 

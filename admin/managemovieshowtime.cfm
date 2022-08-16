@@ -100,11 +100,17 @@
                                             <td>#allMovieShowTimeList.theaterName#</td>
                                             <td>#allMovieShowTimeList.screenName#</td>
                                             <td>#allMovieShowTimeList.releaseDate#</td>
-                                            <td>#allMovieShowTimeList.showStartTime#</td>
+                                            <td>#(timeFormat(allMovieShowTimeList.showStartTime, "hh:mm:ss tt"))#</td>
                                             <td>#allMovieShowTimeList.duration#</td>
-                                            <td>#allMovieShowTimeList.duration#</td>
-                                            <td>#allMovieShowTimeList.endDate#</td>
 
+                                            <cfset s_d=listToArray(#allMovieShowTimeList.duration#,":")>
+                                            <cfset hours=s_d[1]*60*60>
+                                            <cfset min=s_d[2]*60>
+                                            <cfset sec=s_d[3]>
+                                            <cfset dtn=hours+min>                            
+                                            <cfset new_time = timeFormat(DateAdd("s",dtn,#allMovieShowTimeList.showStartTime#),'hh:mm:ss tt')>
+                                            <td>#new_time#</td> 
+                                            <td>#allMovieShowTimeList.endDate#</td>
                                             <cfif dateCompare(allMovieShowTimeList.endDate, now()) EQ -1>
                                                 <td class="bg-danger">Inactive</td>
                                             <cfelseif dateCompare(allMovieShowTimeList.releaseDate, now()) EQ 1>

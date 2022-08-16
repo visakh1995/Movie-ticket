@@ -9,6 +9,7 @@
             <div class="modal-body">
                 <div class="col-lg-12">
                     <div class="card">
+                        <div id="alert"></div>
                         <div class="card-body">
                             <div class="basic-form">
                                 <form class="my-4" method="post" enctype="multipart/form-data" 
@@ -22,8 +23,7 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <input type="email" name ="email" class="form-control" required
-                                            id ="email" placeholder="Email*" 
-                                            onclick ="return onValidateEmail()">
+                                            id ="email" placeholder="Email*">
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -71,7 +71,7 @@
                                             Close
                                         </button>
                                         <button type="submit" class="btn btn-primary" 
-                                        onclick ="return onAddressBookContactValidate()">
+                                        onclick ="return onMovieTicketTheaterValidate()">
                                             Save changes
                                         </button>
                                     </div>

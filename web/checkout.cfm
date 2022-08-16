@@ -64,6 +64,9 @@
                         value="#checkresults.totalPrice&00#">
                         <input type="hidden" name="reservId" id="reservId" value="#checkResults.reservId#">
                         <input type="hidden" name="amount" id="amount" value="#checkResults.totalPrice#">
+                        <input type="hidden" name="movieShowId" id="movieShowId" value="#checkResults.id#">
+                        <input type="hidden" name="availableSeats" id="availSeats" value="#checkResults.availableSeats#">
+                        <input type="hidden" name="ticketCount" id="ticketCount" value="#checkResults.ticketCount#">
                     </form>
                 </cfoutput>
             </div> 
@@ -71,12 +74,15 @@
     </div> 
 </section>
 
-
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
 var amountPayable = document.getElementById('amountPayable').value;
 var reservId = document.getElementById('reservId').value;
 var amount = document.getElementById('amount').value;
+var availableSeats = document.getElementById('availSeats').value;
+var ticketCount = document.getElementById('ticketCount').value;
+var movieShowId = document.getElementById('movieShowId').value;
+
 
 var options = {
     "key": "rzp_test_q14UWXJrpEpdwq", // Enter the Key ID generated from the Dashboard
@@ -99,7 +105,10 @@ var options = {
             method:"saveUserPaymentInfo",
             "amount":amount,
             "reservId":reservId,
-            "paymentId":paymentId
+            "paymentId":paymentId,
+            "availableSeats":availableSeats,
+            "ticketCount":ticketCount,
+            "movieShowId":movieShowId
             },
             success: function(data){   
                 console.log(data);

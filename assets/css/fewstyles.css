@@ -53,3 +53,6 @@ img.cast-pic {
     text-align:center;
     font-weight:900;
 }
+.without_ampm::-webkit-datetime-edit-ampm-field {
+    display: none;
+  }

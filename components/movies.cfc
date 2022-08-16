@@ -439,7 +439,7 @@
         
                     <cfquery name="addData" result = result datasource="cruddb">
                         INSERT INTO bookmyticket.moviepanel_movieShowTimes(movie,theater,screen,showName,
-                        endDate,showPriority,totalSeats,movieTimeStatus)
+                        endDate,showPriority,totalSeats,availableSeats,movieTimeStatus)
                         VALUES(
                             <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.movie#">,
                             <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.theater#">,
@@ -447,6 +447,7 @@
                             <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.showName#">,
                             <cfqueryparam  CFSQLType="cf_sql_varchar" value ="#arguments.endDate#">,
                             <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.showPriority#">,
+                            <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.totalSeats#">,
                             <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.totalSeats#">,
                             <cfqueryparam  CFSQLType="cf_sql_integer" value="1">
                         )

@@ -37,8 +37,8 @@
                                                 <cfset local.encryptMovieShowTime = ToBase64(movie_schedules.id) />
                                                 <button 
                                                     class="btn">
-                                                    <a href="./web_action.cfm?movieShowId=#local.encryptMovieShowTime#">
-                                                        #movie_schedules.showStartTime#
+                                                    <a class="text-white" href="./web_action.cfm?movieShowId=#local.encryptMovieShowTime#">
+                                                        #(timeFormat(movie_schedules.showStartTime, "hh:mm tt"))#
                                                     </a>
                                                 </button>
                                             </li> 
@@ -46,14 +46,6 @@
                                     </li>
                                 </cfloop>
                             </cfoutput>    
-<!---                             <a href="#order" class="order_btn">test</a> --->
-                            <cfquery dbtype="query" name="GetSomeUsers">
-                                select showStartTime
-                                from movie_schedules
-                            </cfquery>
-                            <cfoutput query="GetSomeUsers">
-                                #showStartTime#<br>
-                            </cfoutput>
                         </ul>
                     </div>
                 </div>
@@ -61,5 +53,4 @@
         </div>
     </div>
 </section>
-
- <cfinclude template="../theme/web-footer.cfm">  
+<cfinclude template="../theme/web-footer.cfm">  

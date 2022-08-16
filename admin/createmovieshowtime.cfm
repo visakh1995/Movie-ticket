@@ -12,6 +12,7 @@
             <div class="modal-body">
                 <div class="col-lg-12">
                     <div class="card">
+                        <div id="alert"></div>
                         <div class="card-body">
                             <div class="basic-form">
                                 <form class="my-4" method="post" enctype="multipart/form-data" 
@@ -77,7 +78,8 @@
                                         data-bs-dismiss="modal">
                                             Close
                                         </button>
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-primary"
+                                        onclick ="return onMovieTicketShowTimeValidate()">
                                             Save changes
                                         </button>
                                     </div>

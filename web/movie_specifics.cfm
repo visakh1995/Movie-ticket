@@ -92,7 +92,6 @@
         </div>
      </div> 
  </section>
- 
  <!---box office--->
  <section class="section-content">
      <div class="fullscreen-section bg-black pvb0">
@@ -141,7 +140,6 @@
                  </div>
              </div>
          </div>
-     </section>
- 
- <cfinclude template="../theme/web-footer.cfm">  
+     </section> 
+<cfinclude template="../theme/web-footer.cfm">  
  

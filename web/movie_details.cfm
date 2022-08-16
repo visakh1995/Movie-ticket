@@ -5,7 +5,6 @@
    <cfset movie_cast_details = findmovieDetails.webMovieCastById(movieId)>
    <cfset movie_crew_details = findmovieDetails.webMovieCrewById(movieId)>
    <cfset allShowingMovies = findmovieDetails.frontEndShowAllMovies()> 
-
 </cfif>
 <cfinclude template="../theme/web-header.cfm">  
 
@@ -97,7 +96,6 @@
         </div>
     </div> 
 </section>
-
 <!---box office--->
 <section class="section-content">
     <div class="fullscreen-section bg-black pvb0">
@@ -147,5 +145,4 @@
             </div>
         </div>
     </section>
-
 <cfinclude template="../theme/web-footer.cfm">  

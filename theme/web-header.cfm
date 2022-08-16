@@ -19,29 +19,6 @@
 </head>
 <cfset searchSelector = createObject("component","movie-ticket/components.webside")> 
 <cfset searchResults = searchSelector.searchResults()>
-<style>
-label,{
-    font-family: sans-serif;
-}
-
-label {
-    font-size: 1rem;
-    padding-right: 10px;
-}
-
-select {
-    font-size: 13px;
-    padding: 14px 20px;
-    border-radius:25px;
-}
-
-
-
-.output {
-    background: center/cover no-repeat url('/media/cc0-images/hamster.jpg');
-    position: relative;
-}
-</style>
 <body class="sticky-menu">
     <div id="loader">
         <div class="loader-ring">
@@ -70,10 +47,10 @@ select {
                                 <a href="#"><cfoutput>#Session.UserwebMovieTicketCredentials.userName#</cfoutput></a>
                                 <img src="../assets/web/images/user.png" class="user" alt="user">
                             </div>
-                            <!--- <div class="header_ticket">
-                                <a href="#order" class="order_btn">My tickets</a>
+                            <div class="header_ticket">
+                                <a href="update_password.cfm">Update password</a>
                                 <span>3</span>
-                            </div> --->
+                            </div>
                         </cfif>
                         <div class="button_container" id="toggle">
                             <span class="top"></span>

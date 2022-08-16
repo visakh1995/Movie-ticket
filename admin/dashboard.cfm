@@ -1,4 +1,11 @@
 <cfinclude template="../section/dash-header.cfm">
+<cfset newInstance = createObject("component","movie-ticket/components.moviefunctions")> 
+<cfset allMovieCount = newInstance.findMovieCount()> 
+<cfset allTheaterCount = newInstance.findTheaterCount()> 
+<cfset allUserCount = newInstance.findUserCount()> 
+<cfset allBookingCount = newInstance.findBookingCount()> 
+
+
 <div class="content-body">
     <div class="container-fluid">
         <div class="row invoice-card-row">
@@ -8,7 +15,7 @@
                         <div class="icon me-3">
                         </div>
                         <div>
-                            <h2 class="text-white invoice-num">2478</h2>
+                            <h2 class="text-white invoice-num"><cfoutput>#allTheaterCount#</cfoutput></h2>
                             <span class="text-white fs-18">Total Theaters</span>
                         </div>
                     </div>
@@ -20,7 +27,7 @@
                         <div class="icon me-3">
                         </div>
                         <div>
-                            <h2 class="text-white invoice-num">983</h2>
+                            <h2 class="text-white invoice-num"><cfoutput>#allMovieCount#</cfoutput></h2>
                             <span class="text-white fs-18">Movies</span>
                         </div>
                     </div>
@@ -32,7 +39,7 @@
                         <div class="icon me-3">
                         </div>
                         <div>
-                            <h2 class="text-white invoice-num">1256</h2>
+                            <h2 class="text-white invoice-num"><cfoutput>#allUserCount#</cfoutput></h2>
                             <span class="text-white fs-18">User registration</span>
                         </div>
                     </div>
@@ -44,7 +51,7 @@
                         <div class="icon me-3">
                         </div>
                         <div>
-                            <h2 class="text-white invoice-num">652</h2>
+                            <h2 class="text-white invoice-num"><cfoutput>#allBookingCount#</cfoutput></h2>
                             <span class="text-white fs-18">Movie Bookings</span>
                         </div>
                     </div>

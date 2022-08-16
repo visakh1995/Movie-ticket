@@ -4,7 +4,14 @@
 	<cfset webMovieShowId = ToString(ToBinary(movieShowId))>
 	<cfset webBookingDetailsById = createObject("component","movie-ticket/components.webside")> 
 	<cfset movie_details = webBookingDetailsById.webMovieFindBookingDetails(movieShowId)>
-	<cfset filledSeats = webBookingDetailsById.webMovieTheaterFilledSeats()>
+	<cfset theaterId = movie_details.theatrId>
+
+	<cfinvoke component="movie-ticket/components.webside" 
+		method="webMovieTheaterFilledSeats" returnVariable="filledSeats"> 
+		<cfinvokeargument  name="theaterId"  value="#theaterId#">
+		<cfinvokeargument  name="screenId"  value="#movie_details.screen#">
+		<cfinvokeargument  name="showTimeId"  value="#movie_details.showName#">
+	</cfinvoke>
 </cfif>
 
 <section class="section-content pv12 bg-cover" data-bg-image="../assets/web/images/blog/bg-single.jpg">
@@ -25,20 +32,19 @@
 				<form id="formId" method="post" action="">
 					<div class="booking-details">
 						<ul class="book-left">
-							<li>Movie</li>
-							<li>Date </li>
-							<li>Time </li>
-							<li>Tickets</li>
-							<li>Total</li>
-							<li>Selected Seats</li>
+<!--- 							<li>Movie</li> --->
+<!--- 							<li>Date </li> --->
+<!--- 							<li>Time </li> --->
+<!--- 							<li>Tickets</li> --->
+<!--- 							<li>Total</li> --->
+<!--- 							<li>Selected Seats</li> --->
 						</ul>
 						<cfoutput>
 							<ul class="book-right">
-								<li>: #movie_details.movieName#</li>
-								<li>: #DateFormat(Now())#</li>
-								<li>: #movie_details.showStartTime#</li>
-								<li>: <span id="counter">0</span></li>
-								<li>: <b><i>RS.</i><span id="total">0</span></b></li>
+								<li>Movie: #movie_details.movieName#</li>
+								<li>Time: #(timeFormat(movie_details.showStartTime, "hh:mm tt"))#</li>
+								<li>Tickets: <span id="counter">0</span></li>
+								<li>Total: <b><i>RS.</i><span id="total">0</span></b></li>
 							</ul>
 						</cfoutput>
 						<div class="clear"></div>
@@ -48,13 +54,14 @@
 					<cfoutput>
 						<input type="hidden" value="#movie_details.silverRate#" id="silverPrice">
 						<input type="hidden" value="#movie_details.goldRate#" id="goldPrice">
+						<input type="hidden" value="#movie_details.totalSeats#" id="totalSeats">
+						<input type="hidden" value="#movie_details.theatrId#" id="theaterId">
 						<input type="hidden" name="movieShowTimeId" id="movie_show_time_id" value="#webMovieShowId#">
 						<input type="hidden" name="ticketCount" id="web_seat_count" value="#webSeatCount#">
 					</cfoutput>
-					
 					<fieldset>
 						<input type="submit" name="next-step" class="confirm next-step" value="Confirm Selection" />
-						<input type="button" name="previous-step" class="previous-step" value="Back" />
+<!--- 						<input type="button" name="previous-step" class="previous-step" value="Back" /> --->
 					</fieldset>
 				</form>
 				<div id="snackbar">cant pick seats more than mentioned</div>
@@ -205,6 +212,7 @@
 			var movie_show_time_id = $('#movie_show_time_id').val();
 			var web_seat_count = $('#web_seat_count').val();
 			var total =  document.getElementById('total').innerHTML;
+			var theaterId = $('#theaterId').val();
 			var seat_data = JSON.stringify(seats);
 			// \\\var obj = JSON.parse(data_to_send);
 
@@ -225,6 +233,7 @@
 				method:"saveUserSeatInfo",
 				"movie_show_time_id":movie_show_time_id,       
 				seats:seat_data, 
+				"theaterId":theaterId,
 				"ticket_count":web_seat_count,
 				"total":total
 				},

@@ -178,9 +178,6 @@
                                                         <label>☆</label>
                                                     </div>
                                                     <h3 class="entry-title">#allShowingMovies.movieName#</h3>
-                                                    <ul class="entry-date">
-                                                        <li>#allShowingMovies.releaseDate#</li>  
-                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>
@@ -193,11 +190,7 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>       
-     
-
 </section>
 <cfinclude template="../theme/web-footer.cfm">    

@@ -69,7 +69,7 @@
                                             <p class="entry-excepts">Theatre : #dateResults.theaterName#
                                                  | Shows : #dateResults.showStartTime# | Trailer : #dateResults.trailerUrl#  </p>
                                             <cfset local.encryptId = ToBase64(dateResults.m_id)/>
-                                            <a href="./movie_details.cfm?movieId=#local.encryptId#" class="btn more mt1"> Book Tickets</a>
+                                            <a href="./movie_specifics.cfm?movieId=#local.encryptId#" class="btn more mt1"> More</a>
                                             <div class="social-icon mt1">
                                                 <span><i class="fa fa-thumbs-o-up"></i>14</span>
                                                 <span><i class="fa fa-comment-o"></i>11</span>
@@ -114,7 +114,7 @@
                                             <p class="entry-excepts">Theatre : #showNowShowing.theaterName#
                                                  | Shows : #showNowShowing.showStartTime# | Trailer : #showNowShowing.trailerUrl#  </p>
                                             <cfset local.encryptId = ToBase64(showNowShowing.m_id)/>
-                                            <a href="./movie_details.cfm?movieId=#local.encryptId#" class="btn more mt1"> Book Tickets</a>
+                                            <a href="./movie_specifics.cfm?movieId=#local.encryptId#" class="btn more mt1">More</a>
                                             <div class="social-icon mt1">
                                                 <span><i class="fa fa-thumbs-o-up"></i>14</span>
                                                 <span><i class="fa fa-comment-o"></i>11</span>
@@ -128,8 +128,6 @@
                 </div>
             </div>        
         </div> 
-
-        
     </cfif>
 </section>
 <cfinclude template="../theme/web-footer.cfm"> 
