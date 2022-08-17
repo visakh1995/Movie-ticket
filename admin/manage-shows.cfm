@@ -108,7 +108,7 @@
                                                 src="../uploads/#moviesList.wallpaper#">
                                             </td>
                                             <td>#moviesList.movieName#</td>
-                                            <td>#moviesList.releaseDate#</td>
+                                            <td>#(dateformat(moviesList.releaseDate,"dd-mm-yyyy"))#</td>
                                             <td>#moviesList.movieFormat#</td>
                                             <td>#moviesList.genre#</td>
                                             <td>#moviesList.language#</td>

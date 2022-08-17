@@ -89,26 +89,25 @@
 <script src="../assets/web/booking/js/jquery.nicescroll.js"></script>
 <script type="text/javascript" src="../assets/web/booking/js/theme-change-seat-sel.js"></script>
 <script src="../assets/web/booking/js/scripts.js"></script>
+<script src="../assets/web/booking2/js/html2canvas.min.js"></script>
 
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 <script>
-  $(document).ready(function () {
-      var element = $("#html-content-holder"); // global variable
-      var getCanvas; //global variable
-      html2canvas(element, {
-          onrendered: function (canvas) {
-              getCanvas = canvas;
-          }
-      });
-      $("#btn-Convert-Html2Image").on('click', function () {
-          var imgageData = getCanvas.toDataURL("image/png");
-          //Now browser starts downloading it instead of just showing it
-          var newData = imgageData.replace(/^data:image\/png/, "data:application/octet-stream");
-          $("#btn-Convert-Html2Image").attr("download", "your_image.png").attr("href", newData);
-      });
-  });
-</script>
+    $(document).ready(function () {
+        var element = $("#html-content-holder"); 
+        var getCanvas; //global variable
+        html2canvas(element, {
+            onrendered: function (canvas) {
+                getCanvas = canvas;
+            }
+        });
+        $("#btn-Convert-Html2Image").on('click', function () {
+            var imgageData = getCanvas.toDataURL("image/png");
+            //Now browser starts downloading it instead of just showing it
+            var newData = imgageData.replace(/^data:image\/png/, "data:application/octet-stream");
+            $("#btn-Convert-Html2Image").attr("download", "your_image.png").attr("href", newData);
+        });
+    });
+  </script>
 
 </body>
 </html>

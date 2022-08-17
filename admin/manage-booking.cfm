@@ -1,7 +1,6 @@
 <cfinclude template="../section/dash-header.cfm">
 <cfset newInstance = createObject("component","movie-ticket/components.users")> 
 <cfset usersBookingList = newInstance.findUsersBookingList()> 
-<!--- <cfdump var =#usersBookingList#> --->
 <div class="content-body">
     <div class="container-fluid">
         <div class="row page-titles">

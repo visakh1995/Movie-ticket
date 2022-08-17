@@ -36,7 +36,7 @@
                                         <li><span>Genre:</span>  <p>#movie_details.genre#</p></li>
                                         <li><span>Language:</span>  <p>#movie_details.language#</p></li>
                                         <li><span>Type:</span>  <p>#movie_details.movieFormat#</p></li>
-                                        <li><span>Release Date:</span> <p>#movie_details.releaseDate#</p></li>
+                                        <li><span>Release Date:</span> <p>#(dateformat(movie_details.releaseDate,"dd-mm-yyyy"))#</p></li>
                                     </ul>
                                 </div>                       
                                 <div class="content-footer"> 
@@ -80,7 +80,7 @@
                                                 </div>
                                                 <h3 class="entry-title">#allShowingMovies.movieName#</h3>
                                                 <ul class="entry-date">
-                                                    <li>#allShowingMovies.releaseDate#</li>  
+                                                    <li>#(dateformat(allShowingMovies.releaseDate,"dd-mm-yyyy"))#</li>  
                                                 </ul>
                                             </div>
                                         </div>

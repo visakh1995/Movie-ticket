@@ -83,20 +83,16 @@ var availableSeats = document.getElementById('availSeats').value;
 var ticketCount = document.getElementById('ticketCount').value;
 var movieShowId = document.getElementById('movieShowId').value;
 
-
 var options = {
-    "key": "rzp_test_q14UWXJrpEpdwq", // Enter the Key ID generated from the Dashboard
-    "amount": amountPayable, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "key": "rzp_test_q14UWXJrpEpdwq", 
+    "amount": amountPayable, 
     "currency": "INR",
     "name": "Acme Corp",
     "description": "Test Transaction",
     "image": "https://example.com/your_logo",
     // "order_id": "order_K0OKqLeSo29gZ9",
-     //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
     "handler": function (response){
         var paymentId = response.razorpay_payment_id;
-        // alert(response.razorpay_order_id);
-        // alert(response.razorpay_signature);
         $.ajax({   
             url: "../components/webside.cfc",
             type: 'post',

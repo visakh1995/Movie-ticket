@@ -31,14 +31,7 @@
 				</div>
 				<form id="formId" method="post" action="">
 					<div class="booking-details">
-						<ul class="book-left">
-<!--- 							<li>Movie</li> --->
-<!--- 							<li>Date </li> --->
-<!--- 							<li>Time </li> --->
-<!--- 							<li>Tickets</li> --->
-<!--- 							<li>Total</li> --->
-<!--- 							<li>Selected Seats</li> --->
-						</ul>
+						<ul class="book-left"></ul>
 						<cfoutput>
 							<ul class="book-right">
 								<li>Movie: #movie_details.movieName#</li>

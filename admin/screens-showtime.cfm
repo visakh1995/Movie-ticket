@@ -133,7 +133,7 @@
                                             <tr>
                                                 <td>#timeList.showName#</td>
                                                 <td>#timeList.screenName#</td>
-                                                <td>#timeList.showStartTime#</td>
+                                                <td>#(timeFormat(timeList.showStartTime, "hh:mm tt"))#</td>
                                                 <td>
                                                     <button class="showTime btn btn-outline btn-show" data-id =#timeList.id# 
                                                         data-bs-toggle="modal" data-bs-target=".bd-showTime-modal-lg">

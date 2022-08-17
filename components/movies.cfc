@@ -219,8 +219,7 @@
         <cflocation addtoken="no"  url="../admin/manage-shows.cfm?aMessages=#local.encryptedMessage#"> 
     </cffunction>
 
-    <!---    cast crew --->
-
+  
     <cffunction name="movieTicketCreateCastForm" access="remote" output="true">
         <cfargument name="characterName" type="string" required="true">
         <cfargument name="actorName" type="string" required="true">

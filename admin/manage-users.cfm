@@ -58,13 +58,14 @@
                                         <tr>
                                             <td>#usersList.userName#</td>
                                             <td>#usersList.email#</td>
-                                            <td>#usersList.registeredOn#</td>
+                                            <td>#(dateformat(usersList.registeredOn,"dd-mm-yyyy"))#</td>
                                             <td>
-                                            <button class="btn">
-                                                <a href="./action.cfm?userDelete=#usersList.id#">
-                                                    delete
-                                                </a>
-                                            </button></td>
+                                                <button class="btn">
+                                                    <a href="./action.cfm?userDelete=#usersList.id#">
+                                                        delete
+                                                    </a>
+                                                </button>
+                                            </td>
                                         </tr>
                                     </cfloop>
                                 </cfoutput>

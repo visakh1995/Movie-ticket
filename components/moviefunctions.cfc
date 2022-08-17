@@ -218,7 +218,6 @@
         </cfif>
     </cffunction>
 
-    <!--- manage screen and show time --->
     <cffunction name="movieTicketCreateScreenForm" access="remote" output="true">
         <cfargument name="theatreId" type="string" required="true">
         <cfargument name="screenName" type="string" required="true">
@@ -347,7 +346,6 @@
         </cfif>
     </cffunction>
 
-    <!---  show screen time --->
     <cffunction name="movieTicketCreateShowTime" access="remote" output="true">
         <cfargument name="theatreId" type="string" required="true">
         <cfargument name="showName" type="string" required="true">
@@ -443,8 +441,7 @@
             <cfparam name="arguments.showName" default="">
             <cfparam name="arguments.screen" default="">
             <cfparam name="arguments.showStartTime" default="1">
-
-
+            
             <cfquery name="updateData" datasource="cruddb">
                 UPDATE bookmyticket.moviepanel_showtimes SET 
                 teatreId = <cfqueryparam  CFSQLType="cf_sql_varchar" value="#arguments.theatreId#">,
@@ -606,11 +603,6 @@
         </cfquery>
         <cfreturn bookingCount.recordCount>
     </cffunction>
-
-
-
-
-
 
 </cfcomponent>
 

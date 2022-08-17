@@ -5,7 +5,6 @@
 <cfset allUserCount = newInstance.findUserCount()> 
 <cfset allBookingCount = newInstance.findBookingCount()> 
 
-
 <div class="content-body">
     <div class="container-fluid">
         <div class="row invoice-card-row">
